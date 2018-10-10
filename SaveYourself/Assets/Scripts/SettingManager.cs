@@ -1,16 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class SettingManager : Manager<SettingManager> {
+using UnityEngine.UI;
+public class SettingManager : Singleton<SettingManager> {
     
     public Settings setting;
+
+    [SerializeField]
+    Scrollbar BgmVolumeBar;
+    [SerializeField]
+    Scrollbar SoundVolumeBar;
 	void Start () {
-        JsonHandler.LoadFile(setting);
+        JsonHandler.LoadFile(ref setting);
+        Debug.Log(setting.BGMVolume);
 	}
-    void OnDestory()
+    void OnDisable()
     {
+        Debug.Log(setting.BGMVolume);
         JsonHandler.SaveFile(setting);
+    }
+    public void OnSoundVolumeBarChange()
+    {
+        setting.SoundVolume = SoundVolumeBar.value;
+    }
+    public void OnBgmVolumeBarChange()
+    {
+        setting.BGMVolume = BgmVolumeBar.value;
     }
 }
 [System.Serializable]
