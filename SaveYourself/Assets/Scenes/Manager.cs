@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
+public class Manager<T> : MonoBehaviour where T : Manager<T>
 {
     static public T Instance;
-    protected virtual void Awake()
+    void Awake()
     {
         if (Instance == null)
-        {
+        {            
             Instance = GetComponent<T>();
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 

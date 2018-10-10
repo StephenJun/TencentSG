@@ -6,14 +6,14 @@ using UnityEngine.UI;
 using System;
 using CWindow;
 
-public class UIManager : Singleton<UIManager>
+public class UIManager : Manager<UIManager>
 {
     [SerializeField]
     List<RectTransform> WindowRectBank = new List<RectTransform>();
     static public Dictionary<WindowName, BaseWindow> WindowIndex = new Dictionary<WindowName, BaseWindow>();
     [SerializeField]
     Image blackCurtain;
-    protected override void Awake()
+    void Awake()
     {
         if (Instance != null)
         {
