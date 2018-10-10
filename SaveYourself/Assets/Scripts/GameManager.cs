@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : Manager<GameManager> {
+public class GameManager : Singleton<GameManager> {
 
     public GameState gameState;
 
@@ -61,6 +61,7 @@ public class GameManager : Manager<GameManager> {
         {
             if (lastObject != hitInfo.collider.gameObject)
             {
+                if(lastObject) lastObject.GetComponent<InteractiveObject>().HighlightOff();
                 lastObject = hitInfo.collider.gameObject;
                 lastObject.GetComponent<InteractiveObject>().HighlightOn();
             }
