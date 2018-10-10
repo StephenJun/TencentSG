@@ -5,7 +5,7 @@ using UnityEngine;
 public class Manager<T> : MonoBehaviour where T : Manager<T>
 {
     static public T Instance;
-    void Awake()
+    protected virtual void Awake()
     {
         if (Instance == null)
         {            
