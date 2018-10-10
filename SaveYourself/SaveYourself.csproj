@@ -260,7 +260,6 @@
     <Compile Include="Assets\Plugin\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Plugin\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Plugin\DOTween\Modules\DOTweenModuleUtils.cs" />
-    <Compile Include="Assets\Scenes\Manager.cs" />
     <Compile Include="Assets\Scripts\FX\GameEffect.cs" />
     <Compile Include="Assets\Scripts\FX\GameEffectManager.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Extinguisher.cs" />
@@ -268,9 +267,11 @@
     <Compile Include="Assets\Scripts\Gameplay\MovePointEffect.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />
     <Compile Include="Assets\Scripts\JsonHandler.cs" />
+    <Compile Include="Assets\Scripts\Managers\CameraController.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SettingManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\Singleton.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\AdditionalUIManager.cs" />
     <Compile Include="Assets\Scripts\UI\UIWindow\BaseWindow.cs" />

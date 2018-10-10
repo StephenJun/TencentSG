@@ -14,4 +14,11 @@ public class MainMenu : BaseWindow {
         SceneManager.LoadScene("MainGame");
     }
 
+    public void OnSettingOpenButton()
+    {
+        UIManager.PopWindow(WindowName.SettingMenu);
+        print(1);
+    }
+
+
 }

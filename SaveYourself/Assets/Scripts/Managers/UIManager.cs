@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System;
 using CWindow;
 
-public class UIManager : Manager<UIManager>
+public class UIManager : Singleton<UIManager>
 {
     [SerializeField]
     List<RectTransform> WindowRectBank = new List<RectTransform>();

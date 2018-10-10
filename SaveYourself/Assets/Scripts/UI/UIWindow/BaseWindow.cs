@@ -89,6 +89,7 @@ namespace CWindow
         None,
         ParentsCenter,
         MainMenu,
+        SettingMenu,
         HUD
     }
 }

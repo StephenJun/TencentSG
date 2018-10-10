@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using CWindow;
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
 
     [SerializeField]
@@ -54,4 +54,10 @@ public class PlayerAction
 {
     public string description;
     public Vector3 position;
+
+    public PlayerAction()
+    {
+        //description = 
+    }
+    static public PlayerAction extinguisher;// = new PlayerAction(;
 }

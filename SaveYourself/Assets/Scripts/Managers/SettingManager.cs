@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingManager : Manager<SettingManager> {
+public class SettingManager : Singleton<SettingManager> {
     
     public Settings setting;
 	void Start () {
-        JsonHandler.LoadFile(setting);
+        JsonHandler.LoadFile(ref setting);
 	}
     void OnDestory()
     {
