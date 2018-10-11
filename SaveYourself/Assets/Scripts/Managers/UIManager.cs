@@ -8,6 +8,8 @@ using CWindow;
 
 public class UIManager : Singleton<UIManager>
 {
+    public HUD hud;
+    
     [SerializeField]
     List<RectTransform> WindowRectBank = new List<RectTransform>();
     static public Dictionary<WindowName, BaseWindow> WindowIndex = new Dictionary<WindowName, BaseWindow>();
@@ -60,14 +62,14 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    static public void CloseWindow(WindowName windowName)
+    static public void CloseWindow(WindowName windowName, float time = 0.5f)
     {
         if (WindowIndex[windowName].isRoot)
         {
             Instance.blackCurtain.DOFade(0, 0.8f);
             Instance.blackCurtain.raycastTarget = false;
         }
-        WindowIndex[windowName].Close();
+        WindowIndex[windowName].Close(time);
         WindowIndex[windowName].locked = true;
         DOVirtual.DelayedCall(0.8f, () => WindowIndex[windowName].locked = false);
     }

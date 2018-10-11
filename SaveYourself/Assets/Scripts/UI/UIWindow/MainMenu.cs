@@ -9,15 +9,24 @@ public class MainMenu : BaseWindow {
 	
     public void OnStartButton()
     {
+        UIManager.CloseWindow(WindowName.MainMenu, 0);
         UIManager.PopWindow(WindowName.HUD, 0, 0f);
-        UIManager.CloseWindow(WindowName.MainMenu);
+        AudioManager.Instance.PlayButtonClickedAudio();
         SceneManager.LoadScene("MainGame");
+        GameManager.Instance.GameStart();
     }
 
     public void OnSettingOpenButton()
     {
         UIManager.PopWindow(WindowName.SettingMenu);
-        print(1);
+        AudioManager.Instance.PlayButtonClickedAudio();
+    }
+
+
+    public override void Close(float time = 0.1F)
+    {
+        base.Close(time);
+        AudioManager.Instance.PlayButtonClickedAudio();
     }
 
 

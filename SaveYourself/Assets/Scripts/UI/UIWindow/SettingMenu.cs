@@ -8,6 +8,12 @@ using CWindow;
 public class SettingMenu : BaseWindow {
 
 
+    public void OnCloseButton()
+    {
+        UIManager.CloseWindow(WindowName.SettingMenu);
+        AudioManager.Instance.PlayButtonClickedAudio();
+    }
+
     //private float _brightness;
     //public float Brightness
     //{

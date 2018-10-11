@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameEffectManager : MonoBehaviour {
+public class GameEffectManager : Singleton<GameEffectManager> {
 
     Dictionary<string, List<GameEffect>> effectPool = new Dictionary<string, List<GameEffect>>();
 
@@ -85,7 +85,7 @@ public class GameEffectManager : MonoBehaviour {
 
     public GameEffect CreateEffect(string effectName, Vector3 worldPos)
     {
-        GameObject obj = Resources.Load<GameObject>("Effects/" + effectName);
+        GameObject obj = Resources.Load<GameObject>("VFX/" + effectName);
         if (obj == null)
         {
             Debug.Log("can't find file ! :" + effectName);

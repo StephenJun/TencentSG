@@ -6,6 +6,10 @@ using UnityEngine;
 public class InteractiveObject : MonoBehaviour
 {
     public string detailInfo;
+    public string itemName;
+    public int maxStack = 1;
+    public bool isCollectable;
+    public float timeNeedToCollect;
 
     public Material defaultMat;
     public Material highlightMat;

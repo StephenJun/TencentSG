@@ -5,15 +5,22 @@ using UnityEngine.AI;
 using CWindow;
 public class PlayerController : Singleton<PlayerController>
 {
+    [System.Serializable]
+    public class PlayerParameter
+    {
+        public float hp = 100;
+    }
+
+    public PlayerParameter _playerPara = new PlayerParameter();
+    public List<PlayerAction> playerActions = new List<PlayerAction>();
 
     [SerializeField]
     Camera viewCamera;
     NavMeshAgent navMeshAgent;
-    public List<PlayerAction> playerActions = new List<PlayerAction>();
 
-    void Awake()
+    protected override void Awake()
     {
-        
+        base.Awake();
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
     void Start()
@@ -36,17 +43,38 @@ public class PlayerController : Singleton<PlayerController>
         Vector3 target = targetObj.transform.position;
         while (Vector3.Distance(target,transform.position) > 4.0f)
         {
-            Debug.Log(Vector3.Distance(target, transform.position));
+            //Debug.Log(Vector3.Distance(target, transform.position));
             yield return null;
         }
         navMeshAgent.SetDestination(transform.position);
         UIManager.PopWindow(WindowName.ParentsCenter, targetObj.detailInfo);
-        
-        Debug.Log("Reached");
+        if (targetObj.isCollectable)
+        {
+            InventoryManager.Instance.inventory.ShowTimerWhenInteracting(targetObj);
+        }
+
         yield return new WaitForSeconds(2f);
         UIManager.CloseWindow(WindowName.ParentsCenter);
         
     }
+
+
+    #region PlayerParaStatus
+    public void OnHurt(float damage)
+    {
+        _playerPara.hp -= damage;
+        if(_playerPara.hp <= 0)
+        {
+            Death();
+        }
+    }
+
+    private void Death()
+    {
+        _playerPara.hp = 0;
+        Debug.Log("GameOver");
+    }
+    #endregion
 }
 
 
