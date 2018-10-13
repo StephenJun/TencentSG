@@ -101,6 +101,8 @@ MonoBehaviour:
   maxStack: 1
   isCollectable: 1
   timeNeedToCollect: 2
+  durability: 100
+  defenderProvided: 30
   defaultMat: {fileID: 2100000, guid: bfe1ded083a14a34eaa30a62ab3e9400, type: 2}
   highlightMat: {fileID: 2100000, guid: 3bd013d275020904cadd7432d3e13f9b, type: 2}
   IsHighLight: 0

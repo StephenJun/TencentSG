@@ -10,8 +10,11 @@ public class InteractiveObject : MonoBehaviour
     public int maxStack = 1;
     public bool isCollectable;
     public float timeNeedToCollect;
+	public float durability = 100;
+	public float defenderProvided = 30.0f;
 
-    public Material defaultMat;
+
+	public Material defaultMat;
     public Material highlightMat;
     public Action OnInteractive;
     public bool IsHighLight;

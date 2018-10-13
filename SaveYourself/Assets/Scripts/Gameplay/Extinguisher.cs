@@ -5,19 +5,13 @@ using CWindow;
 
 public class Extinguisher : InteractiveObject
 {
-
-
-
     private void Start()
-
     {
-
         OnInteractive += delegate {
 
-            UIManager.PopWindow(WindowName.ParentsCenter);
-
-            PlayerController.Instance.playerActions.Add(new PlayerAction());
-
+			InventoryManager.Instance.inventory.AddItem(this);
+			//PlayerController.Instance.playerActions.Add(new PlayerAction());
+			this.gameObject.SetActive(false);
         };
 
     }

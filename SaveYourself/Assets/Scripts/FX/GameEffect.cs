@@ -50,7 +50,7 @@ public class GameEffect : MonoBehaviour {
         {
             transform.position = parent.transform.position;
         }
-        if (playTime >= playDuration)
+        if (playTime >= playDuration && playDuration > 0)
         {
             Die();
         }

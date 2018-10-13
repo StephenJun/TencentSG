@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198495985068159284}
   - component: {fileID: 199069958730088042}
   m_Layer: 0
-  m_Name: CFX3_Flying_Ember_Upward
+  m_Name: FlyingFlame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,8 +229,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.06
-      minScalar: 0.04
+      scalar: 0.6
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:

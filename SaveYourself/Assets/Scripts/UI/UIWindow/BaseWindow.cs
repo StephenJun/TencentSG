@@ -33,11 +33,36 @@ namespace CWindow
         }
         protected void Awake()
         {
-            ConfirmButton = transform.Find("ConfirmButton");
-            CancelButton[0] = transform.Find("CancelButton");
-            CancelButton[1] = transform.Find("Background/Cross");
-            MainMessageText = transform.Find("MainMessage");
+			ConfirmButton = FindObject(transform, "Btn_Confirm");
+			CancelButton[0] = FindObject(transform, "Btn_Cancel");
+            CancelButton[1] = FindObject(transform, "Btn_Close");
+            MainMessageText = FindObject(transform, "Text_MainMessage");
         }
+
+		//Recursion to find child obj using index name.
+		private Transform FindObject(Transform trans, string objName)
+		{
+			if (trans.gameObject.name == objName)
+			{
+				return trans;
+			}
+			if (trans.childCount < 1)
+			{
+				return null;
+			}
+			Transform obj = null;
+			for (int i = 0; i < trans.childCount; i++)
+			{
+				Transform go = trans.GetChild(i);
+				obj = FindObject(go, objName);
+				if (obj != null)
+				{
+					break;
+				}
+			}
+			return obj;
+		}
+
         protected virtual void Start()
         {
             m_transform = transform;
@@ -55,8 +80,24 @@ namespace CWindow
             if (CancelButton[0]) CancelButton[0].gameObject.GetComponent<Button>().onClick.RemoveListener(CancelAction);
             if (CancelButton[1]) CancelButton[1].gameObject.GetComponent<Button>().onClick.RemoveListener(CancelAction);
         }
+
+		private void ClearDelegate()
+		{
+			if(confirm != null)
+			{
+				Delegate[] delArray = confirm.GetInvocationList();
+				for (int i = 0; i < delArray.Length; i++)
+				{
+					confirm -= delArray[i] as Action;
+				}
+			}
+
+
+		}
+
         public virtual void Pop(WindowName _upperWindow = WindowName.None, float time = 0.5f)
         {
+			ClearDelegate();
             upperName = _upperWindow;
             m_transform.DOScale(1, time);
         }
@@ -90,6 +131,7 @@ namespace CWindow
         ParentsCenter,
         MainMenu,
         SettingMenu,
-        HUD
+        HUD,
+		GenericPopup
     }
 }

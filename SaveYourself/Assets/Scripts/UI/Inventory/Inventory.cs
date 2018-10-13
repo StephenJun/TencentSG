@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -6,8 +7,17 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour {
 
+	public Action timerComplete;
+
     [HideInInspector]
     public Slot[] slotArray;
+	public float TotalDefender
+	{
+		get
+		{
+			return CalculatAllDefender();
+		}
+	}
 
     [SerializeField]
     private GameObject interactingTimer;
@@ -15,39 +25,63 @@ public class Inventory : MonoBehaviour {
     private Image interactingTimerPic;
     [SerializeField]
     private Text interactingTimerText;
+	[SerializeField]
+	private Text totalDefenderText;
+
     private void Start()
     {
-        slotArray = GetComponentsInChildren<Slot>();
-       
+        slotArray = GetComponentsInChildren<Slot>();  
     }
 
+	public float CalculatAllDefender()
+	{
+		float temp = 0;
+		foreach (var slot in slotArray)
+		{
+			if (slot.transform.childCount > 0) 
+			temp += slot.transform.GetChild(0).GetComponent<ItemUI>().interObj.defenderProvided;
+		}
+		return temp;
+	}
 
     /// <summary>
     /// Show the progression of collecting the item
     /// </summary>
     /// <param name="item">item to collect</param>
-    public void ShowTimerWhenInteracting(InteractiveObject item)
+    public void ShowTimerWhenInteracting(float time, Action OnComplete)
     {
-        StartCoroutine(ShowTimerCoroutine(item));
+        StartCoroutine(ShowTimerCoroutine(time, OnComplete));
     }
-
-    private IEnumerator ShowTimerCoroutine(InteractiveObject item)
+    private IEnumerator ShowTimerCoroutine(float time, Action OnComplete)
     {
-        float initDur = item.timeNeedToCollect;
-        print(1);
+		if(timerComplete != null)
+		{
+			Delegate[] delArray = timerComplete.GetInvocationList();
+			for (int i = 0; i < delArray.Length; i++)
+			{
+				timerComplete -= delArray[i] as Action;
+			}
+		}
+        float initDur = time;
         interactingTimer.SetActive(true);
         while (initDur > 0)
         {
             yield return null;
             initDur -= Time.deltaTime;
-            interactingTimerText.text = initDur.ToString("0.0") + " / " + item.timeNeedToCollect.ToString("0.0");
-            interactingTimerPic.fillAmount = initDur / item.timeNeedToCollect;
+            interactingTimerText.text = initDur.ToString("0.0") + " / " + time.ToString("0.0");
+            interactingTimerPic.fillAmount = initDur / time;
         }
         interactingTimer.SetActive(false);
-        AddItem(item.itemName);
-        Destroy(item.gameObject);
+		if(OnComplete != null)
+		{
+			OnComplete();
+		}
+        //AddItem(item);
+        //Destroy(item.gameObject);
     }
 
+
+	//Add Item to slot base on name
     public bool AddItem(string itemName)
     {
         InteractiveObject item = InventoryManager.Instance.GetItemByName(itemName);
@@ -55,8 +89,7 @@ public class Inventory : MonoBehaviour {
     }
     public bool AddItem(InteractiveObject item)
     {
-        //if()
-        if (item == null)
+		if (item == null)
         {
             Debug.Log("你增加的物品ID不存在");
             return false;
@@ -72,7 +105,7 @@ public class Inventory : MonoBehaviour {
             else
             {
                 emptySlot.AddItem(item);
-            }
+			}
         }
         else
         {
@@ -95,7 +128,8 @@ public class Inventory : MonoBehaviour {
                 }
             }
         }
-        return true;
+		totalDefenderText.text = TotalDefender.ToString() + "%";
+		return true;
     }
 
     private Slot FindEmptySlot(InteractiveObject item)

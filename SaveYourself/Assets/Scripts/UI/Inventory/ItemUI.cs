@@ -9,7 +9,21 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public InteractiveObject interObj;
     public int Amount;
-    //public AudioClip WIKIBtnClicked;
+	//public AudioClip WIKIBtnClicked;
+
+	[SerializeField]
+	private Image durabilityImage;
+	private Image DurabilityImage
+	{
+		get
+		{
+			if (durabilityImage == null)
+			{
+				durabilityImage = transform.Find("Img_Durability").GetComponent<Image>();
+			}
+			return durabilityImage;
+		}
+	}
 
     private Image image;
     private Image Image
@@ -37,7 +51,8 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     }
 
     private float smoothing = 5;
-    private Vector3 AnimScale = Vector3.one * 1.3f;
+	private float targetScale = 1;
+	private Vector3 AnimScale = Vector3.one * 1.3f;
 
     private void Start()
     {
@@ -48,16 +63,18 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     private void Update()
     {
-        //if (transform.localScale.x != targetScale)
-        //{
-        //	float scale = Mathf.Lerp(transform.localScale.x, targetScale, smoothing * Time.deltaTime);
-        //	transform.localScale = Vector3.one * scale;
-        //}
-    }
+		interObj.durability -= 2 * Time.deltaTime;
+		DurabilityImage.fillAmount = interObj.durability / 100;
+		if (transform.localScale.x != targetScale)
+		{
+			float scale = Mathf.Lerp(transform.localScale.x, targetScale, smoothing * Time.deltaTime);
+			transform.localScale = Vector3.one * scale;
+		}
+	}
 
     public void SetIcon(InteractiveObject itemBase, int amount = 1)
     {
-        transform.localScale = AnimScale;
+        //transform.localScale = AnimScale;
         this.interObj = itemBase;
         this.Amount = amount;
         //更新UI

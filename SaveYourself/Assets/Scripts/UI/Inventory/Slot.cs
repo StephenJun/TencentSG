@@ -8,19 +8,18 @@ public class Slot : MonoBehaviour {
 
     public void AddItem(InteractiveObject item)
     {
-        //if (transform.childCount == 0)
-        //{
-        //	GameObject go = Instantiate(itemObject) as GameObject;
-        //	go.transform.SetParent(this.transform, false); //false表示是作为UI的子物体，不是在场景中worldPositionStay
-        //	go.GetComponent<Item>().SetIcon(item);
-        //}
-        //else
-        //{
-        //	transform.GetChild(0).GetComponent<Item>().AddAmount();
-        //}
-        GameObject go = Instantiate(itemUIObject) as GameObject;
-        go.transform.SetParent(this.transform, false); //false表示是作为UI的子物体，不是在场景中worldPositionStay
-        go.GetComponent<ItemUI>().SetIcon(item);
+		if(transform.childCount == 0)
+		{
+			GameObject go = Instantiate(itemUIObject) as GameObject;
+			go.transform.SetParent(this.transform, false); //false表示是作为UI的子物体，不是在场景中worldPositionStay
+			go.GetComponent<RectTransform>().localScale = Vector3.one;
+			go.GetComponent<ItemUI>().SetIcon(item);
+		}
+		else
+		{
+			transform.GetChild(0).GetComponent<ItemUI>().AddAmount();
+		}
+
 
     }
 

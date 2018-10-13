@@ -262,12 +262,17 @@
     <Compile Include="Assets\Plugin\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\FX\GameEffect.cs" />
     <Compile Include="Assets\Scripts\FX\GameEffectManager.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Bucket.cs" />
     <Compile Include="Assets\Scripts\Gameplay\CollectableItem.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Extinguisher.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\FiremanSpawner.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\GameVictoryPoint.cs" />
     <Compile Include="Assets\Scripts\Gameplay\InteractiveObject.cs" />
     <Compile Include="Assets\Scripts\Gameplay\MovePointEffect.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerSpwanPoint.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Smoke.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Towel.cs" />
     <Compile Include="Assets\Scripts\JsonHandler.cs" />
     <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CameraController.cs" />
@@ -282,8 +287,10 @@
     <Compile Include="Assets\Scripts\UI\Inventory\ItemUI.cs" />
     <Compile Include="Assets\Scripts\UI\Inventory\Slot.cs" />
     <Compile Include="Assets\Scripts\UI\UIWindow\BaseWindow.cs" />
+    <Compile Include="Assets\Scripts\UI\UIWindow\GenericPopup.cs" />
     <Compile Include="Assets\Scripts\UI\UIWindow\HUD.cs" />
     <Compile Include="Assets\Scripts\UI\UIWindow\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\UIWindow\NoticeInfo.cs" />
     <Compile Include="Assets\Scripts\UI\UIWindow\SettingMenu.cs" />
     <Compile Include="Assets\Simple UI\Samples\IconPreview.cs" />
   </ItemGroup>

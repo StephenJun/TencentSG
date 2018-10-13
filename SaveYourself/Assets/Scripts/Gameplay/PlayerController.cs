@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using CWindow;
+using System;
+
 public class PlayerController : Singleton<PlayerController>
 {
     [System.Serializable]
@@ -28,7 +30,9 @@ public class PlayerController : Singleton<PlayerController>
         GameManager.Instance.player = this;
         GameManager.Instance.viewCamera = viewCamera;
     }
-    public void MoveTo(Vector3 destination)
+
+
+	public void MoveTo(Vector3 destination)
     {
         navMeshAgent.SetDestination(destination);
     }
@@ -47,20 +51,29 @@ public class PlayerController : Singleton<PlayerController>
             yield return null;
         }
         navMeshAgent.SetDestination(transform.position);
-        UIManager.PopWindow(WindowName.ParentsCenter, targetObj.detailInfo);
-        if (targetObj.isCollectable)
+		BaseWindow bw = UIManager.PopWindow(WindowName.ParentsCenter, targetObj.detailInfo);
+		bw.GetComponent<RectTransform>().anchoredPosition = viewCamera.WorldToScreenPoint(targetObj.transform.position);
+		if (bw is NoticeInfo)
+		{
+			bw.GetComponent<NoticeInfo>().Init(targetObj.isCollectable && LevelController.Instance.gameState == GameState.EscapeState);
+		}
+		if (LevelController.Instance.gameState == GameState.EscapeState)
         {
-            InventoryManager.Instance.inventory.ShowTimerWhenInteracting(targetObj);
-        }
 
-        yield return new WaitForSeconds(2f);
-        UIManager.CloseWindow(WindowName.ParentsCenter);
+			bw.confirm += delegate
+			{
+				InventoryManager.Instance.inventory.ShowTimerWhenInteracting(targetObj.timeNeedToCollect, targetObj.OnInteractive);
+			};
+		}
+
+        //yield return new WaitForSeconds(2f);
+        //UIManager.CloseWindow(WindowName.ParentsCenter);
         
     }
 
 
     #region PlayerParaStatus
-    public void OnHurt(float damage)
+    public void DamageReceiver(float damage)
     {
         _playerPara.hp -= damage;
         if(_playerPara.hp <= 0)
@@ -72,6 +85,7 @@ public class PlayerController : Singleton<PlayerController>
     private void Death()
     {
         _playerPara.hp = 0;
+		LevelController.Instance.SwitchGameState(GameState.GameOver);
         Debug.Log("GameOver");
     }
     #endregion

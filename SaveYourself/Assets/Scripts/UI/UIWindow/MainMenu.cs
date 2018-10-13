@@ -13,7 +13,7 @@ public class MainMenu : BaseWindow {
         UIManager.PopWindow(WindowName.HUD, 0, 0f);
         AudioManager.Instance.PlayButtonClickedAudio();
         SceneManager.LoadScene("MainGame");
-        GameManager.Instance.GameStart();
+        //GameManager.Instance.GameStart();
     }
 
     public void OnSettingOpenButton()

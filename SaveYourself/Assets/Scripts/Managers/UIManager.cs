@@ -37,32 +37,34 @@ public class UIManager : Singleton<UIManager>
     /// </summary>
     /// <param name="windowName"></param>
     /// <param name="upperName"></param>
-    static public void PopWindow(WindowName windowName, WindowName upperName = WindowName.None, float time = 0.5f)
+    static public BaseWindow PopWindow(WindowName windowName, WindowName upperName = WindowName.None, float time = 0.5f)
     {
         if (WindowIndex[windowName].locked)
-            return;
+            return null;
         WindowIndex[windowName].Pop(upperName, time);
         if (upperName == WindowName.None)
         {
             Instance.blackCurtain.DOFade(0.5f, 0.8f);
             Instance.blackCurtain.raycastTarget = true;
         }
-    }
-    static public void PopWindow(WindowName windowName, string msg, WindowName upperName = WindowName.None)
+		return WindowIndex[windowName];
+	}
+    static public BaseWindow PopWindow(WindowName windowName, string msg, WindowName upperName = WindowName.None)
     {
-        if (WindowIndex[windowName].locked)
-            return;
+		if (WindowIndex[windowName].locked)
+			return null;
         WindowIndex[windowName].Pop(upperName);
         WindowIndex[windowName].MainMessage = msg;
         if (upperName == WindowName.None)
         {
             Instance.blackCurtain.DOFade(0.5f, 0.8f);
-            Instance.blackCurtain.raycastTarget = true;
-            
+            Instance.blackCurtain.raycastTarget = true;  
         }
-    }
+		return WindowIndex[windowName];
 
-    static public void CloseWindow(WindowName windowName, float time = 0.5f)
+	}
+
+    static public BaseWindow CloseWindow(WindowName windowName, float time = 0.5f)
     {
         if (WindowIndex[windowName].isRoot)
         {
@@ -72,7 +74,9 @@ public class UIManager : Singleton<UIManager>
         WindowIndex[windowName].Close(time);
         WindowIndex[windowName].locked = true;
         DOVirtual.DelayedCall(0.8f, () => WindowIndex[windowName].locked = false);
-    }
+		return WindowIndex[windowName];
+
+	}
 
 
 

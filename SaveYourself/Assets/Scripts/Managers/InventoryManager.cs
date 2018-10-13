@@ -9,11 +9,6 @@ public class InventoryManager : Singleton<InventoryManager> {
 
     public Inventory inventory;
 
-    private void Start()
-    {
-
-    }
-
 
     //TODO
     void ParseItemJson()
