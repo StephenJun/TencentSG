@@ -34,7 +34,7 @@ public class PlayerController : Singleton<PlayerController>
 
 	public void MoveTo(Vector3 destination)
     {
-        navMeshAgent.SetDestination(destination);
+        navMeshAgent.SetDestination(new Vector3(destination.x,0,destination.z));
     }
     public void MoveTo(InteractiveObject targetObj)
     {

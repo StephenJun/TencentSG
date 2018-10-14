@@ -22,6 +22,10 @@ public class MainMenu : BaseWindow {
         AudioManager.Instance.PlayButtonClickedAudio();
     }
 
+    public void OnQuitButton()
+    {
+        Application.Quit();
+    }
 
     public override void Close(float time = 0.1F)
     {

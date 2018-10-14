@@ -8,16 +8,14 @@ public class CameraController : Singleton<CameraController>
     public Transform target;
     public float distance;
     public float height;
-
-    void Update()
+    public float speed = 100;
+    private void LateUpdate()
     {
-
         cam.LookAt(target);
 
         Vector3 targetPosition = target.position + Vector3.up * height - target.forward * distance;
 
-        cam.position = Vector3.Lerp(cam.position, targetPosition, Time.deltaTime);
-
+        cam.position = Vector3.Lerp(cam.position, targetPosition , Time.deltaTime * speed);
     }
 
 }

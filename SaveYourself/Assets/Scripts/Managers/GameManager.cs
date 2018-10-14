@@ -52,6 +52,8 @@ public class GameManager : Singleton<GameManager> {
                     Instantiate(playerMovePointEffect, hitInfo.point, Quaternion.identity);
                 }
             }
+            Debug.Log(hitInfo.collider.gameObject.name);
+            Debug.DrawLine(viewCamera.transform.position,hitInfo.point,Color.red);
 
             
         }

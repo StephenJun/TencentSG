@@ -38,6 +38,82 @@ ModelImporter:
     100064: //RootNode
     100066: transform8
     100068: transform9
+    100070: group2
+    100072: locator1
+    100074: locator2
+    100076: locator3
+    100078: locator4
+    100080: locator5
+    100082: Mean_Block
+    100084: pCylinder10
+    100086: pCylinder7
+    100088: pCylinder8
+    100090: pCylinder9
+    100092: polySurface100
+    100094: polySurface101
+    100096: polySurface102
+    100098: polySurface103
+    100100: polySurface104
+    100102: polySurface105
+    100104: polySurface106
+    100106: polySurface107
+    100108: polySurface108
+    100110: polySurface109
+    100112: polySurface110
+    100114: polySurface111
+    100116: polySurface112
+    100118: polySurface113
+    100120: polySurface114
+    100122: polySurface115
+    100124: polySurface116
+    100126: polySurface117
+    100128: polySurface118
+    100130: polySurface119
+    100132: polySurface120
+    100134: polySurface134
+    100136: polySurface136
+    100138: polySurface141
+    100140: polySurface142
+    100142: polySurface143
+    100144: polySurface144
+    100146: polySurface145
+    100148: polySurface145 1
+    100150: polySurface145 2
+    100152: polySurface145 3
+    100154: polySurface145 4
+    100156: polySurface146
+    100158: polySurface146 1
+    100160: polySurface146 2
+    100162: polySurface146 3
+    100164: polySurface146 4
+    100166: polySurface147
+    100168: polySurface148
+    100170: polySurface92
+    100172: polySurface92 1
+    100174: polySurface92 10
+    100176: polySurface92 11
+    100178: polySurface92 12
+    100180: polySurface92 2
+    100182: polySurface92 3
+    100184: polySurface92 4
+    100186: polySurface92 5
+    100188: polySurface92 6
+    100190: polySurface92 7
+    100192: polySurface92 8
+    100194: polySurface92 9
+    100196: polySurface93
+    100198: polySurface94
+    100200: polySurface95
+    100202: polySurface96
+    100204: polySurface97
+    100206: polySurface98
+    100208: polySurface99
+    100210: pPlane1
+    100212: pPlane2
+    100214: transform14
+    100216: transform15
+    100218: transform16
+    100220: transform3
     400000: pCube1
     400002: pCube10
     400004: pCube11
@@ -73,7 +149,87 @@ ModelImporter:
     400064: //RootNode
     400066: transform8
     400068: transform9
+    400070: group2
+    400072: locator1
+    400074: locator2
+    400076: locator3
+    400078: locator4
+    400080: locator5
+    400082: Mean_Block
+    400084: pCylinder10
+    400086: pCylinder7
+    400088: pCylinder8
+    400090: pCylinder9
+    400092: polySurface100
+    400094: polySurface101
+    400096: polySurface102
+    400098: polySurface103
+    400100: polySurface104
+    400102: polySurface105
+    400104: polySurface106
+    400106: polySurface107
+    400108: polySurface108
+    400110: polySurface109
+    400112: polySurface110
+    400114: polySurface111
+    400116: polySurface112
+    400118: polySurface113
+    400120: polySurface114
+    400122: polySurface115
+    400124: polySurface116
+    400126: polySurface117
+    400128: polySurface118
+    400130: polySurface119
+    400132: polySurface120
+    400134: polySurface134
+    400136: polySurface136
+    400138: polySurface141
+    400140: polySurface142
+    400142: polySurface143
+    400144: polySurface144
+    400146: polySurface145
+    400148: polySurface145 1
+    400150: polySurface145 2
+    400152: polySurface145 3
+    400154: polySurface145 4
+    400156: polySurface146
+    400158: polySurface146 1
+    400160: polySurface146 2
+    400162: polySurface146 3
+    400164: polySurface146 4
+    400166: polySurface147
+    400168: polySurface148
+    400170: polySurface92
+    400172: polySurface92 1
+    400174: polySurface92 10
+    400176: polySurface92 11
+    400178: polySurface92 12
+    400180: polySurface92 2
+    400182: polySurface92 3
+    400184: polySurface92 4
+    400186: polySurface92 5
+    400188: polySurface92 6
+    400190: polySurface92 7
+    400192: polySurface92 8
+    400194: polySurface92 9
+    400196: polySurface93
+    400198: polySurface94
+    400200: polySurface95
+    400202: polySurface96
+    400204: polySurface97
+    400206: polySurface98
+    400208: polySurface99
+    400210: pPlane1
+    400212: pPlane2
+    400214: transform14
+    400216: transform15
+    400218: transform16
+    400220: transform3
     2100000: lambert1
+    2100002: OldMan01_lambert5SG1
+    2100004: pasted__lambert2
+    2100006: pasted__lambert4
+    2100008: pasted__lambert5
     2300000: pCube10
     2300002: pCube11
     2300004: pCube12
@@ -104,6 +260,72 @@ ModelImporter:
     2300054: pPipe1
     2300056: pPipe2
     2300058: pTorus1
+    2300060: pCube3
+    2300062: pCylinder10
+    2300064: pCylinder7
+    2300066: pCylinder8
+    2300068: pCylinder9
+    2300070: polySurface100
+    2300072: polySurface101
+    2300074: polySurface102
+    2300076: polySurface103
+    2300078: polySurface104
+    2300080: polySurface105
+    2300082: polySurface106
+    2300084: polySurface107
+    2300086: polySurface108
+    2300088: polySurface109
+    2300090: polySurface110
+    2300092: polySurface111
+    2300094: polySurface112
+    2300096: polySurface113
+    2300098: polySurface114
+    2300100: polySurface115
+    2300102: polySurface116
+    2300104: polySurface117
+    2300106: polySurface118
+    2300108: polySurface119
+    2300110: polySurface120
+    2300112: polySurface134
+    2300114: polySurface136
+    2300116: polySurface141
+    2300118: polySurface142
+    2300120: polySurface143
+    2300122: polySurface144
+    2300124: polySurface145
+    2300126: polySurface145 1
+    2300128: polySurface145 2
+    2300130: polySurface145 3
+    2300132: polySurface145 4
+    2300134: polySurface146
+    2300136: polySurface146 1
+    2300138: polySurface146 2
+    2300140: polySurface146 3
+    2300142: polySurface146 4
+    2300144: polySurface147
+    2300146: polySurface148
+    2300148: polySurface92
+    2300150: polySurface92 1
+    2300152: polySurface92 10
+    2300154: polySurface92 11
+    2300156: polySurface92 12
+    2300158: polySurface92 2
+    2300160: polySurface92 3
+    2300162: polySurface92 4
+    2300164: polySurface92 5
+    2300166: polySurface92 6
+    2300168: polySurface92 7
+    2300170: polySurface92 8
+    2300172: polySurface92 9
+    2300174: polySurface93
+    2300176: polySurface94
+    2300178: polySurface95
+    2300180: polySurface96
+    2300182: polySurface97
+    2300184: polySurface98
+    2300186: polySurface99
+    2300188: pPlane1
+    2300190: pPlane2
     3300000: pCube10
     3300002: pCube11
     3300004: pCube12
@@ -134,6 +356,72 @@ ModelImporter:
     3300054: pPipe1
     3300056: pPipe2
     3300058: pTorus1
+    3300060: pCube3
+    3300062: pCylinder10
+    3300064: pCylinder7
+    3300066: pCylinder8
+    3300068: pCylinder9
+    3300070: polySurface100
+    3300072: polySurface101
+    3300074: polySurface102
+    3300076: polySurface103
+    3300078: polySurface104
+    3300080: polySurface105
+    3300082: polySurface106
+    3300084: polySurface107
+    3300086: polySurface108
+    3300088: polySurface109
+    3300090: polySurface110
+    3300092: polySurface111
+    3300094: polySurface112
+    3300096: polySurface113
+    3300098: polySurface114
+    3300100: polySurface115
+    3300102: polySurface116
+    3300104: polySurface117
+    3300106: polySurface118
+    3300108: polySurface119
+    3300110: polySurface120
+    3300112: polySurface134
+    3300114: polySurface136
+    3300116: polySurface141
+    3300118: polySurface142
+    3300120: polySurface143
+    3300122: polySurface144
+    3300124: polySurface145
+    3300126: polySurface145 1
+    3300128: polySurface145 2
+    3300130: polySurface145 3
+    3300132: polySurface145 4
+    3300134: polySurface146
+    3300136: polySurface146 1
+    3300138: polySurface146 2
+    3300140: polySurface146 3
+    3300142: polySurface146 4
+    3300144: polySurface147
+    3300146: polySurface148
+    3300148: polySurface92
+    3300150: polySurface92 1
+    3300152: polySurface92 10
+    3300154: polySurface92 11
+    3300156: polySurface92 12
+    3300158: polySurface92 2
+    3300160: polySurface92 3
+    3300162: polySurface92 4
+    3300164: polySurface92 5
+    3300166: polySurface92 6
+    3300168: polySurface92 7
+    3300170: polySurface92 8
+    3300172: polySurface92 9
+    3300174: polySurface93
+    3300176: polySurface94
+    3300178: polySurface95
+    3300180: polySurface96
+    3300182: polySurface97
+    3300184: polySurface98
+    3300186: polySurface99
+    3300188: pPlane1
+    3300190: pPlane2
     4300000: pCube2
     4300002: pCylinder1
     4300004: pCube4
@@ -164,6 +452,72 @@ ModelImporter:
     4300054: pCylinder3
     4300056: pTorus1
     4300058: pCube26
+    4300060: polySurface143
+    4300062: polySurface92
+    4300064: polySurface93
+    4300066: polySurface94
+    4300068: polySurface95
+    4300070: polySurface96
+    4300072: polySurface97
+    4300074: polySurface98
+    4300076: polySurface99
+    4300078: polySurface100
+    4300080: polySurface101
+    4300082: polySurface102
+    4300084: polySurface103
+    4300086: polySurface104
+    4300088: polySurface105
+    4300090: polySurface106
+    4300092: polySurface107
+    4300094: polySurface108
+    4300096: polySurface109
+    4300098: polySurface110
+    4300100: polySurface111
+    4300102: polySurface112
+    4300104: polySurface113
+    4300106: polySurface114
+    4300108: polySurface115
+    4300110: polySurface116
+    4300112: polySurface117
+    4300114: polySurface118
+    4300116: polySurface119
+    4300118: polySurface120
+    4300120: polySurface144
+    4300122: polySurface92
+    4300124: polySurface134
+    4300126: pPlane1
+    4300128: pCylinder7
+    4300130: polySurface136
+    4300132: polySurface141
+    4300134: polySurface142
+    4300136: polySurface145
+    4300138: polySurface92
+    4300140: polySurface146
+    4300142: polySurface92
+    4300144: polySurface145
+    4300146: polySurface92
+    4300148: polySurface146
+    4300150: polySurface92
+    4300152: polySurface145
+    4300154: polySurface92
+    4300156: polySurface146
+    4300158: polySurface92
+    4300160: polySurface145
+    4300162: polySurface92
+    4300164: polySurface146
+    4300166: polySurface92
+    4300168: polySurface145
+    4300170: polySurface92
+    4300172: polySurface146
+    4300174: polySurface92
+    4300176: polySurface147
+    4300178: polySurface92
+    4300180: polySurface148
+    4300182: pPlane2
+    4300184: pCylinder8
+    4300186: pCylinder9
+    4300188: pCylinder10
+    4300190: pCube3
     9500000: //RootNode
   externalObjects: {}
   materials:

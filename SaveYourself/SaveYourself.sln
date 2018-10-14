@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveYourself", "SaveYourself.csproj", "{F4C14B96-5DE9-112B-FFBD-9047EE7C4290}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveYourself.Editor", "SaveYourself.Editor.csproj", "{37FFAF33-A242-EAB8-0A6F-2705745E76BD}"
