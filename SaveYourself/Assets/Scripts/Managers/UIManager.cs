@@ -16,6 +16,9 @@ public class UIManager : Singleton<UIManager>
     [SerializeField]
     Image blackCurtain;
 
+	static public BaseWindow currentWindow;
+	static public Stack<BaseWindow> windowStacks = new Stack<BaseWindow>();
+
     protected override void Awake()
     {
         if (Instance != null)
@@ -47,6 +50,8 @@ public class UIManager : Singleton<UIManager>
             Instance.blackCurtain.DOFade(0.5f, 0.8f);
             Instance.blackCurtain.raycastTarget = true;
         }
+		windowStacks.Push(WindowIndex[windowName]);
+		print(windowStacks.Peek().name);
 		return WindowIndex[windowName];
 	}
     static public BaseWindow PopWindow(WindowName windowName, string msg, WindowName upperName = WindowName.None)
@@ -60,6 +65,8 @@ public class UIManager : Singleton<UIManager>
             Instance.blackCurtain.DOFade(0.5f, 0.8f);
             Instance.blackCurtain.raycastTarget = true;  
         }
+		windowStacks.Push(WindowIndex[windowName]);
+		print(windowStacks.Peek().name);
 		return WindowIndex[windowName];
 
 	}
@@ -74,8 +81,13 @@ public class UIManager : Singleton<UIManager>
         WindowIndex[windowName].Close(time);
         WindowIndex[windowName].locked = true;
         DOVirtual.DelayedCall(0.8f, () => WindowIndex[windowName].locked = false);
+		windowStacks.Pop();
+		if(windowStacks.Count > 0)
+		{
+			currentWindow = windowStacks.Peek();
+			print(windowStacks.Peek().name);
+		}
 		return WindowIndex[windowName];
-
 	}
 
 
@@ -88,8 +100,6 @@ public class UIManager : Singleton<UIManager>
         {
             Debug.Log(window.Value);
         }
-
     }
-
     #endregion
 }

@@ -26,11 +26,11 @@ public class LevelController : Singleton<LevelController> {
     private void Start()
     {
 		timerTxt = GameManager.Instance.timer.transform.Find("Text_Timeleft").GetComponent<Text>();
-        fireSpawnerRoot = GameObject.Find("FireSpawnerRoot").transform;
-        for (int i = 0; i < fireSpawnerRoot.childCount; i++)
-        {
-            fireSpawners.Add(fireSpawnerRoot.GetChild(i));
-        }
+        //fireSpawnerRoot = GameObject.Find("FireSpawnerRoot").transform;
+        //for (int i = 0; i < fireSpawnerRoot.childCount; i++)
+        //{
+        //    fireSpawners.Add(fireSpawnerRoot.GetChild(i));
+        //}
 		GameStart();
     }
 
@@ -72,7 +72,7 @@ public class LevelController : Singleton<LevelController> {
 
 	private IEnumerator StartEscapeState()
 	{
-		SpawnFireEffect();
+		//SpawnFireEffect();
 		GameManager.Instance.timer.SetActive(true);
 		float initTime = TimeOfEacapeState;
 		while (initTime > 0)

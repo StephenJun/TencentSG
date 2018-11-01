@@ -26,7 +26,7 @@ public class GameManager : Singleton<GameManager> {
     }
     void Update()
     {
-        GetMouseInput();
+        //GetMouseInput();
         HighLightController();
     }
 
@@ -36,7 +36,7 @@ public class GameManager : Singleton<GameManager> {
         {
             if (player == null)
             {
-                Debug.Log("PLayer has not been registered");
+                Debug.Log("PLayer has not been registed");
                 return;
             }
             RaycastHit hitInfo;

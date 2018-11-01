@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using CWindow;
 using System;
 
-[RequireComponent(typeof(CharacterController))]
+//[RequireComponent(typeof(CharacterController))]
 public class PlayerController : Singleton<PlayerController>
 {
     [System.Serializable]
@@ -19,16 +19,18 @@ public class PlayerController : Singleton<PlayerController>
     public List<PlayerAction> playerActions = new List<PlayerAction>();
 
     [SerializeField]
-    Camera viewCamera;
+    private Camera viewCamera;
 
     private NavMeshAgent navMeshAgent;
 	private CharacterController charController;
+	private Rigidbody rb;
 
     protected override void Awake()
     {
         base.Awake();
         navMeshAgent = GetComponent<NavMeshAgent>();
 		charController = GetComponent<CharacterController>();
+		rb = GetComponent<Rigidbody>();
     }
     void Start()
     {
@@ -41,11 +43,54 @@ public class PlayerController : Singleton<PlayerController>
 		float horizontalInput = Input.GetAxis("Horizontal");
 		float vertivalInput = Input.GetAxis("Vertical");
 		Vector3 charDir = new Vector3(horizontalInput, 0, vertivalInput);
-		charController.Move(charDir * _playerPara.speed);
-		if(charDir != Vector3.zero)
+		//charController.Move(charDir * _playerPara.speed);
+		if (charDir != Vector3.zero)
 		{
+			rb.velocity = charDir * _playerPara.speed;
 			Quaternion tempRot = Quaternion.LookRotation(charDir, Vector3.up);
 			transform.rotation = tempRot;
+		}
+
+		//~~~~~~Interactive Input Handler~~~~~~~
+		if (Input.GetKeyDown(KeyCode.J))
+		{
+			UIManager.currentWindow.ConfirmAction();
+		}
+
+		if (Input.GetKeyDown(KeyCode.K))
+		{
+			UIManager.currentWindow.CancelAction();
+		}
+
+
+	}
+
+	private void FixedUpdate()
+	{
+		Collider[] cols = Physics.OverlapBox(transform.position + transform.forward + transform.up * 0.5f, Vector3.one * 0.5f, transform.rotation);
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			foreach(var col in cols)
+			{
+				InteractiveObject io = col.GetComponent<InteractiveObject>();
+				if (io)
+				{
+					BaseWindow bw = UIManager.PopWindow(WindowName.ParentsCenter, io.detailInfo);
+					bw.GetComponent<RectTransform>().anchoredPosition = viewCamera.WorldToScreenPoint(io.transform.position);
+					if (bw is NoticeInfo)
+					{
+						bw.GetComponent<NoticeInfo>().Init(io.isCollectable && LevelController.Instance.gameState == GameState.EscapeState);
+					}
+					if (LevelController.Instance.gameState == GameState.EscapeState)
+					{
+
+						bw.confirm += delegate
+						{
+							InventoryManager.Instance.inventory.ShowTimerWhenInteracting(io.timeNeedToCollect, io.OnInteractive);
+						};
+					}
+				}
+			}
 		}
 	}
 

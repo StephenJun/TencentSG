@@ -91,8 +91,6 @@ namespace CWindow
 					confirm -= delArray[i] as Action;
 				}
 			}
-
-
 		}
 
         public virtual void Pop(WindowName _upperWindow = WindowName.None, float time = 0.5f)
@@ -110,16 +108,16 @@ namespace CWindow
                 upperName = WindowName.None;
             }
         }
-        public  virtual void SetUpperWindow(WindowName _upperName)
+        public virtual void SetUpperWindow(WindowName _upperName)
         {
             upperName = _upperName;
         }
-        protected virtual void ConfirmAction()
+        public virtual void ConfirmAction()
         {
             if (confirm != null) confirm();
             UIManager.CloseWindow(windowName);
         }
-        protected virtual void CancelAction()
+        public virtual void CancelAction()
         {
             if (cancel != null) cancel();
             UIManager.CloseWindow(windowName);
