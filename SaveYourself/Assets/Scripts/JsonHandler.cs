@@ -10,16 +10,17 @@ public class JsonHandler
     static public T LoadFile<T>(ref T data) where T : new()
     {
         string filePath = Application.persistentDataPath + "/" + typeof(T).ToString() + ".txt";
+        string typeName = dictionary.ContainsKey(typeof(T)) ? dictionary[typeof(T)] : "Unregeisted Type";
         if (File.Exists(filePath))
         {
-            data = JsonMapper.ToObject<T>(File.ReadAllText(filePath));
-            Debug.Log("[" + dictionary[typeof(T)] + "]读取成功...");
+            data = JsonMapper.ToObject<T>(File.ReadAllText(filePath));            
+            Debug.Log("[" + typeName + "]读取成功...");
             return data;
         }
         else
         {
             SaveFile(data);
-            Debug.Log("[" + dictionary[typeof(T)] + "]初始化成功...");
+            Debug.Log("[" + typeName + "]初始化成功...");
             return data;
         }
     }
@@ -27,11 +28,12 @@ public class JsonHandler
     static public T SaveFile<T>(T data)
     {
         string filePath = Application.persistentDataPath + "/" + typeof(T).ToString() + ".txt";
+        string typeName = dictionary.ContainsKey(typeof(T)) ? dictionary[typeof(T)] : "Unregisted Type";
         StreamWriter sw = new StreamWriter(filePath);
         sw.Write(JsonMapper.ToJson(data));
         sw.Close();
         sw.Dispose();
-        Debug.Log("[" + dictionary[typeof(T)] + "]保存成功...");
+        Debug.Log("[" + typeName + "]保存成功...");
         return data;
     }
 }
