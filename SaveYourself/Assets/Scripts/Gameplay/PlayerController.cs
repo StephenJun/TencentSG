@@ -5,12 +5,14 @@ using UnityEngine.AI;
 using CWindow;
 using System;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : Singleton<PlayerController>
 {
     [System.Serializable]
     public class PlayerParameter
     {
         public float hp = 100;
+		public float speed = 5;
     }
 
     public PlayerParameter _playerPara = new PlayerParameter();
@@ -18,18 +20,34 @@ public class PlayerController : Singleton<PlayerController>
 
     [SerializeField]
     Camera viewCamera;
-    NavMeshAgent navMeshAgent;
+
+    private NavMeshAgent navMeshAgent;
+	private CharacterController charController;
 
     protected override void Awake()
     {
         base.Awake();
         navMeshAgent = GetComponent<NavMeshAgent>();
+		charController = GetComponent<CharacterController>();
     }
     void Start()
     {
         GameManager.Instance.player = this;
         GameManager.Instance.viewCamera = viewCamera;
     }
+
+	private void Update()
+	{
+		float horizontalInput = Input.GetAxis("Horizontal");
+		float vertivalInput = Input.GetAxis("Vertical");
+		Vector3 charDir = new Vector3(horizontalInput, 0, vertivalInput);
+		charController.Move(charDir * _playerPara.speed);
+		if(charDir != Vector3.zero)
+		{
+			Quaternion tempRot = Quaternion.LookRotation(charDir, Vector3.up);
+			transform.rotation = tempRot;
+		}
+	}
 
 
 	public void MoveTo(Vector3 destination)

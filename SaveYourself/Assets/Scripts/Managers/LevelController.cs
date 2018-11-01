@@ -79,7 +79,9 @@ public class LevelController : Singleton<LevelController> {
 		{
 			yield return null;
 			initTime -= Time.deltaTime;
-			timerTxt.text = (initTime / 60 - 1).ToString("00") + " : " + (initTime % 60).ToString("00");
+			float minutes = initTime / 60;
+			float seconds = initTime - minutes * 60;
+			timerTxt.text = (minutes).ToString("00") + " : " + (initTime % 60).ToString("00");
 			GameManager.Instance.player.DamageReceiver(1 * Time.deltaTime * (1 - InventoryManager.Instance.inventory.TotalDefender / 100));
 			if(initTime < timingOfFiremanAppear && !hasFiremanAppeared)
 			{

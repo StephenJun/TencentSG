@@ -9,13 +9,17 @@ public class CameraController : Singleton<CameraController>
     public float distance;
     public float height;
     public float speed = 100;
+
+
     private void LateUpdate()
     {
-        cam.LookAt(target);
+        //cam.LookAt(target);
 
-        Vector3 targetPosition = target.position + Vector3.up * height - target.forward * distance;
+        Vector3 targetPosition = target.position + Vector3.up * height - Vector3.forward * distance;
 
         cam.position = Vector3.Lerp(cam.position, targetPosition , Time.deltaTime * speed);
+
+
     }
 
 }

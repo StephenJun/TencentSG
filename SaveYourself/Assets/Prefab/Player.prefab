@@ -304,8 +304,7 @@ GameObject:
   - component: {fileID: 4232496598879406}
   - component: {fileID: 114834983042280226}
   - component: {fileID: 54209621269281302}
-  - component: {fileID: 136969956081026540}
-  - component: {fileID: 195747800636733376}
+  - component: {fileID: 143585036671885998}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -472,7 +471,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1805539627279614}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 37.1, y: -0.95, z: 5.7}
+  m_LocalPosition: {x: 37.1, y: 2.18, z: 5.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4711677931375426}
@@ -1216,7 +1215,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!95 &95842708559240492
 Animator:
@@ -1248,38 +1247,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPara:
     hp: 100
+    speed: 0.4
   viewCamera: {fileID: 0}
---- !u!136 &136969956081026540
-CapsuleCollider:
+--- !u!143 &143585036671885998
+CharacterController:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1805539627279614}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 1.2457616
-  m_Height: 5.3988123
-  m_Direction: 1
-  m_Center: {x: 0, y: 2.6384034, z: 0.049599886}
---- !u!195 &195747800636733376
-NavMeshAgent:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1805539627279614}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 1.522512
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 5
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 5.19
+  m_Radius: 1.92
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 2.54, z: 0}
