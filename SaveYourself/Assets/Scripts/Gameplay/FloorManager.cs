@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FloorManager : MonoBehaviour {
+public class FloorManager : Singleton<FloorManager> {
 
 	public int floorRow = 5;
 	public int floorColume = 5;
 	public FloorDetail[,] fd;
+
+	private float speed = 30;
 
 	private void Start()
 	{
@@ -15,9 +17,11 @@ public class FloorManager : MonoBehaviour {
 		int k=0;
 		for (int i = 0; i < data.Length; i++)
 		{
-			data[i] = Random.Range(0, 3);
+			//data[i] = Random.Range(0, 3);
+			data[i] = 1;
 		}
 
+		//Initialize Floor
 		fd = new FloorDetail[floorRow, floorColume];
 		for (int i = 0; i < floorRow; i++)
 		{
@@ -33,6 +37,9 @@ public class FloorManager : MonoBehaviour {
 					if (fd[i, j].floorType == Floortype.Fire)
 					{
 						fd[i, j].fireEff = GameEffectManager.Instance.AddWorldEffect("Fire", new Vector3(i, 0, j), 1, -1);
+					}else if (fd[i, j].floorType == Floortype.Water)
+					{
+						fd[i, j].waterEff = GameEffectManager.Instance.AddWorldEffect("Water", new Vector3(i, 0, j), 0.5f, -1);
 					}
 				}
 			}
@@ -45,36 +52,42 @@ public class FloorManager : MonoBehaviour {
 		{
 			for (int j = 0; j < floorColume; j++)
 			{
-				if(fd[i,j].WetLevel <= -10)
+				if (fd[i, j].WetLevel <= 100 && fd[i, j].floorType != Floortype.Wall)
 				{
-					fd[i, j].WetLevel = fd[i, j].WetLevel + 60 * Time.deltaTime;
+					fd[i, j].WetLevel = fd[i, j].WetLevel + speed * Time.deltaTime;
+				}
+				else if (fd[i, j].isWatering == true)
+				{
+					fd[i, j].isWatering = false;
+					fd[i, j].waterEff.Die();
+				}
+
+				if(fd[i, j].floorType != Floortype.Wall)
+				{
+					print(fd[i, j].SmokeLevel);
 				}
 				
-				if (fd[i, j].SmokeLevel >= 50)
+				if (fd[i, j].SmokeLevel >= 200)
 				{
-					if(fd[i,j].WetLevel < 100)
+					if(fd[i,j].WetLevel < 300)
 					{
-						fd[i, j].WetLevel = fd[i, j].WetLevel + 1 * Time.deltaTime;
+						fd[i, j].WetLevel = fd[i, j].WetLevel + speed * Time.deltaTime;
 					}					
-					if(fd[i, j].WetLevel >= 10 && fd[i, j].floorType == Floortype.None)
+					if(fd[i, j].WetLevel >= 200 && fd[i, j].isFiring == false)
 					{
 						fd[i, j].fireEff = GameEffectManager.Instance.AddWorldEffect("Fire", new Vector3(i, 0, j), 1, -1);
-						fd[i, j].floorType = Floortype.Fire;
+						fd[i, j].isFiring = true;
+						if (fd[i, j].isSmoking == true)
+						{
+							fd[i, j].smokeEff.Die();
+							fd[i, j].isSmoking = false;
+						}
 					}
 					if(fd[i, j].floorType == Floortype.Fire)
 					{
 						foreach (var item in CheckFloorAround(i, j))
 						{
-							item.StartSmoking();
-							//if(item.floorType != Floortype.Wall && item.floorType != Floortype.Fire)
-							//{
-							//	item.SetSmoke(item.smokeLevel + 60 * Time.deltaTime);
-							//	if(item.smokeLevel > 10 && !item.hasSmoke)
-							//	{
-							//		GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", new Vector3(item.posX, 0, item.posY), 1, -1);
-							//		item.hasSmoke = true;
-							//	}
-							//}					
+							item.StartSmoking();			
 						}
 					}
 				}
@@ -92,6 +105,12 @@ public class FloorManager : MonoBehaviour {
 		floors.Add(fd[i, j + 1]);
 		return floors.ToArray();
 	}
+
+	//public FloorDetail[] FloorsToExtinguish(int i, int j)
+	//{
+	//	List<FloorDetail> floors = new List<FloorDetail>();
+	//	floors.Add(fd[i]);
+	//}
 }
 public class MapData
 {
@@ -123,20 +142,29 @@ public class FloorDetail
 		set
 		{
 			wetLevel = value;
-			if (value < -10)
+			if (value < 100)
 			{
 				floorType = Floortype.Water;
 			}
-			else if (value < 10)
+			else if (value < 200)
 			{
 				floorType = Floortype.None;
+			}
+			else
+			{
+				floorType = Floortype.Fire;
 			}
 		}
 	}
 	public GameEffect smokeEff;
 	public GameEffect fireEff;
 	public GameEffect waterEff;
+	public bool isFiring = false;
+	public bool isSmoking = false;
+	public bool isWatering = false;
 	public Floortype floorType = Floortype.None;
+
+	private float speed = 30;
 
 	public FloorDetail(int _floorType, int _posX, int _posY)
 	{
@@ -145,16 +173,18 @@ public class FloorDetail
 		posY = _posY;
 		if(_floorType == 0)
 		{
-			SmokeLevel = 0;
-			WetLevel = 0;
+			SmokeLevel = 150;
+			WetLevel = 150;
 		}else if(_floorType == 1)
 		{
-			SmokeLevel = 50F;
-			WetLevel = 10F;
+			SmokeLevel = 250F;
+			WetLevel = 250F;
+			isFiring = true;
 		}else if(_floorType == 2)
 		{
 			SmokeLevel = 0;
-			WetLevel = -100;
+			WetLevel = 0;
+			isWatering = true;
 		}
 	}
 
@@ -162,39 +192,42 @@ public class FloorDetail
 	{
 		if (floorType != Floortype.Wall && floorType != Floortype.Fire)
 		{
-			if(smokeLevel < 100)
+			if(SmokeLevel < 300)
 			{
-				SmokeLevel = smokeLevel + 10 * Time.deltaTime;
+				SmokeLevel = SmokeLevel + speed * Time.deltaTime;
 			}		
-			if (smokeLevel > 10 && smokeLevel < 50 && smokeEff == null)
+			if (SmokeLevel > 100 && SmokeLevel < 200 && !isSmoking)
 			{
-				smokeEff = GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", new Vector3(posX, 0, posY), 0.2f, -1);
-			}else if (smokeLevel > 50 && smokeEff != null && fireEff == null)
-			{
-				//Destroy(smokeEff.gameObject);
-				fireEff = GameEffectManager.Instance.AddWorldEffect("Fire", new Vector3(posX, 0, posY), 1, -1);
+				smokeEff = GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", new Vector3(posX, 0, posY), 0.4f, -1);
+				isSmoking = true;
 			}
 		}
 	}
 	public void Extinguish()
 	{
-		if(smokeLevel > 0)
+		if(WetLevel > 0)
 		{
-			SmokeLevel = smokeLevel - 60 * Time.deltaTime;
-		}
-		if (smokeLevel < 50)
-		{
-			if (fireEff != null)
+			WetLevel = WetLevel - speed * Time.deltaTime * 4;
+			if (WetLevel < 200)
 			{
-				//Destroy(fireEff.gameObject);
-				smokeEff = GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", new Vector3(posX, 0, posY), 1, -1);
+				if (isFiring)
+				{
+					fireEff.Die();
+					isFiring = false;
+					SmokeLevel = 150;
+					smokeEff = GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", new Vector3(posX, 0, posY), 0.4f, -1);
+					isSmoking = true;
+				}
 			}
 		}
-		if(smokeLevel < 10)
+		if (WetLevel < 100)
 		{
-			if (smokeEff != null)
+			if (isSmoking)
 			{
-				//Destroy(smokeEff.gameObject);
+				smokeEff.Die();
+				//smokeEff = null;
+				isSmoking = false;
+				SmokeLevel = 0;
 			}
 		}
 	}

@@ -205,8 +205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6718d3c0a7138ed4ba2fbd00b39b6225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorRow: 10
-  floorColume: 10
+  floorRow: 4
+  floorColume: 4
 --- !u!4 &270544536
 Transform:
   m_ObjectHideFlags: 0

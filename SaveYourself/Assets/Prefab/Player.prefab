@@ -1277,7 +1277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPara:
     hp: 100
-    speed: 4
+    speed: 10
   viewCamera: {fileID: 0}
 --- !u!136 &136395080101025850
 CapsuleCollider:

@@ -45,7 +45,12 @@ public class Inventory : MonoBehaviour {
 
 	public InteractiveObject EquippedItem()
 	{
-		InteractiveObject equipped = slotArray[currentSlotIndex].GetComponentInChildren<ItemUI>().interObj;
+		ItemUI item = slotArray[currentSlotIndex].GetComponentInChildren<ItemUI>();
+		if(item == null)
+		{
+			return null;
+		}
+		InteractiveObject equipped = item.interObj;
 		return equipped;
 	}
 

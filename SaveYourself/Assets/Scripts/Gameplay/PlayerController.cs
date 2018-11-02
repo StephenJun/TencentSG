@@ -44,9 +44,9 @@ public class PlayerController : Singleton<PlayerController>
 		float vertivalInput = Input.GetAxis("Vertical");
 		Vector3 charDir = new Vector3(horizontalInput, 0, vertivalInput);
 		//charController.Move(charDir * _playerPara.speed);
+		rb.velocity = charDir * _playerPara.speed;
 		if (charDir != Vector3.zero)
 		{
-			rb.velocity = charDir * _playerPara.speed;
 			Quaternion tempRot = Quaternion.LookRotation(charDir, Vector3.up);
 			transform.rotation = tempRot;
 		}
@@ -71,11 +71,9 @@ public class PlayerController : Singleton<PlayerController>
 		{
 			if(InventoryManager.Instance.inventory.EquippedItem() is Extinguisher)
 			{
-				RaycastHit hit;
-				//if (Physics.Raycast(transform.position + transform.forward, Vector3.down, out hit, 0.5f))
-				//{
-				//	if(hit.)
-				//}
+				int posX = Mathf.CeilToInt((transform.position + transform.forward).x);
+				int posY = Mathf.CeilToInt((transform.position + transform.forward).z);
+				FloorManager.Instance.fd[posX, posY].Extinguish();
 			}
 		}
 
@@ -87,13 +85,16 @@ public class PlayerController : Singleton<PlayerController>
 		Collider[] cols = Physics.OverlapBox(transform.position + transform.forward + transform.up * 0.5f, Vector3.one * 0.5f, transform.rotation);
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-			foreach(var col in cols)
+			foreach (var col in cols)
 			{
 				InteractiveObject io = col.GetComponent<InteractiveObject>();
 				if (io)
 				{
+					Vector3 tempView = viewCamera.WorldToViewportPoint(io.transform.position);
+					Vector3 positionInViewPoint = new Vector3(Mathf.Clamp01(tempView.x) * 1920, Mathf.Clamp01(tempView.y) * 1080, 0);
 					BaseWindow bw = UIManager.PopWindow(WindowName.ParentsCenter, io.detailInfo);
-					bw.GetComponent<RectTransform>().anchoredPosition = viewCamera.WorldToScreenPoint(io.transform.position);
+					bw.GetComponent<RectTransform>().anchoredPosition = positionInViewPoint;
+
 					if (bw is NoticeInfo)
 					{
 						bw.GetComponent<NoticeInfo>().Init(io.isCollectable && LevelController.Instance.gameState == GameState.EscapeState);

@@ -28,6 +28,11 @@ public class GameEffect : MonoBehaviour {
         SetScale(transform, scale);
     }
 
+	public void Play()
+	{
+		gameObject.SetActive(true);
+	}
+
     public void SetScale(Transform t, float scale)
     {
         //for (int i = 0; i < t.childCount; i++)
