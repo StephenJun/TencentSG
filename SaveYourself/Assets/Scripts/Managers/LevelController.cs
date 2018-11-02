@@ -82,7 +82,7 @@ public class LevelController : Singleton<LevelController> {
 			float minutes = initTime / 60;
 			float seconds = initTime - minutes * 60;
 			timerTxt.text = (minutes).ToString("00") + " : " + (initTime % 60).ToString("00");
-			GameManager.Instance.player.DamageReceiver(1 * Time.deltaTime * (1 - InventoryManager.Instance.inventory.TotalDefender / 100));
+			GameManager.Instance.player.DamageReceiver(1 * Time.deltaTime);
 			if(initTime < timingOfFiremanAppear && !hasFiremanAppeared)
 			{
 				fireman1.SetActive(true);

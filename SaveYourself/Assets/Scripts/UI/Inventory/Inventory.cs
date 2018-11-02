@@ -90,7 +90,7 @@ public class Inventory : MonoBehaviour {
             yield return null;
             initDur -= Time.deltaTime;
             interactingTimerText.text = initDur.ToString("0.0") + " / " + time.ToString("0.0");
-            interactingTimerPic.fillAmount = initDur / time;
+			interactingTimerPic.fillAmount = initDur / time;		
         }
         interactingTimer.SetActive(false);
 		if(OnComplete != null)

@@ -63,12 +63,16 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     private void Update()
     {
-		interObj.durability -= 2 * Time.deltaTime;
 		DurabilityImage.fillAmount = interObj.durability / 100;
 		if (transform.localScale.x != targetScale)
 		{
 			float scale = Mathf.Lerp(transform.localScale.x, targetScale, smoothing * Time.deltaTime);
 			transform.localScale = Vector3.one * scale;
+		}
+
+		if(interObj.durability < 0)
+		{
+			Destroy(this.gameObject);
 		}
 	}
 

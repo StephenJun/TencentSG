@@ -13,17 +13,20 @@ public class PlayerController : Singleton<PlayerController>
     {
         public float hp = 100;
 		public float speed = 5;
-    }
+	}
 
     public PlayerParameter _playerPara = new PlayerParameter();
     public List<PlayerAction> playerActions = new List<PlayerAction>();
 
+	private float damageMultiplier = 1;
+	private InteractiveObject currentEquipped;
+
     [SerializeField]
     private Camera viewCamera;
-
     private NavMeshAgent navMeshAgent;
 	private CharacterController charController;
 	private Rigidbody rb;
+	private GameObject lastObject;
 
     protected override void Awake()
     {
@@ -69,11 +72,19 @@ public class PlayerController : Singleton<PlayerController>
 
 		if (Input.GetKey(KeyCode.F))
 		{
-			if(InventoryManager.Instance.inventory.EquippedItem() is Extinguisher)
+			currentEquipped = InventoryManager.Instance.inventory.EquippedItem();
+			if(currentEquipped != null)
+			{
+				currentEquipped.OnUsing();
+			}
+			if (currentEquipped is Extinguisher)
 			{
 				int posX = Mathf.CeilToInt((transform.position + transform.forward).x);
 				int posY = Mathf.CeilToInt((transform.position + transform.forward).z);
 				FloorManager.Instance.fd[posX, posY].Extinguish();
+			}else if(currentEquipped is Towel)
+			{
+				damageMultiplier = currentEquipped.defenderProvided;
 			}
 		}
 
@@ -82,12 +93,18 @@ public class PlayerController : Singleton<PlayerController>
 
 	private void FixedUpdate()
 	{
-		Collider[] cols = Physics.OverlapBox(transform.position + transform.forward + transform.up * 0.5f, Vector3.one * 0.5f, transform.rotation);
-		if (Input.GetKeyDown(KeyCode.E))
+		RaycastHit hitInfo;
+		if (Physics.Raycast(transform.position + transform.up * 0.5f, transform.forward, out hitInfo, 1.0f) && hitInfo.collider.tag == "InteractiveObject")
 		{
-			foreach (var col in cols)
+			if (lastObject != hitInfo.collider.gameObject)
 			{
-				InteractiveObject io = col.GetComponent<InteractiveObject>();
+				lastObject = hitInfo.collider.gameObject;
+				lastObject.GetComponent<InteractiveObject>().HighlightOn();
+				
+			}
+			if (Input.GetKeyDown(KeyCode.E))
+			{
+				InteractiveObject io = hitInfo.collider.GetComponent<InteractiveObject>();
 				if (io)
 				{
 					Vector3 tempView = viewCamera.WorldToViewportPoint(io.transform.position);
@@ -108,6 +125,15 @@ public class PlayerController : Singleton<PlayerController>
 						};
 					}
 				}
+			}
+		}
+		else
+		{
+			if (lastObject)
+			{
+				lastObject.GetComponent<InteractiveObject>().HighlightOff();
+				lastObject = null;
+
 			}
 		}
 	}
@@ -156,7 +182,7 @@ public class PlayerController : Singleton<PlayerController>
     #region PlayerParaStatus
     public void DamageReceiver(float damage)
     {
-        _playerPara.hp -= damage;
+        _playerPara.hp -= damage * damageMultiplier;
         if(_playerPara.hp <= 0)
         {
             Death();
