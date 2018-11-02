@@ -62,6 +62,23 @@ public class PlayerController : Singleton<PlayerController>
 			UIManager.currentWindow.CancelAction();
 		}
 
+		if (Input.GetKeyDown(KeyCode.Q))
+		{
+			InventoryManager.Instance.inventory.SwitchItem();
+		}
+
+		if (Input.GetKey(KeyCode.F))
+		{
+			if(InventoryManager.Instance.inventory.EquippedItem() is Extinguisher)
+			{
+				RaycastHit hit;
+				//if (Physics.Raycast(transform.position + transform.forward, Vector3.down, out hit, 0.5f))
+				//{
+				//	if(hit.)
+				//}
+			}
+		}
+
 
 	}
 

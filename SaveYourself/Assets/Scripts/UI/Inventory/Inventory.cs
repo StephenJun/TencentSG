@@ -28,10 +28,26 @@ public class Inventory : MonoBehaviour {
 	[SerializeField]
 	private Text totalDefenderText;
 
+	private Image checkBox;
+	private int currentSlotIndex = 0;
+	private int smothing = 8;
+
     private void Start()
     {
-        slotArray = GetComponentsInChildren<Slot>();  
+        slotArray = GetComponentsInChildren<Slot>();
+		checkBox = transform.Find("Img_CheckBox").GetComponent<Image>();
     }
+
+	private void Update()
+	{
+		checkBox.rectTransform.position = Vector3.Lerp(checkBox.transform.position, slotArray[currentSlotIndex].transform.position, smothing * Time.deltaTime);
+	}
+
+	public InteractiveObject EquippedItem()
+	{
+		InteractiveObject equipped = slotArray[currentSlotIndex].GetComponentInChildren<ItemUI>().interObj;
+		return equipped;
+	}
 
 	public float CalculatAllDefender()
 	{
@@ -76,8 +92,6 @@ public class Inventory : MonoBehaviour {
 		{
 			OnComplete();
 		}
-        //AddItem(item);
-        //Destroy(item.gameObject);
     }
 
 
@@ -131,8 +145,16 @@ public class Inventory : MonoBehaviour {
 		totalDefenderText.text = TotalDefender.ToString() + "%";
 		return true;
     }
+	public void SwitchItem()
+	{
+		currentSlotIndex++;
+		if (currentSlotIndex == slotArray.Length)
+		{
+			currentSlotIndex = 0;
+		}
+	}
 
-    private Slot FindEmptySlot(InteractiveObject item)
+	private Slot FindEmptySlot(InteractiveObject item)
     {
         foreach (Slot slot in slotArray)
         {
@@ -156,16 +178,10 @@ public class Inventory : MonoBehaviour {
         return null;
     }
 
-    //public void SetDescription(InteractiveObject item)
-    //{
-    //    txtItemName.text = item.icon;
-    //    txtTooltip.text = item.tooltip;
-    //    txtDescription.text = item.description;
-    //    itemPicture.sprite = Resources.Load<Sprite>("Items/" + item.icon);
-    //}
 
 
-    public void SaveInventory() //频繁的更改字符用stringbuilder,可以提高内存分配效率
+
+	public void SaveInventory() //频繁的更改字符用stringbuilder,可以提高内存分配效率
     {
         StringBuilder sb = new StringBuilder();
         foreach (Slot slot in slotArray)
