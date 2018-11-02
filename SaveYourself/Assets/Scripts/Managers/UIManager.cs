@@ -17,7 +17,6 @@ public class UIManager : Singleton<UIManager>
     Image blackCurtain;
 
 	static public BaseWindow currentWindow;
-	static public Stack<BaseWindow> windowStacks = new Stack<BaseWindow>();
 
     protected override void Awake()
     {
@@ -43,17 +42,20 @@ public class UIManager : Singleton<UIManager>
     static public BaseWindow PopWindow(WindowName windowName, WindowName upperName = WindowName.None, float time = 0.5f)
     {
         if (WindowIndex[windowName].locked)
+        {
+            Debug.LogError("catch a double click");
             return null;
+        }
+
         WindowIndex[windowName].Pop(upperName, time);
         if (upperName == WindowName.None)
         {
             Instance.blackCurtain.DOFade(0.5f, 0.8f);
             Instance.blackCurtain.raycastTarget = true;
         }
-		windowStacks.Push(WindowIndex[windowName]);
-		print(windowStacks.Peek().name);
-		return WindowIndex[windowName];
-	}
+		currentWindow = WindowIndex[windowName];
+        return currentWindow;
+    }
     static public BaseWindow PopWindow(WindowName windowName, string msg, WindowName upperName = WindowName.None)
     {
 		if (WindowIndex[windowName].locked)
@@ -65,11 +67,10 @@ public class UIManager : Singleton<UIManager>
             Instance.blackCurtain.DOFade(0.5f, 0.8f);
             Instance.blackCurtain.raycastTarget = true;  
         }
-		windowStacks.Push(WindowIndex[windowName]);
-		print(windowStacks.Peek().name);
-		return WindowIndex[windowName];
+		currentWindow = WindowIndex[windowName];
+        return currentWindow;
 
-	}
+    }
 
     static public BaseWindow CloseWindow(WindowName windowName, float time = 0.5f)
     {
@@ -81,12 +82,7 @@ public class UIManager : Singleton<UIManager>
         WindowIndex[windowName].Close(time);
         WindowIndex[windowName].locked = true;
         DOVirtual.DelayedCall(0.8f, () => WindowIndex[windowName].locked = false);
-		windowStacks.Pop();
-		if(windowStacks.Count > 0)
-		{
-			currentWindow = windowStacks.Peek();
-			print(windowStacks.Peek().name);
-		}
+        currentWindow = null;
 		return WindowIndex[windowName];
 	}
 
