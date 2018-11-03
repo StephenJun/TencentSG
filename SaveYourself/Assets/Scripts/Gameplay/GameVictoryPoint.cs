@@ -19,7 +19,7 @@ public class GameVictoryPoint : MonoBehaviour {
 			{
 				LevelController.Instance.SwitchGameState(GameState.AllClear);
 			};
-			InventoryManager.Instance.inventory.ShowTimerWhenInteracting(timerNeedToPass, victory, transform);
+			InventoryManager.Instance.inventory.ShowTimerWhenInteracting(timerNeedToPass, victory, this.transform);
 		}
 	}
 }

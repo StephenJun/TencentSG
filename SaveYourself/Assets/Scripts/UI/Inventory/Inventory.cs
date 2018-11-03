@@ -70,7 +70,7 @@ public class Inventory : MonoBehaviour {
             initDur -= Time.deltaTime;
             interactingTimerText.text = initDur.ToString("0.0") + " / " + time.ToString("0.0");
 			interactingTimerPic.fillAmount = initDur / time;
-			if (Vector3.Distance(obj.position, GameManager.Instance.player.transform.position) > 2.0f)
+			if (Vector3.Distance(obj.position, PlayerController.Instance.transform.position) > 4.0f)
 			{
 				interactingTimer.SetActive(false);
 				yield break;

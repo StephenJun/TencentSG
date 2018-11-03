@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CWindow;
+using DG.Tweening;
 
 public class PlayerSpwanPoint : MonoBehaviour {
 
@@ -13,10 +14,14 @@ public class PlayerSpwanPoint : MonoBehaviour {
         {
 			UIManager.PopWindow(WindowName.GenericPopup, "Go to sleep?").confirm += delegate
 			{
-				LevelController.Instance.SwitchGameState(GameState.EscapeState);
-				pc.transform.rotation = transform.rotation;
-				pc.transform.position = transform.position;
 				gameObject.SetActive(false);
+				InputManager.Instance.canControl = false;
+				pc.expression.ShowExpression(ExpressionType.Sleep);
+				DOVirtual.DelayedCall(4.0f, () => {
+					LevelController.Instance.SwitchGameState(GameState.EscapeState);
+					pc.transform.rotation = transform.rotation;
+					pc.transform.position = transform.position;
+				});		
 			};
             Debug.Log("The game start right away~~");
         }

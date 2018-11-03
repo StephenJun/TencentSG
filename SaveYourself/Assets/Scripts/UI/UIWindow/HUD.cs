@@ -8,6 +8,7 @@ public class HUD : BaseWindow {
 
 	public Image playerHpBar;
 	public Text playerHpText;
+	public Image HeadPortrait;
 
 	private void Update()
 	{
@@ -15,6 +16,18 @@ public class HUD : BaseWindow {
 		{
 			playerHpBar.fillAmount = PlayerController.Instance._playerPara.hp / 100;
 			playerHpText.text = PlayerController.Instance._playerPara.hp.ToString("00") + " / 100";
+			float tempHp = PlayerController.Instance._playerPara.hp;
+			if (tempHp < 33)
+			{
+				HeadPortrait.sprite = Resources.Load<Sprite>("HeadPortrait/UI_Bear_Fail");
+			}else if (tempHp < 66)
+			{
+				HeadPortrait.sprite = Resources.Load<Sprite>("HeadPortrait/UI_Bear_Hurry");
+			}
+			else
+			{
+				HeadPortrait.sprite = Resources.Load<Sprite>("HeadPortrait/UI_Bear_Success");
+			}
 		}		
 	}
 

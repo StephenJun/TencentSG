@@ -14,9 +14,9 @@ public class Extinguisher : InteractiveObject
         OnInteractive += delegate {
 
 			InventoryManager.Instance.inventory.AddItem(this);
-			transform.SetParent(GameManager.Instance.player.CarrierTrans, true);
-			transform.position = GameManager.Instance.player.CarrierTrans.position;
-			transform.rotation = GameManager.Instance.player.CarrierTrans.rotation;
+			transform.SetParent(PlayerController.Instance.CarrierTrans, true);
+			transform.position = PlayerController.Instance.CarrierTrans.position;
+			transform.rotation = PlayerController.Instance.CarrierTrans.rotation;
 			//PlayerController.Instance.playerActions.Add(new PlayerAction());
 			this.gameObject.SetActive(false);
         };

@@ -58,6 +58,7 @@ public class LevelController : Singleton<LevelController> {
 		switch (gameState)
 		{
 			case GameState.SearchState:
+				StartCoroutine(StartSearchState());
 				break;
 			case GameState.EscapeState:
 				StartCoroutine(StartEscapeState());
@@ -71,9 +72,9 @@ public class LevelController : Singleton<LevelController> {
 		}
 	}
 
-
 	private IEnumerator StartSearchState()
 	{
+		InputManager.Instance.canControl = true;
 		GameManager.Instance.timer.SetActive(false);
 		yield return null;
 	}
@@ -82,6 +83,8 @@ public class LevelController : Singleton<LevelController> {
 	{
 		FloorManager.Instance.GameStart();
 		GameManager.Instance.timer.SetActive(true);
+		PlayerController.Instance.expression.ShowExpression(ExpressionType.Shock);
+		InputManager.Instance.canControl = true;
 		float initTime = TimeOfEacapeState;
 		while (initTime > 0)
 		{
@@ -90,7 +93,7 @@ public class LevelController : Singleton<LevelController> {
 			float minutes = initTime / 60;
 			float seconds = initTime - minutes * 60;
 			timerTxt.text = (minutes).ToString("00") + " : " + (initTime % 60).ToString("00");
-			//GameManager.Instance.player.DamageReceiver(1 * Time.deltaTime);
+			//PlayerController.Instance.DamageReceiver(1 * Time.deltaTime);
 			if(initTime < timingOfFiremanAppear && !hasFiremanAppeared)
 			{
 				fireman1.SetActive(true);
@@ -115,6 +118,7 @@ public class LevelController : Singleton<LevelController> {
 	private IEnumerator StartGameOver()
 	{
 		StopCoroutine("StartEscapeState");
+		InputManager.Instance.canControl = false;
 		UIManager.PopWindow(WindowName.GenericPopup, "You Died").confirm += delegate
 		{
 			UIManager.CloseWindow(WindowName.HUD, 0f);

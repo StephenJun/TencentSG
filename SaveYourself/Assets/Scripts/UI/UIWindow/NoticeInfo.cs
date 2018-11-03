@@ -22,7 +22,7 @@ public class NoticeInfo : BaseWindow {
 		while(true)
 		{
 			yield return null;
-			if (obj == null || Vector3.Distance(obj.transform.position, GameManager.Instance.player.transform.position) > 2.0f)
+			if (obj == null || Vector3.Distance(obj.transform.position, PlayerController.Instance.transform.position) > 4.0f)
 			{
 				Close();
 				yield break;

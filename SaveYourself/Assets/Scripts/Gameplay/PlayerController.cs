@@ -26,6 +26,7 @@ public class PlayerController : Singleton<PlayerController>
     public List<PlayerAction> playerActions = new List<PlayerAction>();
 
 	public Transform CarrierTrans;
+	public Expression expression;
 
 	public float damageMultiplier = 1;
 	private InteractiveObject currentEquipped;
@@ -56,7 +57,7 @@ public class PlayerController : Singleton<PlayerController>
 		float vertivalInput = Input.GetAxis("Vertical");
 		Vector3 charDir = new Vector3(horizontalInput, 0, vertivalInput);
 		//charController.Move(charDir * _playerPara.speed);		
-		if (charDir != Vector3.zero)
+		if (charDir != Vector3.zero && InputManager.Instance.canControl)
 		{
 			rb.velocity = charDir * _playerPara.speed;
 			Quaternion tempRot = Quaternion.LookRotation(charDir, Vector3.up);
@@ -66,12 +67,16 @@ public class PlayerController : Singleton<PlayerController>
 		//~~~~~~Interactive Input Handler~~~~~~~
 		if (Input.GetKeyDown(ConfirmKey))
 		{
-			UIManager.currentWindow.ConfirmAction();
+			if(UIManager.currentWindow != null)
+			{
+				UIManager.currentWindow.ConfirmAction();
+			}		
 		}
 
 		if (Input.GetKeyDown(CancelKey))
 		{
-			UIManager.currentWindow.CancelAction();
+			if (UIManager.currentWindow != null)
+				UIManager.currentWindow.CancelAction();
 		}
 
 		if (Input.GetKeyDown(SwitchItem))
@@ -126,7 +131,7 @@ public class PlayerController : Singleton<PlayerController>
 			{
 				lastObject = hitInfo.collider.gameObject;
 				lastObject.GetComponent<InteractiveObject>().HighlightOn();
-				
+				expression.ShowExpression(ExpressionType.Search);
 			}
 			if (Input.GetKeyDown(InteractKey))
 			{
@@ -159,8 +164,8 @@ public class PlayerController : Singleton<PlayerController>
 			if (lastObject)
 			{
 				lastObject.GetComponent<InteractiveObject>().HighlightOff();
+				expression.HideExpression();
 				lastObject = null;
-
 			}
 		}
 	}
