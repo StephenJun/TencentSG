@@ -22,8 +22,7 @@ public class Smoke : MonoBehaviour {
 		PlayerController pc = other.GetComponent<PlayerController>();
 		if (pc)
 		{
-			float dis = Vector3.Distance(other.transform.position, transform.position);
-			pc.DamageReceiver(maxDamagePerSecond * Time.deltaTime * (1- dis/maxRange));
+			pc.DamageReceiver(maxDamagePerSecond * Time.deltaTime);
 		}
 	}
 }

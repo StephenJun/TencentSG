@@ -46,10 +46,10 @@ public class PlayerController : Singleton<PlayerController>
 		float horizontalInput = Input.GetAxis("Horizontal");
 		float vertivalInput = Input.GetAxis("Vertical");
 		Vector3 charDir = new Vector3(horizontalInput, 0, vertivalInput);
-		//charController.Move(charDir * _playerPara.speed);
-		rb.velocity = charDir * _playerPara.speed;
+		//charController.Move(charDir * _playerPara.speed);		
 		if (charDir != Vector3.zero)
 		{
+			rb.velocity = charDir * _playerPara.speed;
 			Quaternion tempRot = Quaternion.LookRotation(charDir, Vector3.up);
 			transform.rotation = tempRot;
 		}

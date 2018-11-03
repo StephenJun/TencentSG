@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4576633156247616}
   - component: {fileID: 198638767846529528}
   - component: {fileID: 199675526928863506}
+  - component: {fileID: 135890994801699332}
+  - component: {fileID: 114010654216726774}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -139,6 +141,18 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114010654216726774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1390895502343066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4821ae698eba4e4e9b63fd430f1f6d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamagePerSecond: 30
 --- !u!114 &114329561418874258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,6 +167,18 @@ MonoBehaviour:
   loop: 1
   smoothFactor: 4
   addIntensity: 0.5
+--- !u!135 &135890994801699332
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1390895502343066}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0.75000024}
 --- !u!198 &198638767846529528
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -213,7 +239,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -1464976547
+  randomSeed: 887810958
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3511,7 +3537,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -80947908
+  randomSeed: -843352824
   InitialModule:
     serializedVersion: 3
     enabled: 1

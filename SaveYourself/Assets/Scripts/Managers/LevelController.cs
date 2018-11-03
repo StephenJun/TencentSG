@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using CWindow;
 
 public class LevelController : Singleton<LevelController> {
@@ -72,7 +73,7 @@ public class LevelController : Singleton<LevelController> {
 
 	private IEnumerator StartEscapeState()
 	{
-		//SpawnFireEffect();
+		FloorManager.Instance.GameStart();
 		GameManager.Instance.timer.SetActive(true);
 		float initTime = TimeOfEacapeState;
 		while (initTime > 0)
@@ -108,7 +109,7 @@ public class LevelController : Singleton<LevelController> {
 		StopCoroutine("StartEscapeState");
 		UIManager.PopWindow(WindowName.GenericPopup, "You Died").confirm += delegate
 		{
-			//Gameover
+			SceneManager.LoadScene("MainMenu");
 		};
 		yield return null;
 	}
