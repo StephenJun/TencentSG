@@ -72,7 +72,7 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
 		if(interObj.durability < 0)
 		{
-			Destroy(this.gameObject);
+			Destroy(gameObject);
 		}
 	}
 
@@ -81,8 +81,8 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         //transform.localScale = AnimScale;
         this.interObj = itemBase;
         this.Amount = amount;
-        //更新UI
-        Image.sprite = Resources.Load<Sprite>("Items/" + itemBase.itemName);
+		//更新UI
+        Image.sprite = Resources.Load<Sprite>("ItemsIcon/" + itemBase.itemName);
         if (Amount > 1)
         {
             Text.text = Amount.ToString();
@@ -92,6 +92,11 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
             Text.text = "";
         }
     }
+
+	public void UpdateIcon()
+	{
+		Image.sprite = Resources.Load<Sprite>("ItemsIcon/" + this.interObj.itemName);
+	}
 
     #region 控制物品数量的方法
     public void AddAmount(int amount = 1)

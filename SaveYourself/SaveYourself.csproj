@@ -243,6 +243,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Give\BearTest.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_New.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDir.cs" />
@@ -270,7 +271,9 @@
     <Compile Include="Assets\Scripts\Gameplay\Inetractive\Bucket.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Inetractive\Extinguisher.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Inetractive\InteractiveObject.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Inetractive\MoneyBox.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Inetractive\Towel.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Inetractive\WaterPool.cs" />
     <Compile Include="Assets\Scripts\Gameplay\MovePointEffect.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerSpwanPoint.cs" />

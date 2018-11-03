@@ -186,8 +186,7 @@ public class FloorDetail
 			}
 			if (SmokeLevel > 100 && SmokeLevel < 200 && !isSmoking)
 			{
-				Debug.Log(1);
-				smokeEff = GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", new Vector3(posX + 0.5f, 0, posY + 0.5f), 0.4f, -1);
+				smokeEff = GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", new Vector3(posX, 0, posY), 0.4f, -1);
 				isSmoking = true;
 			}
 		}
@@ -196,7 +195,7 @@ public class FloorDetail
 	{
 		if (WetLevel > 0)
 		{
-			WetLevel = WetLevel - speed * Time.deltaTime * 4;
+			WetLevel = WetLevel - speed * Time.deltaTime * 10;
 			if (WetLevel < 200)
 			{
 				if (isFiring)
@@ -204,7 +203,7 @@ public class FloorDetail
 					fireEff.Die();
 					isFiring = false;
 					SmokeLevel = 150;
-					smokeEff = GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", new Vector3(posX + 0.5f, 0, posY+0.5f), 0.4f, -1);
+					smokeEff = GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", new Vector3(posX, 0, posY), 0.4f, -1);
 					isSmoking = true;
 				}
 			}
@@ -243,7 +242,7 @@ public class FloorDetail
 			}
 			if (WetLevel >= 200 && isFiring == false)
 			{
-				fireEff = GameEffectManager.Instance.AddWorldEffect("Fire", new Vector3(posX + 0.5f, 0, posY + 0.5f), 1, -1);
+				fireEff = GameEffectManager.Instance.AddWorldEffect("Fire", new Vector3(posX, 0, posY), 1, -1);
 				isFiring = true;
 				if (isSmoking == true)
 				{

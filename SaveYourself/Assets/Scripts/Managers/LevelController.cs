@@ -71,6 +71,13 @@ public class LevelController : Singleton<LevelController> {
 		}
 	}
 
+
+	private IEnumerator StartSearchState()
+	{
+		GameManager.Instance.timer.SetActive(false);
+		yield return null;
+	}
+
 	private IEnumerator StartEscapeState()
 	{
 		FloorManager.Instance.GameStart();
@@ -83,7 +90,7 @@ public class LevelController : Singleton<LevelController> {
 			float minutes = initTime / 60;
 			float seconds = initTime - minutes * 60;
 			timerTxt.text = (minutes).ToString("00") + " : " + (initTime % 60).ToString("00");
-			GameManager.Instance.player.DamageReceiver(1 * Time.deltaTime);
+			//GameManager.Instance.player.DamageReceiver(1 * Time.deltaTime);
 			if(initTime < timingOfFiremanAppear && !hasFiremanAppeared)
 			{
 				fireman1.SetActive(true);
@@ -99,7 +106,8 @@ public class LevelController : Singleton<LevelController> {
 		StopCoroutine("StartEscapeState");
 		UIManager.PopWindow(WindowName.GenericPopup, "You survived!! ^_^").confirm += delegate
 		{
-			//GameVictory
+			UIManager.CloseWindow(WindowName.HUD, 0f);
+			SceneManager.LoadSceneAsync("MainMenu").completed += LevelController_completed;
 		};
 		yield return null;
 	}
@@ -109,9 +117,16 @@ public class LevelController : Singleton<LevelController> {
 		StopCoroutine("StartEscapeState");
 		UIManager.PopWindow(WindowName.GenericPopup, "You Died").confirm += delegate
 		{
-			SceneManager.LoadScene("MainMenu");
+			UIManager.CloseWindow(WindowName.HUD, 0f);
+			//SceneManager.LoadScene("MainMenu");
+			SceneManager.LoadSceneAsync("MainMenu").completed += LevelController_completed;
 		};
 		yield return null;
+	}
+
+	private void LevelController_completed(AsyncOperation obj)
+	{
+		GameEffectManager.Instance.Init();
 	}
 	#endregion
 

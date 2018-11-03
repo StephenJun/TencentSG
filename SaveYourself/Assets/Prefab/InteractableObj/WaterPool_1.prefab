@@ -9,46 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1295401374936134}
+  m_RootGameObject: {fileID: 1238431030171356}
   m_IsPrefabParent: 1
---- !u!1 &1295401374936134
+--- !u!1 &1238431030171356
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4161383754684508}
-  - component: {fileID: 33627496374142974}
-  - component: {fileID: 65186230484732632}
-  - component: {fileID: 23011331752336962}
-  - component: {fileID: 114612082943934808}
+  - component: {fileID: 4422956600268634}
+  - component: {fileID: 33750555900769312}
+  - component: {fileID: 23858526704122936}
+  - component: {fileID: 65616383683160612}
+  - component: {fileID: 114232786242186504}
   m_Layer: 0
-  m_Name: Towel
+  m_Name: WaterPool_1
   m_TagString: InteractiveObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4161383754684508
+--- !u!4 &4422956600268634
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295401374936134}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.7080507, y: 0.56, z: -8.64}
-  m_LocalScale: {x: 1, y: 0.11, z: 1}
+  m_GameObject: {fileID: 1238431030171356}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 4.750001, y: -0.27068758, z: -2.9600005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23011331752336962
+--- !u!23 &23858526704122936
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295401374936134}
+  m_GameObject: {fileID: 1238431030171356}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -57,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7ef3eff16f8b51d4f9b5de0ea6ba1568, type: 2}
+  - {fileID: 2100000, guid: 6a8a6da5881ed144e8c833df96287856, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
@@ -77,43 +77,44 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33627496374142974
+--- !u!33 &33750555900769312
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295401374936134}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65186230484732632
+  m_GameObject: {fileID: 1238431030171356}
+  m_Mesh: {fileID: 4300000, guid: 7f1d1b77b9ed8ac43acec4b5e80733cc, type: 3}
+--- !u!65 &65616383683160612
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295401374936134}
+  m_GameObject: {fileID: 1238431030171356}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114612082943934808
+  m_Size: {x: 1.6685747, y: 1.5974684, z: 0.9318511}
+  m_Center: {x: 0.00000047683716, y: 0.7987342, z: 0.4659284}
+--- !u!114 &114232786242186504
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295401374936134}
+  m_GameObject: {fileID: 1238431030171356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53ccdc1effca2724ab6db1068c33c4f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fb8309042edcb34290a8c084f385080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detailInfo: "\u8FD9\u771F\u7684\u662F\u4E2A\u6761\u6BDB\u5DFE"
-  itemName: Towel
-  maxStack: 5
-  isCollectable: 1
-  timeNeedToCollect: 1
+  detailInfo: There is some water inside
+  itemName: waterPool
+  maxStack: 1
+  timeNeedToCollect: 2
   durability: 100
-  defenderProvided: 0.1
-  defaultMat: {fileID: 2100000, guid: 7ef3eff16f8b51d4f9b5de0ea6ba1568, type: 2}
-  highlightMat: {fileID: 2100000, guid: bfe1ded083a14a34eaa30a62ab3e9400, type: 2}
+  depletionSpeed: 8
+  confirmButtonName: Use
+  stateCanInteract: 1
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightColor: {r: 0.94482756, g: 1, b: 0, a: 1}
   IsHighLight: 0

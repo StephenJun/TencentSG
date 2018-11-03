@@ -11,13 +11,6 @@ public class Inventory : MonoBehaviour {
 
     [HideInInspector]
     public Slot[] slotArray;
-	public float TotalDefender
-	{
-		get
-		{
-			return CalculatAllDefender();
-		}
-	}
 
     [SerializeField]
     private GameObject interactingTimer;
@@ -25,8 +18,6 @@ public class Inventory : MonoBehaviour {
     private Image interactingTimerPic;
     [SerializeField]
     private Text interactingTimerText;
-	[SerializeField]
-	private Text totalDefenderText;
 
 	private Image checkBox;
 	private int currentSlotIndex = 0;
@@ -53,27 +44,15 @@ public class Inventory : MonoBehaviour {
 		InteractiveObject equipped = item.interObj;
 		return equipped;
 	}
-
-	public float CalculatAllDefender()
-	{
-		float temp = 0;
-		foreach (var slot in slotArray)
-		{
-			if (slot.transform.childCount > 0) 
-			temp += slot.transform.GetChild(0).GetComponent<ItemUI>().interObj.defenderProvided;
-		}
-		return temp;
-	}
-
     /// <summary>
     /// Show the progression of collecting the item
     /// </summary>
     /// <param name="item">item to collect</param>
-    public void ShowTimerWhenInteracting(float time, Action OnComplete)
+    public void ShowTimerWhenInteracting(float time, Action OnComplete, Transform obj)
     {
-        StartCoroutine(ShowTimerCoroutine(time, OnComplete));
+        StartCoroutine(ShowTimerCoroutine(time, OnComplete, obj));
     }
-    private IEnumerator ShowTimerCoroutine(float time, Action OnComplete)
+    private IEnumerator ShowTimerCoroutine(float time, Action OnComplete, Transform obj)
     {
 		if(timerComplete != null)
 		{
@@ -90,7 +69,12 @@ public class Inventory : MonoBehaviour {
             yield return null;
             initDur -= Time.deltaTime;
             interactingTimerText.text = initDur.ToString("0.0") + " / " + time.ToString("0.0");
-			interactingTimerPic.fillAmount = initDur / time;		
+			interactingTimerPic.fillAmount = initDur / time;
+			if (Vector3.Distance(obj.position, GameManager.Instance.player.transform.position) > 2.0f)
+			{
+				interactingTimer.SetActive(false);
+				yield break;
+			}
         }
         interactingTimer.SetActive(false);
 		if(OnComplete != null)
@@ -147,7 +131,6 @@ public class Inventory : MonoBehaviour {
                 }
             }
         }
-		totalDefenderText.text = TotalDefender.ToString() + "%";
 		return true;
     }
 	public void SwitchItem()
@@ -158,6 +141,22 @@ public class Inventory : MonoBehaviour {
 			currentSlotIndex = 0;
 		}
 	}
+
+	public ItemUI CheckIfHasTypeOfItem<T>()
+	{
+		foreach(var slot in slotArray)
+		{
+			if(slot.transform.childCount != 0)
+			{
+				if(slot.transform.GetChild(0).GetComponent<ItemUI>().interObj is T)
+				{
+					return slot.transform.GetChild(0).GetComponent<ItemUI>();
+				}
+			}
+		}
+		return null;
+	}
+	
 
 	private Slot FindEmptySlot(InteractiveObject item)
     {
@@ -170,7 +169,6 @@ public class Inventory : MonoBehaviour {
         }
         return null;
     }
-
     private Slot FindSameTypeSlot(InteractiveObject item)
     {
         foreach (Slot slot in slotArray)
@@ -182,8 +180,6 @@ public class Inventory : MonoBehaviour {
         }
         return null;
     }
-
-
 
 
 	public void SaveInventory() //频繁的更改字符用stringbuilder,可以提高内存分配效率
@@ -203,7 +199,6 @@ public class Inventory : MonoBehaviour {
         }
         PlayerPrefs.SetString(this.gameObject.name, sb.ToString());
     }
-
     public void LoadInventory()
     {
         if (PlayerPrefs.HasKey(this.gameObject.name))

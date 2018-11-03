@@ -8,12 +8,11 @@ public class InteractiveObject : MonoBehaviour
     public string detailInfo;
     public string itemName;
     public int maxStack = 1;
-    public bool isCollectable;
     public float timeNeedToCollect;
 	public float durability = 100;
 	public float depletionSpeed = 8.0f;
-	public float defenderProvided = 0.6f;
-
+	public string confirmButtonName = "Pick";
+	public GameState stateCanInteract = GameState.EscapeState;
 
 	public Color defaultColor = Color.white;
 	public Color highlightColor = Color.red;
@@ -29,9 +28,18 @@ public class InteractiveObject : MonoBehaviour
 		GetComponentInChildren<MeshRenderer>().material.color = defaultColor;
     }
 
-	public void OnUsing()
+	public virtual void OnUsing()
 	{
 		durability -= depletionSpeed * Time.deltaTime;
+		if(durability < 0)
+		{
+			Destroy(this.gameObject);
+		}
+	}
+
+	public virtual void OnUnLoad()
+	{
+		gameObject.SetActive(false);
 	}
 
 }

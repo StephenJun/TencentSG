@@ -280,14 +280,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1469ebac05f7bc4fadd6dc368d7676d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detailInfo: "\u6211\u4E5F\u662F\u4E2A\u7BB1\u5B50"
+  detailInfo: I'm a box
   itemName: Blocks
   maxStack: 1
-  isCollectable: 1
   timeNeedToCollect: 1.5
   durability: 100
   depletionSpeed: 8
-  defenderProvided: 0.6
+  confirmButtonName: Clear
+  stateCanInteract: 0
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  highlightColor: {r: 0.9448277, g: 1, b: 0, a: 1}
   IsHighLight: 0

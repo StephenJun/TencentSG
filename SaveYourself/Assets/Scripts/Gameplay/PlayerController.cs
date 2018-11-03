@@ -8,7 +8,14 @@ using System;
 //[RequireComponent(typeof(CharacterController))]
 public class PlayerController : Singleton<PlayerController>
 {
-    [System.Serializable]
+	[Header("HOT KEY")]
+	[SerializeField] private KeyCode ConfirmKey = KeyCode.J;
+	[SerializeField] private KeyCode CancelKey = KeyCode.K;
+	[SerializeField] private KeyCode SwitchItem = KeyCode.Q;
+	[SerializeField] private KeyCode UsingItem = KeyCode.LeftShift;
+	[SerializeField] private KeyCode InteractKey = KeyCode.E;
+
+	[System.Serializable]
     public class PlayerParameter
     {
         public float hp = 100;
@@ -18,7 +25,9 @@ public class PlayerController : Singleton<PlayerController>
     public PlayerParameter _playerPara = new PlayerParameter();
     public List<PlayerAction> playerActions = new List<PlayerAction>();
 
-	private float damageMultiplier = 1;
+	public Transform CarrierTrans;
+
+	public float damageMultiplier = 1;
 	private InteractiveObject currentEquipped;
 
     [SerializeField]
@@ -55,22 +64,22 @@ public class PlayerController : Singleton<PlayerController>
 		}
 
 		//~~~~~~Interactive Input Handler~~~~~~~
-		if (Input.GetKeyDown(KeyCode.J))
+		if (Input.GetKeyDown(ConfirmKey))
 		{
 			UIManager.currentWindow.ConfirmAction();
 		}
 
-		if (Input.GetKeyDown(KeyCode.K))
+		if (Input.GetKeyDown(CancelKey))
 		{
 			UIManager.currentWindow.CancelAction();
 		}
 
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(SwitchItem))
 		{
 			InventoryManager.Instance.inventory.SwitchItem();
 		}
 
-		if (Input.GetKey(KeyCode.F))
+		if (Input.GetKey(UsingItem))
 		{
 			currentEquipped = InventoryManager.Instance.inventory.EquippedItem();
 			if(currentEquipped != null)
@@ -79,13 +88,30 @@ public class PlayerController : Singleton<PlayerController>
 			}
 			if (currentEquipped is Extinguisher)
 			{
-				int posX = Mathf.CeilToInt((transform.position + transform.forward).x);
-				int posY = Mathf.CeilToInt((transform.position + transform.forward).z);
-				FloorManager.Instance.fd[posX, posY].Extinguish();
+				for (int i = 1; i < 5; i++)
+				{
+					int posX = Mathf.CeilToInt((transform.position + transform.forward * i).x);
+					int posY = Mathf.CeilToInt((transform.position + transform.forward * i).z);
+					FloorManager.Instance.fd[posX, posY].Extinguish();
+				}
+	
 			}else if(currentEquipped is Towel)
 			{
-				damageMultiplier = currentEquipped.defenderProvided;
+				damageMultiplier = currentEquipped.GetComponent<Towel>().defenderProvided;
 			}
+		}
+
+		if (Input.GetKeyUp(UsingItem))
+		{
+			if(CarrierTrans.childCount != 0)
+			{
+				currentEquipped = CarrierTrans.GetChild(0).GetComponent<InteractiveObject>();
+			}	
+			if (currentEquipped != null)
+			{
+				currentEquipped.OnUnLoad();
+			}
+			damageMultiplier = 1;
 		}
 
 
@@ -102,7 +128,7 @@ public class PlayerController : Singleton<PlayerController>
 				lastObject.GetComponent<InteractiveObject>().HighlightOn();
 				
 			}
-			if (Input.GetKeyDown(KeyCode.E))
+			if (Input.GetKeyDown(InteractKey))
 			{
 				InteractiveObject io = hitInfo.collider.GetComponent<InteractiveObject>();
 				if (io)
@@ -114,15 +140,16 @@ public class PlayerController : Singleton<PlayerController>
 
 					if (bw is NoticeInfo)
 					{
-						bw.GetComponent<NoticeInfo>().Init(io.isCollectable && LevelController.Instance.gameState == GameState.EscapeState);
-					}
-					if (LevelController.Instance.gameState == GameState.EscapeState)
-					{
-
-						bw.confirm += delegate
+						bool temp = io.stateCanInteract == LevelController.Instance.gameState;
+						bw.GetComponent<NoticeInfo>().Init(temp, io.confirmButtonName);
+						bw.GetComponent<NoticeInfo>().UpdateState(io.transform);
+						if (temp)
 						{
-							InventoryManager.Instance.inventory.ShowTimerWhenInteracting(io.timeNeedToCollect, io.OnInteractive);
-						};
+							bw.confirm += delegate
+							{
+								InventoryManager.Instance.inventory.ShowTimerWhenInteracting(io.timeNeedToCollect, io.OnInteractive, io.transform);
+							};
+						}
 					}
 				}
 			}
@@ -162,14 +189,14 @@ public class PlayerController : Singleton<PlayerController>
 		bw.GetComponent<RectTransform>().anchoredPosition = viewCamera.WorldToScreenPoint(targetObj.transform.position);
 		if (bw is NoticeInfo)
 		{
-			bw.GetComponent<NoticeInfo>().Init(targetObj.isCollectable && LevelController.Instance.gameState == GameState.EscapeState);
+			bw.GetComponent<NoticeInfo>().Init(LevelController.Instance.gameState == GameState.EscapeState, "Pick");
 		}
 		if (LevelController.Instance.gameState == GameState.EscapeState)
         {
 
 			bw.confirm += delegate
 			{
-				InventoryManager.Instance.inventory.ShowTimerWhenInteracting(targetObj.timeNeedToCollect, targetObj.OnInteractive);
+				InventoryManager.Instance.inventory.ShowTimerWhenInteracting(targetObj.timeNeedToCollect, targetObj.OnInteractive, targetObj.transform);
 			};
 		}
 

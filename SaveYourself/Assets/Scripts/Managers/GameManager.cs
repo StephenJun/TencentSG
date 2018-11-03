@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager> {
     void Update()
     {
         //GetMouseInput();
-        HighLightController();
+        //HighLightController();
     }
 
     void GetMouseInput()

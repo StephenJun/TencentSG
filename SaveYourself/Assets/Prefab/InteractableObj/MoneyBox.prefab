@@ -9,46 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1145706991076964}
+  m_RootGameObject: {fileID: 1183412495817532}
   m_IsPrefabParent: 1
---- !u!1 &1145706991076964
+--- !u!1 &1183412495817532
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4589307242408322}
-  - component: {fileID: 33328041961612580}
-  - component: {fileID: 23381444327583670}
-  - component: {fileID: 65144807701802104}
-  - component: {fileID: 114744378136355402}
+  - component: {fileID: 4483187684777414}
+  - component: {fileID: 33714422422132780}
+  - component: {fileID: 23922932323886632}
+  - component: {fileID: 65036481907214134}
+  - component: {fileID: 114344697236805746}
   m_Layer: 0
-  m_Name: Prop_TowelBig_Red
+  m_Name: MoneyBox
   m_TagString: InteractiveObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4589307242408322
+--- !u!4 &4483187684777414
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1145706991076964}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 4.7670007, y: 1.65764, z: -4.7960014}
+  m_GameObject: {fileID: 1183412495817532}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -31.408997, y: 0, z: 28.280006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23381444327583670
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!23 &23922932323886632
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1145706991076964}
+  m_GameObject: {fileID: 1183412495817532}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -77,44 +77,44 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33328041961612580
+--- !u!33 &33714422422132780
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1145706991076964}
-  m_Mesh: {fileID: 4300000, guid: 55d210dad2d2841459de3208640cf8a8, type: 3}
---- !u!65 &65144807701802104
+  m_GameObject: {fileID: 1183412495817532}
+  m_Mesh: {fileID: 4300000, guid: e6c8217286198a34b93587214d64416b, type: 3}
+--- !u!65 &65036481907214134
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1145706991076964}
+  m_GameObject: {fileID: 1183412495817532}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.49586654, y: 1.9165983, z: 0.17082222}
-  m_Center: {x: -0.0000019073482, y: -0.6981249, z: -0.0000014305111}
---- !u!114 &114744378136355402
+  m_Size: {x: 1.6704258, y: 0.967101, z: 1.1099646}
+  m_Center: {x: -0.0000019073486, y: 0.4835505, z: 0.0000028610232}
+--- !u!114 &114344697236805746
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1145706991076964}
+  m_GameObject: {fileID: 1183412495817532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53ccdc1effca2724ab6db1068c33c4f5, type: 3}
+  m_Script: {fileID: 11500000, guid: cda71691f12738c43bf6b93b09a08a08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detailInfo: I'm really a towel
-  itemName: Towel
+  detailInfo: Wow, so much money
+  itemName: Money
   maxStack: 1
-  timeNeedToCollect: 1
+  timeNeedToCollect: 4
   durability: 100
-  depletionSpeed: 8
-  defenderProvided: 0.1
+  depletionSpeed: 0
+  confirmButtonName: Pick
   stateCanInteract: 1
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightColor: {r: 0.90344834, g: 1, b: 0, a: 1}
+  highlightColor: {r: 1, g: 0.9724138, b: 0, a: 1}
   IsHighLight: 0

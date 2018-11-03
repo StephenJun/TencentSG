@@ -11,6 +11,7 @@ public class GameEffectManager : Singleton<GameEffectManager> {
     public void Init()
     {
         _GM = GetComponent<GameManager>();
+		effectPool.Clear();
     }
 
     /// <summary>

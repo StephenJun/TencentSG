@@ -19,8 +19,6 @@ public class Slot : MonoBehaviour {
 		{
 			transform.GetChild(0).GetComponent<ItemUI>().AddAmount();
 		}
-
-
     }
 
     public string GetThisItemName()
