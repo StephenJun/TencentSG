@@ -11,8 +11,10 @@ public class MainMenu : BaseWindow {
     {
         UIManager.CloseWindow(WindowName.MainMenu, 0);
         UIManager.PopWindow(WindowName.HUD, 0, 0f);
+        UIManager.currentWindow = null;
         AudioManager.Instance.PlayButtonClickedAudio();
         SceneManager.LoadScene("FloorTest");
+        
         //GameManager.Instance.GameStart();
     }
 
