@@ -67,7 +67,7 @@ public class LevelController : Singleton<LevelController> {
 		InventoryManager.Instance.inventory.Initialization();
 		UIManager.PopWindow(WindowName.HUD, 0, 0f);
 		UIManager.currentWindow = null;
-		//MapManager.Instance.UseMap(levelIndex);
+		MapManager.Instance.UseMap(levelIndex);
 		SwitchGameState(GameState.SearchState);
 	}
 

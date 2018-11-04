@@ -21,8 +21,9 @@ public class MapManager : Singleton<MapManager>
     float U;
     float V;
     [SerializeField] GameObject[] map = new GameObject[2];
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rotationHandler = transform.Find("RotationHandler").gameObject.GetComponent<RectTransform>();
         originTransform = rotationHandler.Find("MapOrigin 2").gameObject.GetComponent<RectTransform>();
         coverTransform = rotationHandler.Find("MapCover").gameObject.GetComponent<RectTransform>();
@@ -168,11 +169,16 @@ public class MapManager : Singleton<MapManager>
     {
         if (index == 0)
         {
+            rotationHandler.Find("MapOrigin 1").gameObject.SetActive(true);
+            rotationHandler.Find("MapOrigin 2").gameObject.SetActive(false);
+            originTransform = rotationHandler.Find("MapOrigin 1").gameObject.GetComponent<RectTransform>();
             map[0].SetActive(true);
             map[1].SetActive(false);
         }
         if (index == 1)
         {
+            rotationHandler.Find("MapOrigin 2").gameObject.SetActive(true);
+            rotationHandler.Find("MapOrigin 1").gameObject.SetActive(false);
             originTransform = rotationHandler.Find("MapOrigin 2").gameObject.GetComponent<RectTransform>();
             map[0].SetActive(false);
             map[1].SetActive(true);
