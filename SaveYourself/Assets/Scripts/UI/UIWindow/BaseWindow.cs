@@ -132,6 +132,7 @@ namespace CWindow
         SettingMenu,
         HUD,
 		GenericPopup,
-        extinguisherGame
+        extinguisherGame,
+        Help
     }
 }

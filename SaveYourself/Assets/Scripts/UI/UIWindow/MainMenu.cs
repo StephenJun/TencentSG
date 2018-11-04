@@ -26,6 +26,10 @@ public class MainMenu : BaseWindow {
         UIManager.PopWindow(WindowName.SettingMenu);
 		AudioManager.Instance.PlayUIAudioClip(UIAudioClip.buttonClick1);
 	}
+    public void OnHelp()
+    {
+        UIManager.PopWindow(WindowName.Help);
+    }
 
     public void OnQuitButton()
     {
@@ -41,7 +45,7 @@ public class MainMenu : BaseWindow {
     {
         base.Start();
         actions[0] = OnStartButton;
-        actions[1] = OnSettingOpenButton;
+        actions[1] = OnHelp;
         actions[2] = OnQuitButton;
     }
     int currentSelection = 0;
