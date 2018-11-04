@@ -27170,7 +27170,7 @@ Prefab:
     - target: {fileID: 114296402994045626, guid: b3d0e85e02bbdb44ca24f40e15f48c18,
         type: 2}
       propertyPath: floorColume
-      value: 41
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 114771069962625534, guid: b3d0e85e02bbdb44ca24f40e15f48c18,
         type: 2}
