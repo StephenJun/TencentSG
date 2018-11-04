@@ -10,6 +10,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
     bool canControll;
 
     Transform platformParent;
+    Transform UIParent;
     Animator[] animators;
     PoseType[] totalPoseTypes;
     List<PoseType> archivedPoseTypes;
@@ -17,6 +18,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
     //to do 建立一个对象池 根据totalPoseTypes取出相应的对象 置入platform子物体 setposition 根据archieved点亮动作
     void Start()
     {
+        //init
         LevelData levelData = null;
         totalPoseTypes = JsonHandler.LoadLevelData(ref levelData, 1).totolType;
         archivedPoseTypes = new List<PoseType>();
@@ -28,17 +30,21 @@ public class PlaybackManager : Singleton<PlaybackManager>
 
         StartPlayback();
     }
-    public void StartPlayback()
-    {
-        UIs = GameObject.Find("Canvas/UIs").GetComponentsInChildren<Image>();
-        lastUIID = UIs.Length - 1;
-        StartCoroutine(PlaybackCoroutine());
-        CheckPoseTypes();
+    public void StartPlayback()    {
 
+        StartCoroutine(PlaybackCoroutine());
     }
+    public void PushPose(PoseType poseType)
+    {
+        if (!archivedPoseTypes.Contains(poseType))
+        {
+            archivedPoseTypes.Add(poseType);
+        }
+    }
+
     private void Update()
     {
-        if (platformParent && canControll)
+        if (platformParent && canControll && isFinished)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -48,16 +54,28 @@ public class PlaybackManager : Singleton<PlaybackManager>
             {
                 RotatePlatform(1);
             }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                GameManager.Instance.NextLevel();
+            }
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                GameManager.Instance.RestartLevel();
+            }
         }
     }
-
-    float[] rotationAngleBank;
     IEnumerator PlaybackCoroutine()
     {
+        
         platformParent = GameObject.Find("PlatformParent").transform;
-        rotationAngleBank = new float[platformParent.childCount];
+        UIParent = GameObject.Find("Canvas/UIs").transform;        
+        CheckPoseTypes();
+        LoadPoses();
+        LoadUIs();
+        SetAnimators();
+        SetPostitions();
+        float[] rotationAngleBank = new float[platformParent.childCount];
         float sectionAngle = 360f / platformParent.childCount;
-        animators = platformParent.GetComponentsInChildren<Animator>();
         for (int i = 0; i < rotationAngleBank.Length; i++)
         {
             rotationAngleBank[i] = i * sectionAngle;
@@ -66,14 +84,14 @@ public class PlaybackManager : Singleton<PlaybackManager>
         for (int i = 0; i < rotationAngleBank.Length; i++)
         {
             isFinished = false;
-            platformParent.DORotate(new Vector3(0, rotationAngleBank[i]), 2, RotateMode.FastBeyond360).OnComplete(() => isFinished = true);
+            platformParent.DORotate(new Vector3(0, rotationAngleBank[i]), 2).OnComplete(() => isFinished = true);
             PopTip(1);
-            yield return new WaitForSeconds(1f);
-            if (i < animators.Length)
+            yield return new WaitForSeconds(2f);
+            if (i < animators.Length && animators[i])
                 animators[i].SetBool("Go", true);
             yield return new WaitUntil(delegate { return isFinished; });
             yield return new WaitForSeconds(1);
-            if (i < animators.Length)
+            if (i < animators.Length && animators[i])
                 animators[i].SetBool("Go", false);
         }
         print("YEAH!");
@@ -81,37 +99,18 @@ public class PlaybackManager : Singleton<PlaybackManager>
         canControll = true;
     }
 
-    [SerializeField]
-    float radius;
-    [ContextMenu("SetPostitions")]
-    public void SetPostitions()
-    {
-        if(platformParent = GameObject.Find("PlatformParent").transform) return;
-        int i = 0;
-        float sectionAngle = Mathf.PI * 2 / platformParent.childCount;
-        foreach (Transform camPos in platformParent)
-        {
-            camPos.position = new Vector3(radius * Mathf.Cos(sectionAngle * i), 0, radius * Mathf.Sin(sectionAngle * i));
-            camPos.eulerAngles = new Vector3(0, -i * 360 / platformParent.childCount + 90);
-            i++;
-        }
-        Debug.Log("Set positons of" + platformParent.childCount);
-    }
-
     float currentAngle;
-    private void RotatePlatform(int i = 1)
+    private void RotatePlatform(int direction = 1)
     {
-        platformParent.DOKill();
-        if (i == 1)
+        if (direction == 1)
         {
             currentAngle += 360 / platformParent.childCount;
-            PopTip(i);
         }
-        else if (i == -1)
+        else if (direction == -1)
         {
             currentAngle -= 360 / platformParent.childCount;
-            PopTip(i);
-        }        
+        }
+        PopTip(direction);
         platformParent.DORotate(new Vector3(0, currentAngle), 2).OnComplete(() => isFinished = true);
     }
 
@@ -120,6 +119,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
     private void PopTip(int direction)
     {
         if (UIs[lastUIID]) UIs[lastUIID].rectTransform.DOLocalMoveX(-1426, 0.4f);
+
         if (direction == -1)
         {
             lastUIID--;
@@ -130,17 +130,24 @@ public class PlaybackManager : Singleton<PlaybackManager>
             lastUIID++;
             if (lastUIID > UIs.Length - 1) lastUIID = 0;
         }
-        if (lastUIID < animators.Length)
-            animators[lastUIID].SetBool("Go", true);
+        Debug.Log(lastUIID);
+        if (lastUIID < animators.Length && animators[lastUIID])
+            DOVirtual.DelayedCall(2,() => animators[lastUIID].SetBool("Go", true));
+        //animators[lastUIID].SetBool(lastUIID.ToString(), true);
         UIs[lastUIID].transform.localPosition = new Vector3(-277,1000,0);
         UIs[lastUIID].transform.DOLocalMoveY(-78,0.4f);
     }
 
-    public void PushPose(PoseType poseType)
+    void SetAnimators()
     {
-        if (!archivedPoseTypes.Contains(poseType))
+        animators = new Animator[totalPoseTypes.Length]; //
+        int i = 0;
+        foreach (Transform platform in platformParent)
         {
-            archivedPoseTypes.Add(poseType);
+            Debug.Log("", platform);
+            Debug.Log("", platform.GetComponentInChildren<Animator>());
+            animators[i] = platform.GetComponentInChildren<Animator>();
+            i++;
         }
     }
     void CheckPoseTypes()
@@ -159,6 +166,51 @@ public class PlaybackManager : Singleton<PlaybackManager>
             }
         }
     }
+    void LoadPoses()
+    {
+        for (int i = 0; i < totalPoseTypes.Length; i++)
+        {
+            GameObject go = Resources.Load("Pose/Bear_Playback_" + totalPoseTypes[i].ToString()) as GameObject;
+            if (!go)
+            {
+                Debug.Log("Pose/Bear_Playback_Routes_" + totalPoseTypes[i].ToString() + " is empty");
+                go = Resources.Load("Pose/Bear_Playback_Empty") as GameObject;
+            }
+            go = Instantiate(go, platformParent);
+        }
+    }
+    void LoadUIs()
+    {
+        for (int i = 0; i < totalPoseTypes.Length; i++)
+        {
+            GameObject go = Resources.Load("Tips/Tip_" + totalPoseTypes[i].ToString()) as GameObject;
+            if (!go)
+            {
+                go = Resources.Load("Pose/Tip_empty") as GameObject;
+            }
+            go = Instantiate(go, UIParent);
+            //Debug.Log();
+            //go.GetComponent<>
+        }
+        UIs = UIParent.GetComponentsInChildren<Image>();
+        lastUIID = UIs.Length - 1;
+    }
+    [SerializeField]
+    float radius;
+    [ContextMenu("SetPostitions")]
+    public void SetPostitions()
+    {        
+        int i = 0;
+        float sectionAngle = Mathf.PI * 2 / platformParent.childCount;
+        foreach (Transform camPos in platformParent)
+        {
+            camPos.position = new Vector3(radius * Mathf.Cos(sectionAngle * i), 0, radius * Mathf.Sin(sectionAngle * i));
+            camPos.eulerAngles = new Vector3(0, -i * 360 / platformParent.childCount + 90);
+            i++;
+        }
+        Debug.Log("Set positons of " + platformParent.childCount);
+    }
+
 }
 public enum PoseType
 {
@@ -166,14 +218,4 @@ public enum PoseType
     Watch,
     Extinguisher,
     Routes
-}
-
-class PlayerControllerT : MonoBehaviour
-{
-    Animator animator;
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
-
 }

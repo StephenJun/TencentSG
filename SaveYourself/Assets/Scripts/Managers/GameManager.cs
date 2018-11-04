@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
 
 	public GameObject timer;
-
-	[HideInInspector]
+    public int currentLevel = 1;
+    [HideInInspector]
     public Camera viewCamera;
     Vector3 currentTargetPositon;
 
@@ -82,6 +83,27 @@ public class GameManager : Singleton<GameManager> {
         }
     }
     #endregion
+
+    public void NextLevel()
+    {
+        int levelNum = currentLevel + 1;
+        string levelName = levelNum.ToString();
+        if (currentLevel < 10)
+        {
+            levelName = "0" + levelName;
+        }
+        SceneManager.LoadScene("Level" + levelName);
+    }
+    public void RestartLevel()
+    {
+        int levelNum = currentLevel;
+        string levelName = levelNum.ToString();
+        if (currentLevel < 10)
+        {
+            levelName = "0" + levelName;
+        }
+        SceneManager.LoadScene("Level" + levelName);
+    }
 }
 
 
