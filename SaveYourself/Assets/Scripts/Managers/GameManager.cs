@@ -34,8 +34,14 @@ public class GameManager : Singleton<GameManager> {
 
     public void NextLevel()
     {
+        Start();
         int levelNum = currentLevel + 1;
         string levelName = levelNum.ToString();
+        if (levelNum == 2)
+        {
+            SceneManager.LoadScene("MainMenu");
+            return;
+        }
         if (currentLevel < 10)
         {
             levelName = "0" + levelName;

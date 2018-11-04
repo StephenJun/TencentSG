@@ -32,7 +32,6 @@ public class PlaybackManager : Singleton<PlaybackManager>
     }
     public void StartPlayback()
     {
-
         StartCoroutine(PlaybackCoroutine());
     }
     public void PushPose(PoseType poseType)
@@ -42,7 +41,14 @@ public class PlaybackManager : Singleton<PlaybackManager>
             archivedPoseTypes.Add(poseType);
         }
     }
-
+    public void Level2()
+    {
+        canControll = false;
+        archivedPoseTypes.Clear();
+        animators.Initialize();
+        LevelData levelData = null;
+        totalPoseTypes = JsonHandler.LoadLevelData(ref levelData, 1).totolType;
+    }
 
     private void Update()
     {

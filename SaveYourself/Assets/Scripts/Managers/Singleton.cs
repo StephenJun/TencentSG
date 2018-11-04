@@ -11,6 +11,10 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         {            
             Instance = GetComponent<T>();
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
