@@ -9,12 +9,7 @@ public class AlarmClock : InteractiveObject {
 	private void Start()
 	{
 		showTime = Random.Range(0,24);
-		LevelController.Instance.SmartDoorHandler(showTime);
-		OnInteractive += delegate
-		{
-			showTime = Random.Range(0, 24);
-			LevelController.Instance.SmartDoorHandler(showTime);
-			detailInfo = "Current time is " + showTime.ToString();
-		};
+		detailInfo = "Current time is " + showTime.ToString();
+		LevelController.Instance.startTime = showTime;
 	}
 }

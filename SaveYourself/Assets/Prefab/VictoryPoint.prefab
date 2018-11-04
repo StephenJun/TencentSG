@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114498488020583762}
   m_Layer: 0
   m_Name: VictoryPoint
-  m_TagString: Untagged
+  m_TagString: InteractiveObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,13 +36,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1084142792216022}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.91, y: 3.7279532, z: -1.35}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 18.97, y: 0, z: 4.85}
   m_LocalScale: {x: 0.14, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!23 &23743988732078258
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -94,8 +94,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 26.242886, y: 1, z: 1}
-  m_Center: {x: 12.621442, y: 0, z: 0}
+  m_Size: {x: 4.6308103, y: 1, z: 1}
+  m_Center: {x: 1.8153831, y: 0, z: 1.9239252e-16}
 --- !u!114 &114498488020583762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -107,4 +107,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2062e021ab72838468f922221a21780a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detailInfo: This is the entrance!
+  itemName: door
+  maxStack: 1
+  timeNeedToCollect: 0
+  durability: 100
+  depletionSpeed: 8
+  confirmButtonName: Pick
+  stateCanInteract: 3
+  defaultColor: {r: 0.5147059, g: 0, b: 0, a: 1}
+  highlightColor: {r: 0.5, g: 0.40344828, b: 0, a: 1}
+  IsHighLight: 0
   timerNeedToPass: 5

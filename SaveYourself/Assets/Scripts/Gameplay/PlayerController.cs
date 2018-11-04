@@ -98,6 +98,11 @@ public class PlayerController : Singleton<PlayerController>
 				UIManager.currentWindow.CancelAction();
 		}
 
+		if (Input.GetKeyDown(KeyCode.L))
+		{
+			InventoryManager.Instance.inventory.Initialization();
+		}
+
 		if (Input.GetKeyDown(SwitchItem) && InputManager.Instance.canSwitch)
 		{
 			InventoryManager.Instance.inventory.SwitchItem();

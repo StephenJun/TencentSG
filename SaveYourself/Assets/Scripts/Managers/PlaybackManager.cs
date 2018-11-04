@@ -45,7 +45,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
     {
         canControll = false;
         archivedPoseTypes.Clear();
-        animators.Initialize();
+		animators = new Animator[3];
         LevelData levelData = null;
         totalPoseTypes = JsonHandler.LoadLevelData(ref levelData, 1).totolType;
     }

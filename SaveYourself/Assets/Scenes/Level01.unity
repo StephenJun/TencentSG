@@ -3013,20 +3013,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4795078, y: 4.6851273, z: 0.85819715}
-  m_Center: {x: -4.2602415, y: 2.3425627, z: 0.42909703}
---- !u!65 &188562392
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 188562390}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.4469014, y: 4.6851273, z: 0.85819715}
-  m_Center: {x: -0.7234245, y: 2.3425627, z: 0.4290962}
+  m_Size: {x: 5.0000176, y: 4.6851273, z: 0.858197}
+  m_Center: {x: -2.4999726, y: 2.3425627, z: 0.42909318}
 --- !u!1 &194220829
 GameObject:
   m_ObjectHideFlags: 0
@@ -27458,7 +27446,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4314060056313648, guid: 78e5698e793f342498bd013aac8ae108, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 4.6
+      value: 4.85
       objectReference: {fileID: 0}
     - target: {fileID: 4314060056313648, guid: 78e5698e793f342498bd013aac8ae108, type: 2}
       propertyPath: m_LocalRotation.x
@@ -27480,28 +27468,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 4314060056313648, guid: 78e5698e793f342498bd013aac8ae108, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
-      objectReference: {fileID: 0}
     - target: {fileID: 1084142792216022, guid: 78e5698e793f342498bd013aac8ae108, type: 2}
       propertyPath: m_Name
       value: VictoryPoint (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 65914976191517314, guid: 78e5698e793f342498bd013aac8ae108,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 2.9255176
-      objectReference: {fileID: 0}
-    - target: {fileID: 65914976191517314, guid: 78e5698e793f342498bd013aac8ae108,
-        type: 2}
-      propertyPath: m_Center.x
-      value: 0.96273696
-      objectReference: {fileID: 0}
-    - target: {fileID: 65914976191517314, guid: 78e5698e793f342498bd013aac8ae108,
-        type: 2}
-      propertyPath: m_Center.z
-      value: 1.2357475e-16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 78e5698e793f342498bd013aac8ae108, type: 2}

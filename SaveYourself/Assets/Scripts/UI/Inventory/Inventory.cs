@@ -47,7 +47,7 @@ public class Inventory : MonoBehaviour {
 		{
 			if(slot.transform.childCount > 0)
 			{
-				Destroy(slot.transform.GetChild(0));
+				Destroy(slot.transform.GetChild(0).gameObject);
 			}
 		}
 	}

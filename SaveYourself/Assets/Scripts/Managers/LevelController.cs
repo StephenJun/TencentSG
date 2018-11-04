@@ -9,6 +9,8 @@ public class LevelController : Singleton<LevelController> {
 
 	[HideInInspector]
 	public GameState gameState;
+	[HideInInspector]
+	public int startTime;
 	public int levelIndex = 0;
 	private Text timerTxt;
 	[SerializeField]
@@ -22,6 +24,8 @@ public class LevelController : Singleton<LevelController> {
 
 	[SerializeField]
 	private GameObject[] doors;
+	[SerializeField]
+	private GameObject[] beforeAndAfter;
 
 	private bool hasFiremanAppeared;
     private Transform fireSpawnerRoot;
@@ -65,9 +69,11 @@ public class LevelController : Singleton<LevelController> {
 	public void GameStart()
 	{
 		InventoryManager.Instance.inventory.Initialization();
+		PlaybackManager.Instance.Level2();
 		UIManager.PopWindow(WindowName.HUD, 0, 0f);
 		UIManager.currentWindow = null;
 		MapManager.Instance.UseMap(levelIndex);
+		GameManager.Instance.currentLevel = levelIndex;
 		SwitchGameState(GameState.SearchState);
 	}
 
@@ -96,12 +102,22 @@ public class LevelController : Singleton<LevelController> {
 		InputManager.Instance.canControl = true;
 		GameManager.Instance.timer.SetActive(false);
 		AudioManager.Instance.PlayExploreBGM();
+		PlaybackManager.Instance.PushPose(PoseType.Watch);
 		PlayerController.Instance.expression.ShowExpression(ExpressionType.Music, 3.0f);
 		yield return null;
 	}
 
 	private IEnumerator StartEscapeState()
 	{
+		if (levelIndex == 1)
+		{
+			SmartDoorHandler(startTime);
+		}
+		if (beforeAndAfter.Length > 0)
+		{
+			beforeAndAfter[0].SetActive(false);
+			beforeAndAfter[1].SetActive(true);
+		}
 		FloorManager.Instance.GameStart();
 		GameManager.Instance.timer.SetActive(true);
 		AudioManager.Instance.PlayEscapeBGM();
