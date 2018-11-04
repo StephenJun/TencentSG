@@ -6,12 +6,9 @@ public class Towel : InteractiveObject {
 
 	[HideInInspector]
 	public float defenderProvided;
-	public bool isWet = false;
 
-	[SerializeField]
-	private float dryDefender = 0.8f;
-	[SerializeField]
-	private float wetDefender = 0.4f;
+	public float dryDefender = 0.6f;
+	public float wetDefender = 0.3f;
 
 	private void Start()
 	{
@@ -20,11 +17,6 @@ public class Towel : InteractiveObject {
 			InventoryManager.Instance.inventory.AddItem(this);
 			this.gameObject.SetActive(false);
 		};
-	}
-
-	private void Update()
-	{
-		defenderProvided = isWet ? wetDefender : dryDefender;
 	}
 
 }

@@ -11,7 +11,7 @@ public class WaterPool : InteractiveObject {
 			ItemUI preTowel = InventoryManager.Instance.inventory.CheckIfHasTypeOfItem<Towel>();
 			if (preTowel)
 			{
-				preTowel.interObj.GetComponent<Towel>().isWet = true;
+				preTowel.interObj.GetComponent<Towel>().defenderProvided = preTowel.interObj.GetComponent<Towel>().wetDefender;
 				preTowel.interObj.GetComponent<Towel>().itemName = "WetTowel";
 				preTowel.UpdateIcon();
 			}

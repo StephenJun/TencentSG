@@ -6,6 +6,9 @@ using CWindow;
 
 public class GenericPopup : BaseWindow {
 
-
+	public void Init(bool showCancelButton)
+	{
+		CancelButton[0].gameObject.SetActive(showCancelButton);
+	}
 
 }

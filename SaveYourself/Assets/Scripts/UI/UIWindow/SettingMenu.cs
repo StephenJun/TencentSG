@@ -11,8 +11,8 @@ public class SettingMenu : BaseWindow {
     public void OnCloseButton()
     {
         UIManager.CloseWindow(WindowName.SettingMenu);
-        AudioManager.Instance.PlayButtonClickedAudio();
-    }
+		AudioManager.Instance.PlayUIAudioClip(UIAudioClip.buttonClick1);
+	}
 
     //private float _brightness;
     //public float Brightness

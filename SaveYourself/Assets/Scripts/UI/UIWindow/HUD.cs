@@ -17,16 +17,30 @@ public class HUD : BaseWindow {
 			playerHpBar.fillAmount = PlayerController.Instance._playerPara.hp / 100;
 			playerHpText.text = PlayerController.Instance._playerPara.hp.ToString("00") + " / 100";
 			float tempHp = PlayerController.Instance._playerPara.hp;
+			int tempIndex = PlayerController.Instance.currentCharIndex;
+			string charPortraitName = "";
+			switch (tempIndex)
+			{
+				case 0:
+					charPortraitName = "HeadPortrait/UI_Ninja_";
+					break;
+				case 1:
+					charPortraitName = "HeadPortrait/UI_Thief_";
+					break;
+				case 2:
+					charPortraitName = "HeadPortrait/UI_Bear_";
+					break;
+			}
 			if (tempHp < 33)
 			{
-				HeadPortrait.sprite = Resources.Load<Sprite>("HeadPortrait/UI_Bear_Fail");
+				HeadPortrait.sprite = Resources.Load<Sprite>(charPortraitName + "Fail");
 			}else if (tempHp < 66)
 			{
-				HeadPortrait.sprite = Resources.Load<Sprite>("HeadPortrait/UI_Bear_Hurry");
+				HeadPortrait.sprite = Resources.Load<Sprite>(charPortraitName + "Hurry");
 			}
 			else
 			{
-				HeadPortrait.sprite = Resources.Load<Sprite>("HeadPortrait/UI_Bear_Success");
+				HeadPortrait.sprite = Resources.Load<Sprite>(charPortraitName + "Success");
 			}
 		}		
 	}

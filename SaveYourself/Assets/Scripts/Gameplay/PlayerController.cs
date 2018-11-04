@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using CWindow;
-using System;
 
 //[RequireComponent(typeof(CharacterController))]
 public class PlayerController : Singleton<PlayerController>
@@ -20,6 +19,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         public float hp = 100;
 		public float speed = 5;
+		public GameObject[] charModels;
 	}
 
     public PlayerParameter _playerPara = new PlayerParameter();
@@ -30,6 +30,7 @@ public class PlayerController : Singleton<PlayerController>
 
 	public float damageMultiplier = 1;
 	private InteractiveObject currentEquipped;
+	[HideInInspector]public int currentCharIndex;
 
     [SerializeField]
     private Camera viewCamera;
@@ -41,17 +42,29 @@ public class PlayerController : Singleton<PlayerController>
 
     protected override void Awake()
     {
-        base.Awake();
-        navMeshAgent = GetComponent<NavMeshAgent>();
+		navMeshAgent = GetComponent<NavMeshAgent>();
 		charController = GetComponent<CharacterController>();
 		rb = GetComponent<Rigidbody>();
 		anim = GetComponentInChildren<Animator>();
+		base.Awake();
     }
     void Start()
     {
-        GameManager.Instance.player = this;
+		GameManager.Instance.player = this;
         GameManager.Instance.viewCamera = viewCamera;
+		GetRandomCharacter();
     }
+
+	private void GetRandomCharacter()
+	{
+		foreach (var item in _playerPara.charModels)
+		{
+			item.SetActive(false);
+		}
+		currentCharIndex = Random.Range(0, _playerPara.charModels.Length);
+		_playerPara.charModels[currentCharIndex].SetActive(true);
+		anim = _playerPara.charModels[currentCharIndex].GetComponent<Animator>();
+	}
 
 	private void Update()
 	{

@@ -12,7 +12,9 @@ public class PlayerSpwanPoint : MonoBehaviour {
         PlayerController pc = other.GetComponent<PlayerController>();
         if (pc)
         {
-			UIManager.PopWindow(WindowName.GenericPopup, "Go to sleep?").confirm += delegate
+			BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "Go to sleep?");
+			popup.GetComponent<GenericPopup>().Init(true);
+			popup.confirm += delegate
 			{
 				gameObject.SetActive(false);
 				InputManager.Instance.canControl = false;

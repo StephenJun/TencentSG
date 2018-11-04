@@ -12,8 +12,8 @@ public class MainMenu : BaseWindow {
         UIManager.CloseWindow(WindowName.MainMenu, 0);
         UIManager.PopWindow(WindowName.HUD, 0, 0f);
         UIManager.currentWindow = null;
-        AudioManager.Instance.PlayButtonClickedAudio();
-        SceneManager.LoadScene("FloorTest");
+		AudioManager.Instance.PlayUIAudioClip(UIAudioClip.buttonClick1);
+        SceneManager.LoadScene("Level01");
         
         //GameManager.Instance.GameStart();
     }
@@ -21,8 +21,8 @@ public class MainMenu : BaseWindow {
     public void OnSettingOpenButton()
     {
         UIManager.PopWindow(WindowName.SettingMenu);
-        AudioManager.Instance.PlayButtonClickedAudio();
-    }
+		AudioManager.Instance.PlayUIAudioClip(UIAudioClip.buttonClick1);
+	}
 
     public void OnQuitButton()
     {
@@ -32,8 +32,8 @@ public class MainMenu : BaseWindow {
     public override void Close(float time = 0.1F)
     {
         base.Close(time);
-        AudioManager.Instance.PlayButtonClickedAudio();
-    }
+		AudioManager.Instance.PlayUIAudioClip(UIAudioClip.buttonClick1);
+	}
 
 
 }

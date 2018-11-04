@@ -107,12 +107,14 @@ public class LevelController : Singleton<LevelController> {
     private IEnumerator StartAllClearState()
     {
 		InputManager.Instance.canControl = false;
-        StopCoroutine("StartEscapeState");
-        UIManager.PopWindow(WindowName.GenericPopup, "You survived!! ^_^").confirm += delegate
-        {
-            UIManager.CloseWindow(WindowName.HUD, 0f);
-            SceneManager.LoadSceneAsync("Gym").completed += LevelController_completed;
-        };
+		StopCoroutine("StartEscapeState");
+		BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "You survived!! ^_^");
+		popup.GetComponent<GenericPopup>().Init(false);
+		popup.confirm += delegate
+		{
+			UIManager.CloseWindow(WindowName.HUD, 0f);
+			SceneManager.LoadSceneAsync("Gym").completed += LevelController_completed;
+		};
         yield return null;
     }
 
@@ -120,10 +122,11 @@ public class LevelController : Singleton<LevelController> {
     {
 		InputManager.Instance.canControl = false;
         StopCoroutine("StartEscapeState");
-        UIManager.PopWindow(WindowName.GenericPopup, "You Died").confirm += delegate
+		BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "You Died");
+		popup.GetComponent<GenericPopup>().Init(false);
+		popup.confirm += delegate
         {
-            UIManager.CloseWindow(WindowName.HUD, 0f);
-            //SceneManager.LoadScene("MainMenu");
+			UIManager.CloseWindow(WindowName.HUD, 0f);
             SceneManager.LoadSceneAsync("Gym").completed += LevelController_completed;
         };
         yield return null;
