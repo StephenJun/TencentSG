@@ -7,7 +7,7 @@ public class SettingManager : Singleton<SettingManager> {
     public Settings setting;
 	void Start () {
         JsonHandler.LoadFile(ref setting);
-	}
+    }
     void OnDestory()
     {
         JsonHandler.SaveFile(setting);
@@ -25,6 +25,7 @@ public class Settings
     {
         save = new Save();
         save.a = 5;
+
     }
 }
 [System.Serializable]
@@ -33,4 +34,5 @@ public class Save
     public int a;
     int b;
     int c;
+    public PoseType[] pt;
 }

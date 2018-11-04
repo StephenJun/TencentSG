@@ -8,16 +8,32 @@ public class PlaybackManager : Singleton<PlaybackManager>
 
     bool isFinished;
     bool canControll;
-    float[] rotationAngleBank;
-    Transform platformParent;
-    Image[] UIs;
-    Animator[] animators;
-    public float radius;
 
+    Transform platformParent;
+    Animator[] animators;
+    PoseType[] totalPoseTypes;
+    List<PoseType> archivedPoseTypes;
+    bool[] archieved;
+    //to do 建立一个对象池 根据totalPoseTypes取出相应的对象 置入platform子物体 setposition 根据archieved点亮动作
     void Start()
     {
-        //UIs = transform.Find("UIs").GetComponentsInChildren<Image>();
+        LevelData levelData = null;
+        totalPoseTypes = JsonHandler.LoadLevelData(ref levelData, 1).totolType;
+        archivedPoseTypes = new List<PoseType>();
+
+        PushPose(PoseType.Extinguisher);
+        PushPose(PoseType.Extinguisher);
+        PushPose(PoseType.Extinguisher);
+        PushPose(PoseType.Smoke);
+
+        StartPlayback();
+    }
+    public void StartPlayback()
+    {
+        UIs = GameObject.Find("Canvas/UIs").GetComponentsInChildren<Image>();
+        lastUIID = UIs.Length - 1;
         StartCoroutine(PlaybackCoroutine());
+        CheckPoseTypes();
 
     }
     private void Update()
@@ -26,14 +42,16 @@ public class PlaybackManager : Singleton<PlaybackManager>
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                RotatePlatform(1);
+                RotatePlatform(-1);
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
-                RotatePlatform(-1);
+                RotatePlatform(1);
             }
         }
     }
+
+    float[] rotationAngleBank;
     IEnumerator PlaybackCoroutine()
     {
         platformParent = GameObject.Find("PlatformParent").transform;
@@ -48,29 +66,33 @@ public class PlaybackManager : Singleton<PlaybackManager>
         for (int i = 0; i < rotationAngleBank.Length; i++)
         {
             isFinished = false;
-            platformParent.DORotate(new Vector3(0, rotationAngleBank[i]), 2).OnComplete(() => isFinished = true);
+            platformParent.DORotate(new Vector3(0, rotationAngleBank[i]), 2, RotateMode.FastBeyond360).OnComplete(() => isFinished = true);
+            PopTip(1);
             yield return new WaitForSeconds(1f);
             if (i < animators.Length)
                 animators[i].SetBool("Go", true);
             yield return new WaitUntil(delegate { return isFinished; });
             yield return new WaitForSeconds(1);
+            if (i < animators.Length)
+                animators[i].SetBool("Go", false);
         }
         print("YEAH!");
         currentAngle = platformParent.eulerAngles.y;
         canControll = true;
     }
 
+    [SerializeField]
+    float radius;
     [ContextMenu("SetPostitions")]
     public void SetPostitions()
     {
-        platformParent = GameObject.Find("PlatformParent").transform;
+        if(platformParent = GameObject.Find("PlatformParent").transform) return;
         int i = 0;
         float sectionAngle = Mathf.PI * 2 / platformParent.childCount;
         foreach (Transform camPos in platformParent)
         {
             camPos.position = new Vector3(radius * Mathf.Cos(sectionAngle * i), 0, radius * Mathf.Sin(sectionAngle * i));
             camPos.eulerAngles = new Vector3(0, -i * 360 / platformParent.childCount + 90);
-            PopTip(i);
             i++;
         }
         Debug.Log("Set positons of" + platformParent.childCount);
@@ -83,17 +105,75 @@ public class PlaybackManager : Singleton<PlaybackManager>
         if (i == 1)
         {
             currentAngle += 360 / platformParent.childCount;
+            PopTip(i);
         }
-        else
+        else if (i == -1)
         {
             currentAngle -= 360 / platformParent.childCount;
+            PopTip(i);
         }        
         platformParent.DORotate(new Vector3(0, currentAngle), 2).OnComplete(() => isFinished = true);
     }
-    Image lastUI;
-    private void PopTip(int i)
+
+    int lastUIID;
+    Image[] UIs;
+    private void PopTip(int direction)
     {
-        //if (lastUI) lastUI.
-        UIs[i].transform.DOScale(0,0.8f);
+        if (UIs[lastUIID]) UIs[lastUIID].rectTransform.DOLocalMoveX(-1426, 0.4f);
+        if (direction == -1)
+        {
+            lastUIID--;
+            if (lastUIID < 0) lastUIID = UIs.Length - 1;
+        }
+        else if (direction == 1)
+        {
+            lastUIID++;
+            if (lastUIID > UIs.Length - 1) lastUIID = 0;
+        }
+        if (lastUIID < animators.Length)
+            animators[lastUIID].SetBool("Go", true);
+        UIs[lastUIID].transform.localPosition = new Vector3(-277,1000,0);
+        UIs[lastUIID].transform.DOLocalMoveY(-78,0.4f);
     }
+
+    public void PushPose(PoseType poseType)
+    {
+        if (!archivedPoseTypes.Contains(poseType))
+        {
+            archivedPoseTypes.Add(poseType);
+        }
+    }
+    void CheckPoseTypes()
+    {
+        archieved = new bool[totalPoseTypes.Length];
+        foreach (var item in archivedPoseTypes)
+        {
+            int index = 0;
+            foreach (var item2 in totalPoseTypes)
+            {
+                if (item == item2)
+                {
+                    archieved[index] = true;
+                }
+                index++;
+            }
+        }
+    }
+}
+public enum PoseType
+{
+    Smoke,
+    Watch,
+    Extinguisher,
+    Routes
+}
+
+class PlayerControllerT : MonoBehaviour
+{
+    Animator animator;
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
 }

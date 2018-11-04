@@ -15,14 +15,13 @@ public class JsonHandler
         {
             data = JsonMapper.ToObject<T>(File.ReadAllText(filePath));            
             Debug.Log("[" + typeName + "]读取成功...");
-            return data;
         }
         else
         {
             SaveFile(data);
             Debug.Log("[" + typeName + "]初始化成功...");
-            return data;
         }
+        return data;
     }
 
     static public T SaveFile<T>(T data)
@@ -34,6 +33,24 @@ public class JsonHandler
         sw.Close();
         sw.Dispose();
         Debug.Log("[" + typeName + "]保存成功...");
+        return data;
+    }
+
+    static public LevelData LoadLevelData(ref LevelData data, int level)
+    {
+        string levelString = level.ToString();
+        if (level < 10) levelString = "0" + levelString;
+        string filePath = Application.streamingAssetsPath + "/Levels/Level_" + levelString + ".txt";
+        string typeName = dictionary.ContainsKey(typeof(LevelData)) ? dictionary[typeof(LevelData)] : "Unregeisted Type";
+        if (File.Exists(filePath))
+        {
+            data = JsonMapper.ToObject<LevelData>(File.ReadAllText(filePath));
+            Debug.Log("[" + typeName + "]读取成功...");
+        }
+        else
+        {
+            Debug.Log(filePath + " 文件不存在");
+        }
         return data;
     }
 }

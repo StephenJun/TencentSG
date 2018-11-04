@@ -104,34 +104,34 @@ public class LevelController : Singleton<LevelController> {
 		SwitchGameState(GameState.GameOver);
 	}
 
-	private IEnumerator StartAllClearState()
-	{
-		StopCoroutine("StartEscapeState");
-		UIManager.PopWindow(WindowName.GenericPopup, "You survived!! ^_^").confirm += delegate
-		{
-			UIManager.CloseWindow(WindowName.HUD, 0f);
-			SceneManager.LoadSceneAsync("MainMenu").completed += LevelController_completed;
-		};
-		yield return null;
-	}
+    private IEnumerator StartAllClearState()
+    {
+        StopCoroutine("StartEscapeState");
+        UIManager.PopWindow(WindowName.GenericPopup, "You survived!! ^_^").confirm += delegate
+        {
+            UIManager.CloseWindow(WindowName.HUD, 0f);
+            SceneManager.LoadSceneAsync("Gym").completed += LevelController_completed;
+        };
+        yield return null;
+    }
 
-	private IEnumerator StartGameOver()
-	{
-		StopCoroutine("StartEscapeState");
-		InputManager.Instance.canControl = false;
-		UIManager.PopWindow(WindowName.GenericPopup, "You Died").confirm += delegate
-		{
-			UIManager.CloseWindow(WindowName.HUD, 0f);
-			//SceneManager.LoadScene("MainMenu");
-			SceneManager.LoadSceneAsync("MainMenu").completed += LevelController_completed;
-		};
-		yield return null;
-	}
+    private IEnumerator StartGameOver()
+    {
+        StopCoroutine("StartEscapeState");
+        UIManager.PopWindow(WindowName.GenericPopup, "You Died").confirm += delegate
+        {
+            UIManager.CloseWindow(WindowName.HUD, 0f);
+            //SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadSceneAsync("Gym").completed += LevelController_completed;
+        };
+        yield return null;
+    }
 
-	private void LevelController_completed(AsyncOperation obj)
-	{
-		GameEffectManager.Instance.Init();
-	}
-	#endregion
+    private void LevelController_completed(AsyncOperation obj)
+    {
+        GameEffectManager.Instance.Init();
+        PlaybackManager.Instance.StartPlayback();
+    }
+    #endregion
 
 }
