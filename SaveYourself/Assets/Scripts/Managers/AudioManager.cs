@@ -139,17 +139,18 @@ public class AudioManager : Singleton<AudioManager>
 
 public enum GamePlayAudioClip
 {
-	playerSpawnClip,
-	playerDodgeClip,
-	playerHurtClip,
-	playerDeathClip,
-	switchWeaponClip,
-	DiscardWeaponClip,
-	PickupItemClip,
-	ChestSpawnClip,
-	EnemyHurtClip,
-	EnemyDeathClip,
-	EnemyAttackClip
+	Expression,
+	Extinguisher,
+	Extinguisher_Excute,
+	Fail,
+	Fire,
+	FireEngine,
+	GetMoney,
+	Interactive,
+	Success,
+	Switch,
+	Walk,
+	Water
 }
 
 public enum UIAudioClip

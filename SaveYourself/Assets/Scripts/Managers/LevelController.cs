@@ -20,6 +20,9 @@ public class LevelController : Singleton<LevelController> {
 	[SerializeField]
 	private GameObject fireman2;
 
+	[SerializeField]
+	private GameObject[] doors;
+
 	private bool hasFiremanAppeared;
     private Transform fireSpawnerRoot;
     private List<Transform> fireSpawners = new List<Transform>();
@@ -35,16 +38,25 @@ public class LevelController : Singleton<LevelController> {
 		GameStart();
     }
 
-
-	private void SpawnFireEffect()
+	public void SmartDoorHandler(int time)
 	{
-		GameEffectManager.Instance.AddWorldEffect("FlyingFlame",fireSpawnerRoot.position, 1, -1);
-		foreach (var spwaner in fireSpawners)
+		foreach (var door in doors)
 		{
-			GameEffectManager.Instance.AddWorldEffect("Fire", spwaner.position, 1, -1);
-			GameEffectManager.Instance.AddWorldEffect("VFX_Smoke", spwaner.position, Random.Range(0.5f, 4.0f), -1);
+			door.SetActive(false);
+		}
+		if(time <= 8)
+		{
+			doors[0].SetActive(true);
+		}else if (time <= 16)
+		{
+			doors[1].SetActive(true);
+		}
+		else
+		{
+			doors[2].SetActive(true);
 		}
 	}
+
 
 	#region GameStateHandler
 	public void GameStart()
