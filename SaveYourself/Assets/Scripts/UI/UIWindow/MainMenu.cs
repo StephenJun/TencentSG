@@ -4,9 +4,12 @@ using UnityEngine;
 using CWindow;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.UI;
+using DG.Tweening;
 public class MainMenu : BaseWindow {
 
-	
+    [SerializeField]Button[] buttons = new Button[3];
+    
     public void OnStartButton()
     {
         UIManager.CloseWindow(WindowName.MainMenu, 0);
@@ -65,6 +68,11 @@ public class MainMenu : BaseWindow {
             {
                 UIManager.currentWindow.Close();
             }
+            foreach (var item in buttons)
+            {
+                item.targetGraphic.color = Color.white;
+            }
+            DOTween.To(() => buttons[currentSelection].targetGraphic.color, x => buttons[currentSelection].targetGraphic.color = x, new Color32(180, 180, 180, 255), 0.3f);
         }
 
     }

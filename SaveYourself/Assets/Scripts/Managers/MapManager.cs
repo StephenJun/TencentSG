@@ -24,7 +24,7 @@ public class MapManager : MonoBehaviour
     private void Awake()
     {
         rotationHandler = transform.Find("RotationHandler").gameObject.GetComponent<RectTransform>();
-        originTransform = rotationHandler.Find("MapOrigin").gameObject.GetComponent<RectTransform>();
+        originTransform = rotationHandler.Find("MapOrigin 1").gameObject.GetComponent<RectTransform>();
         coverTransform = rotationHandler.Find("MapCover").gameObject.GetComponent<RectTransform>();
         fog = new Texture2D((int)originTransform.sizeDelta.x, (int)originTransform.sizeDelta.y, TextureFormat.Alpha8, false);
         rotationHandler.Find("MapCover").gameObject.GetComponent<RawImage>().texture = fog;
