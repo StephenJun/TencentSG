@@ -23,12 +23,6 @@ public class PlaybackManager : Singleton<PlaybackManager>
         totalPoseTypes = JsonHandler.LoadLevelData(ref levelData, 1).totolType;
         archivedPoseTypes = new List<PoseType>();
 
-        PushPose(PoseType.Extinguisher);
-        PushPose(PoseType.Extinguisher);
-        PushPose(PoseType.Extinguisher);
-        PushPose(PoseType.Smoke);
-
-        StartPlayback();
     }
     public void StartPlayback()    {
 
@@ -41,6 +35,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
             archivedPoseTypes.Add(poseType);
         }
     }
+
 
     private void Update()
     {
