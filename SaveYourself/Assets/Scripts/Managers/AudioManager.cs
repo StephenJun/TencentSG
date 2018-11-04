@@ -83,7 +83,9 @@ public class AudioManager : Singleton<AudioManager>
 	}
 
 	public AudioClip menuBGM;
-	public AudioClip battleBGM;
+	public AudioClip exploreBGM;
+	public AudioClip escapeBGM;
+	public AudioClip playbackBGM;
 	[SerializeField]
 	private AudioSource bgmAudioSource;
 	[SerializeField]
@@ -98,21 +100,28 @@ public class AudioManager : Singleton<AudioManager>
 		InitAudioClip();
 	}
 
-	void Update()
-	{
-
-	}
-
-	public void PlayBattleBGM()
-	{
-		bgmAudioSource.clip = battleBGM;
-		bgmAudioSource.loop = true;
-		bgmAudioSource.Play();
-	}
 
 	public void PlayMenuBGM()
 	{
 		bgmAudioSource.clip = menuBGM;
+		bgmAudioSource.loop = true;
+		bgmAudioSource.Play();
+	}
+	public void PlayExploreBGM()
+	{
+		bgmAudioSource.clip = exploreBGM;
+		bgmAudioSource.loop = true;
+		bgmAudioSource.Play();
+	}
+	public void PlayEscapeBGM()
+	{
+		bgmAudioSource.clip = escapeBGM;
+		bgmAudioSource.loop = true;
+		bgmAudioSource.Play();
+	}
+	public void PlayPlaybackBGM()
+	{
+		bgmAudioSource.clip = playbackBGM;
 		bgmAudioSource.loop = true;
 		bgmAudioSource.Play();
 	}
@@ -125,12 +134,6 @@ public class AudioManager : Singleton<AudioManager>
 	public void PlayGameplayAudioClip(GamePlayAudioClip clip)
 	{
 		gameplayAudioSource.PlayOneShot(gameplayAudioIndex[clip]);
-		print(1);
-	}
-
-	public void PlayGameplayAudioClip(AudioClip clip)
-	{
-		gameplayAudioSource.PlayOneShot(clip);
 	}
 }
 

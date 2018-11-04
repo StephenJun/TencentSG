@@ -23,7 +23,8 @@ public class GameManager : Singleton<GameManager> {
     }
 
     void Start () {
-        UIManager.PopWindow(CWindow.WindowName.MainMenu, 0, 0f);     
+        UIManager.PopWindow(CWindow.WindowName.MainMenu, 0, 0f);
+		AudioManager.Instance.PlayMenuBGM();
     }
     void Update()
     {

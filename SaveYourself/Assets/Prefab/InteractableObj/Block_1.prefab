@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1469ebac05f7bc4fadd6dc368d7676d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detailInfo: I'm a box too
+  detailInfo: I'm a box
   itemName: Blocks
   maxStack: 1
   timeNeedToCollect: 1.5

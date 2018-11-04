@@ -8,12 +8,12 @@ public class WaterPool : InteractiveObject {
 	{
 		OnInteractive += delegate
 		{
-			ItemUI preTowel = InventoryManager.Instance.inventory.CheckIfHasTypeOfItem<Towel>();
+			Towel preTowel = InventoryManager.Instance.inventory.CheckIfHasTypeOfItem<Towel>().interObj as Towel;
 			if (preTowel)
 			{
-				preTowel.interObj.GetComponent<Towel>().defenderProvided = preTowel.interObj.GetComponent<Towel>().wetDefender;
-				preTowel.interObj.GetComponent<Towel>().itemName = "WetTowel";
-				preTowel.UpdateIcon();
+				preTowel.defenderProvided = preTowel.wetDefender;
+				preTowel.itemName = "WetTowel";
+				InventoryManager.Instance.inventory.CheckIfHasTypeOfItem<Towel>().UpdateIcon();
 			}
 		};
 	}

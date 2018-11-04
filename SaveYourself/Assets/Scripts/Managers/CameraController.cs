@@ -11,13 +11,10 @@ public class CameraController : Singleton<CameraController>
     public float height;
     public float speed = 100;
 
-	public Component smokeScript;
-	public Component shockScript;
-
 	private void Start()
 	{
-		smokeScript.GetComponent<CameraFilterPack_3D_Fog_Smoke>().enabled = false;
-		shockScript.GetComponent<CameraFilterPack_FX_EarthQuake>().enabled = false;
+		GetComponent<CameraFilterPack_3D_Fog_Smoke>().enabled = false;
+		GetComponent<CameraFilterPack_FX_EarthQuake>().enabled = false;
 	}
 
 
@@ -33,12 +30,17 @@ public class CameraController : Singleton<CameraController>
 
 	public void SetSmokeShaderActive(bool newActive)
 	{
-		smokeScript.GetComponent<CameraFilterPack_3D_Fog_Smoke>().enabled = newActive;
+		GetComponent<CameraFilterPack_3D_Fog_Smoke>().enabled = newActive;
 	}
 
 	public void SetShockShaderActive(bool newAction)
 	{
-		smokeScript.GetComponent<CameraFilterPack_FX_EarthQuake>().enabled = newAction;
+		GetComponent<CameraFilterPack_FX_EarthQuake>().enabled = newAction;
+	}
+
+	public void SetRGBShaderActive(Color newColor, float duration)
+	{
+		DOTween.To(()=> GetComponent<CameraFilterPack_Color_RGB>().ColorRGB, x => GetComponent<CameraFilterPack_Color_RGB>().ColorRGB = x, newColor, duration);
 	}
 
 }

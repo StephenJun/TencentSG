@@ -76,6 +76,7 @@ public class LevelController : Singleton<LevelController> {
 	{
 		InputManager.Instance.canControl = true;
 		GameManager.Instance.timer.SetActive(false);
+		AudioManager.Instance.PlayExploreBGM();
 		yield return null;
 	}
 
@@ -83,7 +84,9 @@ public class LevelController : Singleton<LevelController> {
 	{
 		FloorManager.Instance.GameStart();
 		GameManager.Instance.timer.SetActive(true);
+		AudioManager.Instance.PlayEscapeBGM();
 		CameraController.Instance.SetSmokeShaderActive(true);
+		CameraController.Instance.SetRGBShaderActive(Color.white, 0.5f);
 		PlayerController.Instance.expression.ShowExpression(ExpressionType.Shock);
 		InputManager.Instance.canControl = true;
 		float initTime = TimeOfEacapeState;
@@ -137,6 +140,7 @@ public class LevelController : Singleton<LevelController> {
     {
         GameEffectManager.Instance.Init();
         PlaybackManager.Instance.StartPlayback();
+		AudioManager.Instance.PlayPlaybackBGM();
     }
     #endregion
 

@@ -119,5 +119,5 @@ MonoBehaviour:
   highlightColor: {r: 0.90344834, g: 1, b: 0, a: 1}
   IsHighLight: 0
   defenderProvided: 0.1
-  dryDefender: 0.6
-  wetDefender: 0.3
+  dryDefender: 0.4
+  wetDefender: 0.2
