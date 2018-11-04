@@ -6,7 +6,7 @@ using CWindow;
 public class Extinguisher : InteractiveObject
 {
 	public Transform jetTrans;
-
+    public bool canBeUsed;
 	private float shootTimer = 0;
 
     private void Start()
@@ -19,11 +19,17 @@ public class Extinguisher : InteractiveObject
 			transform.rotation = PlayerController.Instance.CarrierTrans.rotation;
 			//PlayerController.Instance.playerActions.Add(new PlayerAction());
 			this.gameObject.SetActive(false);
+            ExtinguisherGame ex = UIManager.PopWindow(WindowName.extinguisherGame) as ExtinguisherGame;
+            ex.OnPickUp();
+            canBeUsed = false;
+
         };
+
     }
 
 	public override void OnUsing()
 	{
+        if (!canBeUsed) return;
 		shootTimer += Time.deltaTime;
 		if(shootTimer > 0.1f)
 		{

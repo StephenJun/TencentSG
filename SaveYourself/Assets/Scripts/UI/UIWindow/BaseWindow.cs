@@ -9,6 +9,7 @@ namespace CWindow
     using UnityEngine.UI;
     public class BaseWindow : MonoBehaviour
     {
+        public bool isOpen;
         public bool locked = false;
         public WindowName windowName;
         public WindowName upperName;
@@ -95,13 +96,13 @@ namespace CWindow
 
         public virtual void Pop(WindowName _upperWindow = WindowName.None, float time = 0.5f)
         {
-			ClearDelegate();
+            ClearDelegate();
             upperName = _upperWindow;
-            m_transform.DOScale(1, time);
+            m_transform.DOScale(1, time).OnComplete(() => isOpen = true);
         }
         public virtual void Close(float time = 0.8f)
         {
-            m_transform.DOScale(0, time);
+            m_transform.DOScale(0, time).OnComplete(() => isOpen = false);
             if (!isRoot)
             {
                 UIManager.PopWindow(upperName);
@@ -130,6 +131,7 @@ namespace CWindow
         MainMenu,
         SettingMenu,
         HUD,
-		GenericPopup
+		GenericPopup,
+        extinguisherGame
     }
 }

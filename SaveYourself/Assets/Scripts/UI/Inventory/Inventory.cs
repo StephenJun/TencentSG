@@ -8,8 +8,20 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour {
 
 	public Action timerComplete;
-
-    [HideInInspector]
+    public bool isInventoryFull {
+        get
+        {
+            bool _bool = true;
+            foreach (var slot in slotArray)
+            {
+                //print(slot.itemUIObject != null);
+                _bool = _bool && (slot.transform.childCount != 0);
+            }
+            //print("-----" + _bool);
+            return _bool;
+        }
+    }
+    //[HideInInspector]
     public Slot[] slotArray;
 
     [SerializeField]
@@ -160,12 +172,15 @@ public class Inventory : MonoBehaviour {
 
 	private Slot FindEmptySlot(InteractiveObject item)
     {
+        int i = 0;
         foreach (Slot slot in slotArray)
         {
             if (slot.transform.childCount < 1)
             {
-                    return slot;
+                currentSlotIndex = i;
+                return slot;
             }
+            i++;
         }
         return null;
     }

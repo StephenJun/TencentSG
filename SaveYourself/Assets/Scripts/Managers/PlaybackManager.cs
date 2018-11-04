@@ -23,6 +23,10 @@ public class PlaybackManager : Singleton<PlaybackManager>
         totalPoseTypes = JsonHandler.LoadLevelData(ref levelData, 1).totolType;
         archivedPoseTypes = new List<PoseType>();
 
+        //PushPose(PoseType.Extinguisher);
+        //PushPose(PoseType.Extinguisher);
+        //PushPose(PoseType.Routes);
+        //StartPlayback();
     }
     public void StartPlayback()    {
 
@@ -59,6 +63,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
             }
         }
     }
+
     IEnumerator PlaybackCoroutine()
     {
         
@@ -75,7 +80,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
         {
             rotationAngleBank[i] = i * sectionAngle;
         }
-
+        
         for (int i = 0; i < rotationAngleBank.Length; i++)
         {
             isFinished = false;
@@ -97,6 +102,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
     float currentAngle;
     private void RotatePlatform(int direction = 1)
     {
+        if (!isFinished) return;
         if (direction == 1)
         {
             currentAngle += 360 / platformParent.childCount;
@@ -125,7 +131,6 @@ public class PlaybackManager : Singleton<PlaybackManager>
             lastUIID++;
             if (lastUIID > UIs.Length - 1) lastUIID = 0;
         }
-        Debug.Log(lastUIID);
         if (lastUIID < animators.Length && animators[lastUIID])
             DOVirtual.DelayedCall(2,() => animators[lastUIID].SetBool("Go", true));
         //animators[lastUIID].SetBool(lastUIID.ToString(), true);
@@ -179,9 +184,9 @@ public class PlaybackManager : Singleton<PlaybackManager>
         for (int i = 0; i < totalPoseTypes.Length; i++)
         {
             GameObject go = Resources.Load("Tips/Tip_" + totalPoseTypes[i].ToString()) as GameObject;
-            if (!go)
+            if (!go || !archieved[i])
             {
-                go = Resources.Load("Pose/Tip_empty") as GameObject;
+                go = Resources.Load("Tips/Tip_empty") as GameObject;
             }
             go = Instantiate(go, UIParent);
             //Debug.Log();

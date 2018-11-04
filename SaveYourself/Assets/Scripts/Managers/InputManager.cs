@@ -5,5 +5,6 @@ using UnityEngine;
 public class InputManager : Singleton<InputManager> {
 
 	public bool canControl = true;
+    public bool canSwitch = true;
 
 }

@@ -98,7 +98,7 @@ public class PlayerController : Singleton<PlayerController>
 				UIManager.currentWindow.CancelAction();
 		}
 
-		if (Input.GetKeyDown(SwitchItem))
+		if (Input.GetKeyDown(SwitchItem) && InputManager.Instance.canSwitch)
 		{
 			InventoryManager.Instance.inventory.SwitchItem();
 		}
@@ -156,7 +156,7 @@ public class PlayerController : Singleton<PlayerController>
 				lastObject.GetComponent<InteractiveObject>().HighlightOn();
 				expression.ShowExpression(ExpressionType.Search);
 			}
-			if (Input.GetKeyDown(InteractKey))
+			if (Input.GetKeyDown(InteractKey) && !InventoryManager.Instance.inventory.isInventoryFull)
 			{
 				InteractiveObject io = hitInfo.collider.GetComponent<InteractiveObject>();
 				if (io)

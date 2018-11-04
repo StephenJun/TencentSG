@@ -12,7 +12,7 @@ public class InteractiveObject : MonoBehaviour
 	public float durability = 100;
 	public float depletionSpeed = 8.0f;
 	public string confirmButtonName = "Pick";
-	public GameState stateCanInteract = GameState.EscapeState;
+    public GameState stateCanInteract = GameState.EscapeState;
 
 	public Color defaultColor = Color.white;
 	public Color highlightColor = Color.red;
