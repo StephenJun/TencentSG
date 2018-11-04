@@ -131,9 +131,15 @@ public class AudioManager : Singleton<AudioManager>
 		UIAudioSource.PlayOneShot(UIAudioIndex[clip]);
 	}
 
-	public void PlayGameplayAudioClip(GamePlayAudioClip clip)
+	public void PlayGameplayAudioClip(GamePlayAudioClip clip, bool loopType = false)
 	{
 		gameplayAudioSource.PlayOneShot(gameplayAudioIndex[clip]);
+		gameplayAudioSource.loop = loopType;
+	}
+
+	public void StopGameplayAudio()
+	{
+		gameplayAudioSource.Stop();
 	}
 }
 

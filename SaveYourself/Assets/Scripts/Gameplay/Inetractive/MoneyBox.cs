@@ -8,6 +8,7 @@ public class MoneyBox : InteractiveObject {
 	{
 		OnInteractive += delegate {
 			InventoryManager.Instance.inventory.AddItem(this);
+			AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.GetMoney);
 		};
 
 	}

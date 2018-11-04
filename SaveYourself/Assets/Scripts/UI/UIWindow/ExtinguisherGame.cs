@@ -25,6 +25,7 @@ public class ExtinguisherGame : BaseWindow{
         {
             if (Input.GetKeyDown(KeyCode.J))
             {
+				AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Extinguisher_Excute);
                 if (i == 0) images[0].DOFade(0, 1);
                 if (i == 1) images[2].DOFade(0, 1);
                 if (i == 2) images[1].DOFade(0, 1);

@@ -31,6 +31,7 @@ public class Expression : MonoBehaviour {
 				sr.sprite = Resources.Load<Sprite>("ExpressionIcon/E_Music");
 				break;
 		}
+		AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Expression);
 		sr.DOFade(1, 0.2f);
 
 		DOVirtual.DelayedCall(duration, () => HideExpression());

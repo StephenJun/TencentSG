@@ -123,8 +123,9 @@ public class LevelController : Singleton<LevelController> {
 
     private IEnumerator StartAllClearState()
     {
-		InputManager.Instance.canControl = false;
 		StopCoroutine("StartEscapeState");
+		InputManager.Instance.canControl = false;
+		AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Success);
 		BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "You survived!! ^_^");
 		popup.GetComponent<GenericPopup>().Init(false, "win");
 		popup.confirm += delegate
@@ -137,8 +138,9 @@ public class LevelController : Singleton<LevelController> {
 
     private IEnumerator StartGameOver()
     {
+		StopCoroutine("StartEscapeState");
+		AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Fail);
 		InputManager.Instance.canControl = false;
-        StopCoroutine("StartEscapeState");
 		BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "You Died");
 		popup.GetComponent<GenericPopup>().Init(false, "fail");
 		popup.confirm += delegate

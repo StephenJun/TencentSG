@@ -29,6 +29,7 @@ public class PlayerSpwanPoint : MonoBehaviour {
 			{
 				gameObject.SetActive(false);
 				InputManager.Instance.canControl = false;
+				AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.FireEngine);
 				pc.expression.ShowExpression(ExpressionType.Sleep, 2.0f);
 				CameraController.Instance.SetRGBShaderActive(Color.black, 3.0f);
 				DOVirtual.DelayedCall(3.0f, () => {

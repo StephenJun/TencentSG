@@ -8,6 +8,7 @@ public class WaterPool : InteractiveObject {
 	{
 		OnInteractive += delegate
 		{
+			AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Water);
 			Towel preTowel = InventoryManager.Instance.inventory.CheckIfHasTypeOfItem<Towel>().interObj as Towel;
 			if (preTowel)
 			{

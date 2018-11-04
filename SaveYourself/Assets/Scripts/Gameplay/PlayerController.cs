@@ -101,6 +101,17 @@ public class PlayerController : Singleton<PlayerController>
 		if (Input.GetKeyDown(SwitchItem) && InputManager.Instance.canSwitch)
 		{
 			InventoryManager.Instance.inventory.SwitchItem();
+			AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Switch);
+		}
+
+		if (Input.GetKeyDown(UsingItem))
+		{
+			currentEquipped = InventoryManager.Instance.inventory.EquippedItem();
+			if (currentEquipped is Extinguisher)
+			{
+				PlaybackManager.Instance.PushPose(PoseType.Extinguisher);
+				AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Extinguisher);
+			}
 		}
 
 		if (Input.GetKey(UsingItem))
@@ -112,8 +123,6 @@ public class PlayerController : Singleton<PlayerController>
 			}
 			if (currentEquipped is Extinguisher)
 			{
-				anim.SetBool("HoldOrNot", true);
-				PlaybackManager.Instance.PushPose(PoseType.Extinguisher);
 				for (int i = 1; i < 5; i++)
 				{
 					int posX = Mathf.CeilToInt((transform.position + transform.forward * i).x);
@@ -131,6 +140,7 @@ public class PlayerController : Singleton<PlayerController>
 		if (Input.GetKeyUp(UsingItem))
 		{
 			anim.SetBool("HoldOrNot", false);
+			AudioManager.Instance.StopGameplayAudio();
 			if (CarrierTrans.childCount != 0)
 			{
 				currentEquipped = CarrierTrans.GetChild(0).GetComponent<InteractiveObject>();
