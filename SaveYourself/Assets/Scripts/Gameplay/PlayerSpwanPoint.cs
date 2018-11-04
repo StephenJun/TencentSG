@@ -24,12 +24,12 @@ public class PlayerSpwanPoint : MonoBehaviour {
         if (pc)
         {
 			BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "Go to sleep?");
-			popup.GetComponent<GenericPopup>().Init(true);
+			popup.GetComponent<GenericPopup>().Init(true, "tip");
 			popup.confirm += delegate
 			{
 				gameObject.SetActive(false);
 				InputManager.Instance.canControl = false;
-				pc.expression.ShowExpression(ExpressionType.Sleep);
+				pc.expression.ShowExpression(ExpressionType.Sleep, 2.0f);
 				CameraController.Instance.SetRGBShaderActive(Color.black, 3.0f);
 				DOVirtual.DelayedCall(3.0f, () => {
 					LevelController.Instance.SwitchGameState(GameState.EscapeState);

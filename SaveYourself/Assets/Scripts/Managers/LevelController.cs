@@ -77,6 +77,7 @@ public class LevelController : Singleton<LevelController> {
 		InputManager.Instance.canControl = true;
 		GameManager.Instance.timer.SetActive(false);
 		AudioManager.Instance.PlayExploreBGM();
+		PlayerController.Instance.expression.ShowExpression(ExpressionType.Music, 3.0f);
 		yield return null;
 	}
 
@@ -87,17 +88,17 @@ public class LevelController : Singleton<LevelController> {
 		AudioManager.Instance.PlayEscapeBGM();
 		CameraController.Instance.SetSmokeShaderActive(true);
 		CameraController.Instance.SetRGBShaderActive(Color.white, 0.5f);
-		PlayerController.Instance.expression.ShowExpression(ExpressionType.Shock);
+		PlayerController.Instance.expression.ShowExpression(ExpressionType.Shock, 1.0f);
 		InputManager.Instance.canControl = true;
 		float initTime = TimeOfEacapeState;
 		while (initTime > 0)
 		{
 			yield return null;
 			initTime -= Time.deltaTime;
-			float minutes = initTime / 60;
-			float seconds = initTime - minutes * 60;
+			float seconds = initTime % 60;
+			float minutes = (initTime - seconds) / 60;
 			timerTxt.text = (minutes).ToString("00") + " : " + (initTime % 60).ToString("00");
-			PlayerController.Instance.DamageReceiver(0.5f * Time.deltaTime);
+			PlayerController.Instance.DamageReceiver(1f * Time.deltaTime);
 			if(initTime < timingOfFiremanAppear && !hasFiremanAppeared)
 			{
 				fireman1.SetActive(true);
@@ -113,7 +114,7 @@ public class LevelController : Singleton<LevelController> {
 		InputManager.Instance.canControl = false;
 		StopCoroutine("StartEscapeState");
 		BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "You survived!! ^_^");
-		popup.GetComponent<GenericPopup>().Init(false);
+		popup.GetComponent<GenericPopup>().Init(false, "win");
 		popup.confirm += delegate
 		{
 			UIManager.CloseWindow(WindowName.HUD, 0f);
@@ -127,7 +128,7 @@ public class LevelController : Singleton<LevelController> {
 		InputManager.Instance.canControl = false;
         StopCoroutine("StartEscapeState");
 		BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "You Died");
-		popup.GetComponent<GenericPopup>().Init(false);
+		popup.GetComponent<GenericPopup>().Init(false, "fail");
 		popup.confirm += delegate
         {
 			UIManager.CloseWindow(WindowName.HUD, 0f);

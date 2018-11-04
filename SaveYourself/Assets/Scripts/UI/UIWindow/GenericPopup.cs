@@ -6,9 +6,12 @@ using CWindow;
 
 public class GenericPopup : BaseWindow {
 
-	public void Init(bool showCancelButton)
+	public Image img_Title;
+
+	public void Init(bool showCancelButton, string title)
 	{
 		CancelButton[0].gameObject.SetActive(showCancelButton);
+		img_Title.sprite = Resources.Load<Sprite>("UI/Ribbon_" + title);
 	}
 
 }

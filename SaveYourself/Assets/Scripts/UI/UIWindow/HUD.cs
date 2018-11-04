@@ -15,7 +15,7 @@ public class HUD : BaseWindow {
 		if (PlayerController.Instance)
 		{
 			playerHpBar.fillAmount = PlayerController.Instance._playerPara.hp / 100;
-			playerHpText.text = PlayerController.Instance._playerPara.hp.ToString("00") + " / 100";
+			playerHpText.text = PlayerController.Instance._playerPara.hp.ToString("00") + " %";
 			float tempHp = PlayerController.Instance._playerPara.hp;
 			int tempIndex = PlayerController.Instance.currentCharIndex;
 			string charPortraitName = "";

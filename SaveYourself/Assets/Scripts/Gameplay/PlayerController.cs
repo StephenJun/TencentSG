@@ -154,7 +154,7 @@ public class PlayerController : Singleton<PlayerController>
 			{
 				lastObject = hitInfo.collider.gameObject;
 				lastObject.GetComponent<InteractiveObject>().HighlightOn();
-				expression.ShowExpression(ExpressionType.Search);
+				expression.ShowExpression(ExpressionType.Search, 1.5f);
 			}
 			if (Input.GetKeyDown(InteractKey) && !InventoryManager.Instance.inventory.isInventoryFull)
 			{
