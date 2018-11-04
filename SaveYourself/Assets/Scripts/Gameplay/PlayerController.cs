@@ -36,6 +36,7 @@ public class PlayerController : Singleton<PlayerController>
     private NavMeshAgent navMeshAgent;
 	private CharacterController charController;
 	private Rigidbody rb;
+	private Animator anim;
 	private GameObject lastObject;
 
     protected override void Awake()
@@ -44,6 +45,7 @@ public class PlayerController : Singleton<PlayerController>
         navMeshAgent = GetComponent<NavMeshAgent>();
 		charController = GetComponent<CharacterController>();
 		rb = GetComponent<Rigidbody>();
+		anim = GetComponentInChildren<Animator>();
     }
     void Start()
     {
@@ -53,15 +55,19 @@ public class PlayerController : Singleton<PlayerController>
 
 	private void Update()
 	{
-		float horizontalInput = Input.GetAxis("Horizontal");
-		float vertivalInput = Input.GetAxis("Vertical");
-		Vector3 charDir = new Vector3(horizontalInput, 0, vertivalInput);
-		//charController.Move(charDir * _playerPara.speed);		
-		if (charDir != Vector3.zero && InputManager.Instance.canControl)
+		if (InputManager.Instance.canControl)
 		{
-			rb.velocity = charDir * _playerPara.speed;
-			Quaternion tempRot = Quaternion.LookRotation(charDir, Vector3.up);
-			transform.rotation = tempRot;
+			float horizontalInput = Input.GetAxis("Horizontal");
+			float vertivalInput = Input.GetAxis("Vertical");
+			Vector3 charDir = new Vector3(horizontalInput, 0, vertivalInput);
+			anim.SetFloat("Speed", charDir.magnitude);
+			//charController.Move(charDir * _playerPara.speed);		
+			if (charDir != Vector3.zero)
+			{
+				rb.velocity = charDir * _playerPara.speed;
+				Quaternion tempRot = Quaternion.LookRotation(charDir, Vector3.up);
+				transform.rotation = tempRot;
+			}
 		}
 
 		//~~~~~~Interactive Input Handler~~~~~~~
@@ -93,6 +99,8 @@ public class PlayerController : Singleton<PlayerController>
 			}
 			if (currentEquipped is Extinguisher)
 			{
+				anim.SetBool("HoldOrNot", true);
+				PlaybackManager.Instance.PushPose(PoseType.Extinguisher);
 				for (int i = 1; i < 5; i++)
 				{
 					int posX = Mathf.CeilToInt((transform.position + transform.forward * i).x);
@@ -102,13 +110,15 @@ public class PlayerController : Singleton<PlayerController>
 	
 			}else if(currentEquipped is Towel)
 			{
+				PlaybackManager.Instance.PushPose(PoseType.Smoke);
 				damageMultiplier = currentEquipped.GetComponent<Towel>().defenderProvided;
 			}
 		}
 
 		if (Input.GetKeyUp(UsingItem))
 		{
-			if(CarrierTrans.childCount != 0)
+			anim.SetBool("HoldOrNot", false);
+			if (CarrierTrans.childCount != 0)
 			{
 				currentEquipped = CarrierTrans.GetChild(0).GetComponent<InteractiveObject>();
 			}	
@@ -203,19 +213,18 @@ public class PlayerController : Singleton<PlayerController>
 			{
 				InventoryManager.Instance.inventory.ShowTimerWhenInteracting(targetObj.timeNeedToCollect, targetObj.OnInteractive, targetObj.transform);
 			};
-		}
-
-        //yield return new WaitForSeconds(2f);
-        //UIManager.CloseWindow(WindowName.ParentsCenter);
-        
+		}        
     }
 
 
     #region PlayerParaStatus
     public void DamageReceiver(float damage)
     {
-        _playerPara.hp -= damage * damageMultiplier;
-        if(_playerPara.hp <= 0)
+		if(_playerPara.hp > 0)
+		{
+			_playerPara.hp -= damage * damageMultiplier;
+		}    
+        if(_playerPara.hp <= 0 && InputManager.Instance.canControl)
         {
             Death();
         }

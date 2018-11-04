@@ -7,6 +7,7 @@ public class Blocks : InteractiveObject {
 	private void Start()
 	{
 		OnInteractive += delegate {
+			PlaybackManager.Instance.PushPose(PoseType.Routes);
 			Destroy(this.gameObject);
 		};
 

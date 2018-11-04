@@ -12,7 +12,7 @@ public class WallChunk : FracturedWreckage {
         //m_transfrom.DOLocalMove(m_transfrom.localPosition * 5f, 0.8f).From();
 
         float lastRandom = 1;
-        m_transfrom.DOLocalMove(m_transfrom.localPosition * 5f - Vector3.back * 100, 0.8f).From();
+        //m_transfrom.DOLocalMove(m_transfrom.localPosition * 5f - Vector3.back * 100, 0.8f).From();
         lastRandom = Random.Range(0.8f, 1f);
         transform.localScale = new Vector3(transform.localScale.x, lastRandom * transform.localScale.y, transform.localScale.z);
     }

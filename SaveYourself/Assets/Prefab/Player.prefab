@@ -894,7 +894,6 @@ GameObject:
   - component: {fileID: 114834983042280226}
   - component: {fileID: 54209621269281302}
   - component: {fileID: 136395080101025850}
-  - component: {fileID: 95472326653540290}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2469,23 +2468,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!95 &95472326653540290
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1805539627279614}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 01f4d70dd81192a41b47032a54733c27, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &95548255722552880
 Animator:
   serializedVersion: 3
@@ -2495,7 +2477,7 @@ Animator:
   m_GameObject: {fileID: 1393038622864504}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 83feb0eb5e32b4e439417e8ba8081709, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 01f4d70dd81192a41b47032a54733c27, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2522,7 +2504,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1805539627279614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: facbdd032cf93d4419e2c808e335365c, type: 3}
+  m_Script: {fileID: 11500000, guid: ad8fe195308da37498163336565d7324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ConfirmKey: 106
@@ -2532,7 +2514,7 @@ MonoBehaviour:
   InteractKey: 101
   _playerPara:
     hp: 100
-    speed: 10
+    speed: 5
   CarrierTrans: {fileID: 4144999512764914}
   expression: {fileID: 114479814270638054}
   damageMultiplier: 1
@@ -2701,5 +2683,5 @@ SpriteRenderer:
   m_Size: {x: 7.28, y: 6.74}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
