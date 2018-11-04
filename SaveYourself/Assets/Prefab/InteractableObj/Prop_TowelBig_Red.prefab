@@ -112,13 +112,12 @@ MonoBehaviour:
   maxStack: 1
   timeNeedToCollect: 1
   durability: 100
-  depletionSpeed: 8
+  depletionSpeed: 5
   confirmButtonName: Pick
   stateCanInteract: 1
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 0.90344834, g: 1, b: 0, a: 1}
   IsHighLight: 0
   defenderProvided: 0.1
-  isWet: 0
   dryDefender: 0.6
   wetDefender: 0.3

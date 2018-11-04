@@ -194,48 +194,13 @@ public class PlayerController : Singleton<PlayerController>
 	}
 
 
-	public void MoveTo(Vector3 destination)
-    {
-        navMeshAgent.SetDestination(new Vector3(destination.x,0,destination.z));
-    }
-    public void MoveTo(InteractiveObject targetObj)
-    {
-        StartCoroutine(MoveToObject(targetObj));
-        
-    }
-    IEnumerator MoveToObject(InteractiveObject targetObj)
-    {
-        navMeshAgent.SetDestination(targetObj.transform.position);
-        Vector3 target = targetObj.transform.position;
-        while (Vector3.Distance(target,transform.position) > 4.0f)
-        {
-            //Debug.Log(Vector3.Distance(target, transform.position));
-            yield return null;
-        }
-        navMeshAgent.SetDestination(transform.position);
-		BaseWindow bw = UIManager.PopWindow(WindowName.ParentsCenter, targetObj.detailInfo);
-		bw.GetComponent<RectTransform>().anchoredPosition = viewCamera.WorldToScreenPoint(targetObj.transform.position);
-		if (bw is NoticeInfo)
-		{
-			bw.GetComponent<NoticeInfo>().Init(LevelController.Instance.gameState == GameState.EscapeState, "Pick");
-		}
-		if (LevelController.Instance.gameState == GameState.EscapeState)
-        {
-
-			bw.confirm += delegate
-			{
-				InventoryManager.Instance.inventory.ShowTimerWhenInteracting(targetObj.timeNeedToCollect, targetObj.OnInteractive, targetObj.transform);
-			};
-		}        
-    }
-
-
     #region PlayerParaStatus
     public void DamageReceiver(float damage)
     {
 		if(_playerPara.hp > 0)
 		{
 			_playerPara.hp -= damage * damageMultiplier;
+			CameraController.Instance.SetShockShaderActive(true);
 		}    
         if(_playerPara.hp <= 0 && InputManager.Instance.canControl)
         {

@@ -83,6 +83,7 @@ public class LevelController : Singleton<LevelController> {
 	{
 		FloorManager.Instance.GameStart();
 		GameManager.Instance.timer.SetActive(true);
+		CameraController.Instance.SetSmokeShaderActive(true);
 		PlayerController.Instance.expression.ShowExpression(ExpressionType.Shock);
 		InputManager.Instance.canControl = true;
 		float initTime = TimeOfEacapeState;
@@ -93,7 +94,7 @@ public class LevelController : Singleton<LevelController> {
 			float minutes = initTime / 60;
 			float seconds = initTime - minutes * 60;
 			timerTxt.text = (minutes).ToString("00") + " : " + (initTime % 60).ToString("00");
-			//PlayerController.Instance.DamageReceiver(1 * Time.deltaTime);
+			PlayerController.Instance.DamageReceiver(0.5f * Time.deltaTime);
 			if(initTime < timingOfFiremanAppear && !hasFiremanAppeared)
 			{
 				fireman1.SetActive(true);

@@ -5510,7 +5510,7 @@ MonoBehaviour:
   InteractKey: 101
   _playerPara:
     hp: 100
-    speed: 5
+    speed: 3
     charModels:
     - {fileID: 1299122640508444}
     - {fileID: 1684826154798238}
@@ -5518,6 +5518,7 @@ MonoBehaviour:
   CarrierTrans: {fileID: 4144999512764914}
   expression: {fileID: 114479814270638054}
   damageMultiplier: 1
+  currentCharIndex: 0
   viewCamera: {fileID: 0}
 --- !u!136 &136395080101025850
 CapsuleCollider:

@@ -31,59 +31,6 @@ public class GameManager : Singleton<GameManager> {
         //HighLightController();
     }
 
-    void GetMouseInput()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (player == null)
-            {
-                Debug.Log("PLayer has not been registed");
-                return;
-            }
-            RaycastHit hitInfo;
-            if (Physics.Raycast(viewCamera.ScreenPointToRay(Input.mousePosition), out hitInfo) )
-            {
-                if (hitInfo.collider.tag == "InteractiveObject")
-                {
-                    player.MoveTo(hitInfo.collider.GetComponent<InteractiveObject>());
-                }
-                else
-                {
-                    player.MoveTo(hitInfo.point);
-                    Instantiate(playerMovePointEffect, hitInfo.point, Quaternion.identity);
-                }
-            }
-            Debug.Log(hitInfo.collider.gameObject.name);
-            Debug.DrawLine(viewCamera.transform.position,hitInfo.point,Color.red);
-
-            
-        }
-    }
-    #region HighLight
-    GameObject lastObject;
-
-    void HighLightController()
-    {
-        RaycastHit hitInfo;
-        if (Physics.Raycast(viewCamera.ScreenPointToRay(Input.mousePosition), out hitInfo) && hitInfo.collider.tag == "InteractiveObject")
-        {
-            if (lastObject != hitInfo.collider.gameObject)
-            {
-                lastObject = hitInfo.collider.gameObject;
-                lastObject.GetComponent<InteractiveObject>().HighlightOn();
-            }
-        }
-        else
-        {
-            if (lastObject)
-            {
-                lastObject.GetComponent<InteractiveObject>().HighlightOff();
-                lastObject = null;
-            }
-        }
-    }
-    #endregion
-
     public void NextLevel()
     {
         int levelNum = currentLevel + 1;
