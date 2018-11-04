@@ -23632,7 +23632,7 @@ GameObject:
   - component: {fileID: 393881786}
   - component: {fileID: 393881785}
   m_Layer: 5
-  m_Name: Image
+  m_Name: TipBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23668,7 +23668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

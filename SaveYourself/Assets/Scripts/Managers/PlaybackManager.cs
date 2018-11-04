@@ -14,6 +14,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
     Animator[] animators;
     PoseType[] totalPoseTypes;
     List<PoseType> archivedPoseTypes;
+    Image tipBar;
     bool[] archieved;
     //to do 建立一个对象池 根据totalPoseTypes取出相应的对象 置入platform子物体 setposition 根据archieved点亮动作
     void Start()
@@ -71,6 +72,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
 
         platformParent = GameObject.Find("PlatformParent").transform;
         UIParent = GameObject.Find("Canvas/UIs").transform;
+        tipBar = GameObject.Find("Canvas/TipBar").GetComponent<Image>();
         CheckPoseTypes();
         LoadPoses();
         LoadUIs();
@@ -99,6 +101,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
         print("YEAH!");
         currentAngle = platformParent.eulerAngles.y;
         RotatePlatform();
+        tipBar.DOFade(1, 0);
         canControll = true;
     }
 
@@ -138,8 +141,8 @@ public class PlaybackManager : Singleton<PlaybackManager>
         if (lastUIID < animators.Length && animators[lastUIID])
             DOVirtual.DelayedCall(2, () => animators[lastUIID].SetBool("Go", true));
         //animators[lastUIID].SetBool(lastUIID.ToString(), true);
-        UIs[lastUIID].transform.localPosition = new Vector3(-277, 1000, 0);
-        UIs[lastUIID].transform.DOLocalMoveY(-78, 0.4f);
+        UIs[lastUIID].transform.localPosition = new Vector3(-349, 1000, 0);
+        UIs[lastUIID].transform.DOLocalMoveY(80, 0.4f);
     }
 
     void SetAnimators()
