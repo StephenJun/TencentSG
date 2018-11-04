@@ -24,11 +24,13 @@ public class PlaybackManager : Singleton<PlaybackManager>
         archivedPoseTypes = new List<PoseType>();
 
         //PushPose(PoseType.Extinguisher);
-        //PushPose(PoseType.Extinguisher);
+        //PushPose(PoseType.Watch);
         //PushPose(PoseType.Routes);
+        //PushPose(PoseType.Smoke);
         //StartPlayback();
     }
-    public void StartPlayback()    {
+    public void StartPlayback()
+    {
 
         StartCoroutine(PlaybackCoroutine());
     }
@@ -66,9 +68,9 @@ public class PlaybackManager : Singleton<PlaybackManager>
 
     IEnumerator PlaybackCoroutine()
     {
-        
+
         platformParent = GameObject.Find("PlatformParent").transform;
-        UIParent = GameObject.Find("Canvas/UIs").transform;        
+        UIParent = GameObject.Find("Canvas/UIs").transform;
         CheckPoseTypes();
         LoadPoses();
         LoadUIs();
@@ -80,7 +82,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
         {
             rotationAngleBank[i] = i * sectionAngle;
         }
-        
+
         for (int i = 0; i < rotationAngleBank.Length; i++)
         {
             isFinished = false;
@@ -96,6 +98,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
         }
         print("YEAH!");
         currentAngle = platformParent.eulerAngles.y;
+        RotatePlatform();
         canControll = true;
     }
 
@@ -103,6 +106,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
     private void RotatePlatform(int direction = 1)
     {
         if (!isFinished) return;
+        isFinished = false;
         if (direction == 1)
         {
             currentAngle += 360 / platformParent.childCount;
@@ -132,10 +136,10 @@ public class PlaybackManager : Singleton<PlaybackManager>
             if (lastUIID > UIs.Length - 1) lastUIID = 0;
         }
         if (lastUIID < animators.Length && animators[lastUIID])
-            DOVirtual.DelayedCall(2,() => animators[lastUIID].SetBool("Go", true));
+            DOVirtual.DelayedCall(2, () => animators[lastUIID].SetBool("Go", true));
         //animators[lastUIID].SetBool(lastUIID.ToString(), true);
-        UIs[lastUIID].transform.localPosition = new Vector3(-277,1000,0);
-        UIs[lastUIID].transform.DOLocalMoveY(-78,0.4f);
+        UIs[lastUIID].transform.localPosition = new Vector3(-277, 1000, 0);
+        UIs[lastUIID].transform.DOLocalMoveY(-78, 0.4f);
     }
 
     void SetAnimators()
@@ -144,8 +148,6 @@ public class PlaybackManager : Singleton<PlaybackManager>
         int i = 0;
         foreach (Transform platform in platformParent)
         {
-            Debug.Log("", platform);
-            Debug.Log("", platform.GetComponentInChildren<Animator>());
             animators[i] = platform.GetComponentInChildren<Animator>();
             i++;
         }
@@ -199,7 +201,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
     float radius;
     [ContextMenu("SetPostitions")]
     public void SetPostitions()
-    {        
+    {
         int i = 0;
         float sectionAngle = Mathf.PI * 2 / platformParent.childCount;
         foreach (Transform camPos in platformParent)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CWindow;
 using UnityEngine.SceneManagement;
-
+using System;
 public class MainMenu : BaseWindow {
 
 	
@@ -34,6 +34,38 @@ public class MainMenu : BaseWindow {
         base.Close(time);
 		AudioManager.Instance.PlayUIAudioClip(UIAudioClip.buttonClick1);
 	}
+    protected override void Start()
+    {
+        base.Start();
+        actions[0] = OnStartButton;
+        actions[1] = OnSettingOpenButton;
+        actions[2] = OnQuitButton;
+    }
+    int currentSelection = 0;
+    Action[] actions = new Action[3];
+    public void Update()
+    {
+        if (isOpen)
+        {
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                currentSelection--;
+                if (currentSelection < 0) currentSelection = 2;
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                currentSelection++;
+                if (currentSelection > 2) currentSelection = 0;
+            }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                actions[currentSelection]();
+            }
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                UIManager.currentWindow.Close();
+            }
+        }
 
-
+    }
 }

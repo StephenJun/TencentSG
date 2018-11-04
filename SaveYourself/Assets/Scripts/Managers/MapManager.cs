@@ -20,6 +20,7 @@ public class MapManager : MonoBehaviour
     float scaleFactor = 5;
     float U;
     float V;
+    [SerializeField] GameObject[] map = new GameObject[2];
     private void Awake()
     {
         rotationHandler = transform.Find("RotationHandler").gameObject.GetComponent<RectTransform>();
@@ -54,8 +55,8 @@ public class MapManager : MonoBehaviour
 
     void Update()
     {
-        if (targetTransform == null) targetTransform = PlayerController.Instance.transform;
-        else UpdateMap1(Mapping(targetTransform.position));
+        if (!targetTransform && PlayerController.Instance) targetTransform = PlayerController.Instance.transform;
+        else if (targetTransform) UpdateMap1(Mapping(targetTransform.position));
 
     }
     public Vector2Int Mapping(Vector3 position)
@@ -73,7 +74,7 @@ public class MapManager : MonoBehaviour
         int playerPositionX = (int)(playerPosition.x * scaleFactor);
         int playerPositionY = (int)(playerPosition.y * scaleFactor);
         originTransform.localPosition = coverTransform.localPosition = new Vector3(-playerPositionX, -playerPositionY, 0);
-        rotationHandler.eulerAngles = new Vector3(0, 0, targetTransform.eulerAngles.y);
+        //rotationHandler.eulerAngles = new Vector3(0, 0, targetTransform.eulerAngles.y);
 
 
     }
@@ -81,12 +82,12 @@ public class MapManager : MonoBehaviour
     {
         int pixelX;
         int pixelY;
-        int playerPositionX = (int)(playerPosition.x * scaleFactor);
-        int playerPositionY = (int)(playerPosition.y * scaleFactor);
+        int playerPositionX = (int)(playerPosition.x);
+        int playerPositionY = (int)(playerPosition.y);
         originTransform.localPosition = coverTransform.localPosition = new Vector3(-playerPositionX, -playerPositionY, 0);
-        rotationHandler.eulerAngles = new Vector3(0, 0, targetTransform.eulerAngles.y);
+        //rotationHandler.eulerAngles = new Vector3(0, 0, targetTransform.eulerAngles.y);
         //get color from new positon
-        colorBuffer = fog.GetPixels((mapScaleX - miniMapScaleX ) / 2 + playerPositionX, (mapScaleY - miniMapScaleY) / 2 + playerPositionY , miniMapScaleX, miniMapScaleY);
+        //colorBuffer = fog.GetPixels((mapScaleX - miniMapScaleX) / 2 + playerPositionX, (mapScaleY - miniMapScaleY) / 2 + playerPositionY, miniMapScaleX, miniMapScaleY);
         //    int pixelNeedUpdateX = Mathf.Clamp(mapScaleX - (mapScaleX - miniMapScaleX) / 2 - playerPositionX, 0, miniMapScaleX);
         //    int pixelNeedUpdateY = Mathf.Clamp(mapScaleY - (mapScaleY - miniMapScaleY) / 2 - playerPositionY, 0, miniMapScaleY);
         //    colorBuffer = fog.GetPixels(
@@ -161,5 +162,20 @@ public class MapManager : MonoBehaviour
         }
         fog.SetPixels((mapScaleX - miniMapScaleX) / 2, (mapScaleY - miniMapScaleY) / 2, 256, 256, colorBuffer);
         fog.Apply();
+    }
+
+    public void UseMap(int index)
+    {
+        if (index == 0)
+        {
+            map[0].SetActive(true);
+            map[1].SetActive(false);
+        }
+        if (index == 1)
+        {
+            map[0].SetActive(false);
+            map[1].SetActive(true);
+        }
+
     }
 }
