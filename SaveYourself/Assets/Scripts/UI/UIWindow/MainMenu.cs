@@ -13,8 +13,6 @@ public class MainMenu : BaseWindow {
     public void OnStartButton()
     {
         UIManager.CloseWindow(WindowName.MainMenu, 0);
-        UIManager.PopWindow(WindowName.HUD, 0, 0f);
-        UIManager.currentWindow = null;
 		AudioManager.Instance.PlayUIAudioClip(UIAudioClip.buttonClick1);
         SceneManager.LoadScene("Level01");
         

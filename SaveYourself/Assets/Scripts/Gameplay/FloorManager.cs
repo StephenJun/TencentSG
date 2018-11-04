@@ -7,6 +7,7 @@ public class FloorManager : Singleton<FloorManager>
 
 	public int floorRow = 5;
 	public int floorColume = 5;
+	public string mapName = "IDMap_Level1";
 	public FloorDetail[,] fd;
 
 	private bool isStarted;
@@ -22,7 +23,7 @@ public class FloorManager : Singleton<FloorManager>
 	Color32 waterColor = new Color32(0, 0, 0, 255);
 	private void ReadIdMap()
 	{
-		Texture2D map = Resources.Load<Texture2D>("IDMaps/IDMap_Level1");
+		Texture2D map = Resources.Load<Texture2D>("IDMaps/" + mapName);
 		Color32[] colors = map.GetPixels32();
 		int k = 0;
 		fd = new FloorDetail[floorRow, floorColume];

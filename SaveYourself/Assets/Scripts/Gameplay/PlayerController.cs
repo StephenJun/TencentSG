@@ -109,6 +109,7 @@ public class PlayerController : Singleton<PlayerController>
 			currentEquipped = InventoryManager.Instance.inventory.EquippedItem();
 			if (currentEquipped is Extinguisher)
 			{
+				anim.SetBool("HoldOrNot", true);
 				PlaybackManager.Instance.PushPose(PoseType.Extinguisher);
 				AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Extinguisher);
 			}

@@ -5506,7 +5506,7 @@ MonoBehaviour:
   ConfirmKey: 106
   CancelKey: 107
   SwitchItem: 113
-  UsingItem: 304
+  UsingItem: 106
   InteractKey: 101
   _playerPara:
     hp: 100

@@ -9,7 +9,7 @@ public class LevelController : Singleton<LevelController> {
 
 	[HideInInspector]
 	public GameState gameState;
-
+	public int levelIndex = 0;
 	private Text timerTxt;
 	[SerializeField]
 	private float TimeOfEacapeState = 60.0F;
@@ -44,16 +44,19 @@ public class LevelController : Singleton<LevelController> {
 		{
 			door.SetActive(false);
 		}
-		if(time <= 8)
+		if(time <= 6)
 		{
 			doors[0].SetActive(true);
-		}else if (time <= 16)
+		}else if (time <= 12)
 		{
 			doors[1].SetActive(true);
+		}else if (time <= 18)
+		{
+			doors[2].SetActive(true);
 		}
 		else
 		{
-			doors[2].SetActive(true);
+			doors[3].SetActive(true);
 		}
 	}
 
@@ -61,6 +64,10 @@ public class LevelController : Singleton<LevelController> {
 	#region GameStateHandler
 	public void GameStart()
 	{
+		InventoryManager.Instance.inventory.Initialization();
+		UIManager.PopWindow(WindowName.HUD, 0, 0f);
+		UIManager.currentWindow = null;
+		//MapManager.Instance.UseMap(levelIndex);
 		SwitchGameState(GameState.SearchState);
 	}
 

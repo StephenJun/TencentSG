@@ -41,6 +41,17 @@ public class Inventory : MonoBehaviour {
 		checkBox = transform.Find("Img_CheckBox").GetComponent<Image>();
     }
 
+	public void Initialization()
+	{
+		foreach (var slot in slotArray)
+		{
+			if(slot.transform.childCount > 0)
+			{
+				Destroy(slot.transform.GetChild(0));
+			}
+		}
+	}
+
 	private void Update()
 	{
 		checkBox.rectTransform.position = Vector3.Lerp(checkBox.transform.position, slotArray[currentSlotIndex].transform.position, smothing * Time.deltaTime);
