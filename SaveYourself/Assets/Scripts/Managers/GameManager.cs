@@ -7,14 +7,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager> {
 
 	public GameObject timer;
-    public int currentLevel = 0;
+    public int currentLevel = 1;
     [HideInInspector]
     public Camera viewCamera;
-    Vector3 currentTargetPositon;
 
     public PlayerController player;
-    [SerializeField]
-    GameObject playerMovePointEffect;
+    public bool TestToggle;
 
 
     protected override void Awake()
@@ -35,7 +33,7 @@ public class GameManager : Singleton<GameManager> {
 
     public void NextLevel()
     {
-        int levelNum = currentLevel + 2;
+        int levelNum = ++currentLevel;
         string levelName = levelNum.ToString();
 		if(levelNum == 3)
 		{
@@ -47,6 +45,7 @@ public class GameManager : Singleton<GameManager> {
         {
             levelName = "0" + levelName;
         }
+
         SceneManager.LoadScene("Level" + levelName);
     }
     public void RestartLevel()

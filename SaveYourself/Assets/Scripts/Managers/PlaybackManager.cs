@@ -16,19 +16,22 @@ public class PlaybackManager : Singleton<PlaybackManager>
     List<PoseType> archivedPoseTypes;
     Image tipBar;
     bool[] archieved;
+    string defaultPlayerModel = "Bear";
+
     //to do 建立一个对象池 根据totalPoseTypes取出相应的对象 置入platform子物体 setposition 根据archieved点亮动作
     void Start()
     {
         //init
-        LevelData levelData = null;
-        totalPoseTypes = JsonHandler.LoadLevelData(ref levelData, 1).totolType;
-        archivedPoseTypes = new List<PoseType>();
-
         //PushPose(PoseType.Extinguisher);
         //PushPose(PoseType.Watch);
         //PushPose(PoseType.Routes);
         //PushPose(PoseType.Smoke);
-        //StartPlayback();
+
+    }
+    public void OnLevelInit(int levelIndex)
+    {
+        totalPoseTypes = LevelController.Instance.levelData.totolType;
+        archivedPoseTypes = new List<PoseType>();
     }
     public void StartPlayback()
     {
@@ -41,18 +44,10 @@ public class PlaybackManager : Singleton<PlaybackManager>
             archivedPoseTypes.Add(poseType);
         }
     }
-    public void Level2()
-    {
-        canControll = false;
-        archivedPoseTypes.Clear();
-		animators = new Animator[3];
-        LevelData levelData = null;
-        totalPoseTypes = JsonHandler.LoadLevelData(ref levelData, 1).totolType;
-    }
 
     private void Update()
     {
-        if (platformParent && canControll && isFinished)
+        if (canControll && isFinished)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -64,10 +59,14 @@ public class PlaybackManager : Singleton<PlaybackManager>
             }
             if (Input.GetKeyDown(KeyCode.J))
             {
+                canControll = false;
+                isFinished = false;
                 GameManager.Instance.NextLevel();
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
+                canControll = false;
+                isFinished = false;
                 GameManager.Instance.RestartLevel();
             }
         }
@@ -75,11 +74,10 @@ public class PlaybackManager : Singleton<PlaybackManager>
 
     IEnumerator PlaybackCoroutine()
     {
-
         platformParent = GameObject.Find("PlatformParent").transform;
         UIParent = GameObject.Find("Canvas/UIs").transform;
         tipBar = GameObject.Find("Canvas/TipBar").GetComponent<Image>();
-        CheckPoseTypes();
+        
         LoadPoses();
         LoadUIs();
         SetAnimators();
@@ -104,7 +102,6 @@ public class PlaybackManager : Singleton<PlaybackManager>
             if (i < animators.Length && animators[i])
                 animators[i].SetBool("Go", false);
         }
-        print("YEAH!");
         currentAngle = platformParent.eulerAngles.y;
         RotatePlatform();
         tipBar.DOFade(1, 0);
@@ -153,7 +150,7 @@ public class PlaybackManager : Singleton<PlaybackManager>
 
     void SetAnimators()
     {
-        animators = new Animator[totalPoseTypes.Length]; //
+        animators = new Animator[totalPoseTypes.Length];
         int i = 0;
         foreach (Transform platform in platformParent)
         {
@@ -161,47 +158,42 @@ public class PlaybackManager : Singleton<PlaybackManager>
             i++;
         }
     }
-    void CheckPoseTypes()
+    public void CheckPoseTypes()
     {
         archieved = new bool[totalPoseTypes.Length];
         foreach (var item in archivedPoseTypes)
         {
-            int index = 0;
-            foreach (var item2 in totalPoseTypes)
+            for (int i = 0; i < totalPoseTypes.Length; i++)
             {
-                if (item == item2)
-                {
-                    archieved[index] = true;
-                }
-                index++;
+                if (item == totalPoseTypes[i]) archieved[i] = true;
             }
         }
     }
+    string positionPosesPath = "Pose/Bear_Playback_";
     void LoadPoses()
     {
         for (int i = 0; i < totalPoseTypes.Length; i++)
         {
-            GameObject go = Resources.Load("Pose/Bear_Playback_" + totalPoseTypes[i].ToString()) as GameObject;
+            GameObject go = Resources.Load(positionPosesPath + totalPoseTypes[i].ToString()) as GameObject;
             if (!go)
             {
-                Debug.Log("Pose/Bear_Playback_Routes_" + totalPoseTypes[i].ToString() + " is empty");
-                go = Resources.Load("Pose/Bear_Playback_Empty") as GameObject;
+                Debug.Log(positionPosesPath + totalPoseTypes[i].ToString() + " is empty");
+                go = Resources.Load(positionPosesPath + "Empty") as GameObject;
             }
             go = Instantiate(go, platformParent);
         }
     }
+    string tipPath = "Tips/Tip_";
     void LoadUIs()
     {
         for (int i = 0; i < totalPoseTypes.Length; i++)
         {
-            GameObject go = Resources.Load("Tips/Tip_" + totalPoseTypes[i].ToString()) as GameObject;
+            GameObject go = Resources.Load(tipPath + totalPoseTypes[i].ToString()) as GameObject;
             if (!go || !archieved[i])
             {
-                go = Resources.Load("Tips/Tip_empty") as GameObject;
+                go = Resources.Load(tipPath + "empty") as GameObject;
             }
             go = Instantiate(go, UIParent);
-            //Debug.Log();
-            //go.GetComponent<>
         }
         UIs = UIParent.GetComponentsInChildren<Image>();
         lastUIID = UIs.Length - 1;

@@ -30,7 +30,7 @@ public class LevelController : Singleton<LevelController> {
 	private bool hasFiremanAppeared;
     private Transform fireSpawnerRoot;
     private List<Transform> fireSpawners = new List<Transform>();
-
+    public LevelData levelData;
     private void Start()
     {
 		timerTxt = GameManager.Instance.timer.transform.Find("Text_Timeleft").GetComponent<Text>();
@@ -39,9 +39,8 @@ public class LevelController : Singleton<LevelController> {
         //{
         //    fireSpawners.Add(fireSpawnerRoot.GetChild(i));
         //}
-		GameStart();
+        InitLevel();
     }
-
 	public void SmartDoorHandler(int time)
 	{
 		foreach (var door in doors)
@@ -66,10 +65,11 @@ public class LevelController : Singleton<LevelController> {
 
 
 	#region GameStateHandler
-	public void GameStart()
+	public void InitLevel()
 	{
-		InventoryManager.Instance.inventory.Initialization();
-		PlaybackManager.Instance.Level2();
+        JsonHandler.LoadLevelData(ref levelData, levelIndex);
+        PlaybackManager.Instance.OnLevelInit(levelIndex);
+        InventoryManager.Instance.inventory.Initialization();
 		UIManager.PopWindow(WindowName.HUD, 0, 0f);
 		UIManager.currentWindow = null;
 		MapManager.Instance.UseMap(levelIndex);
@@ -147,10 +147,11 @@ public class LevelController : Singleton<LevelController> {
     private IEnumerator StartAllClearState()
     {
 		StopCoroutine("StartEscapeState");
-		InputManager.Instance.canControl = false;
 		AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Success);
+		InputManager.Instance.canControl = false;
 		BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "You survived!! ^_^");
-		popup.GetComponent<GenericPopup>().Init(false, "win");
+        PlaybackManager.Instance.CheckPoseTypes();
+        popup.GetComponent<GenericPopup>().Init(false, "win");
 		popup.confirm += delegate
 		{
 			UIManager.CloseWindow(WindowName.HUD, 0f);
@@ -165,7 +166,8 @@ public class LevelController : Singleton<LevelController> {
 		AudioManager.Instance.PlayGameplayAudioClip(GamePlayAudioClip.Fail);
 		InputManager.Instance.canControl = false;
 		BaseWindow popup = UIManager.PopWindow(WindowName.GenericPopup, "You Died");
-		popup.GetComponent<GenericPopup>().Init(false, "fail");
+        PlaybackManager.Instance.CheckPoseTypes();
+        popup.GetComponent<GenericPopup>().Init(false, "fail");
 		popup.confirm += delegate
         {
 			UIManager.CloseWindow(WindowName.HUD, 0f);

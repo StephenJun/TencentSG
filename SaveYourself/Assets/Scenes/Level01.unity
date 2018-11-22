@@ -15562,6 +15562,11 @@ Prefab:
       propertyPath: TimeOfEacapeState
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 114771069962625534, guid: b3d0e85e02bbdb44ca24f40e15f48c18,
+        type: 2}
+      propertyPath: levelIndex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3d0e85e02bbdb44ca24f40e15f48c18, type: 2}
   m_IsPrefabParent: 0
