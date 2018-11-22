@@ -109,7 +109,7 @@ public class LevelController : Singleton<LevelController> {
 
 	private IEnumerator StartEscapeState()
 	{
-		if (levelIndex == 1)
+		if (levelIndex == 2)
 		{
 			SmartDoorHandler(startTime);
 		}
