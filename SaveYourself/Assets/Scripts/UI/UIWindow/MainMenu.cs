@@ -14,7 +14,7 @@ public class MainMenu : BaseWindow {
     {
         UIManager.CloseWindow(WindowName.MainMenu, 0);
 		AudioManager.Instance.PlayUIAudioClip(UIAudioClip.buttonClick1);
-        SceneManager.LoadScene("Level02");
+        SceneManager.LoadScene("Level01");
         
         //GameManager.Instance.GameStart();
     }
